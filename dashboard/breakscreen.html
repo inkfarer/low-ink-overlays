@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+    <custom-style>
+		<style include="iron-flex iron-flex-alignment">
+			:root {
+				--blue: #3F51B5;
+				--red: #C9513E;
+				--green: #5BA664;
+			}
+            .title {
+                font-weight: bold;
+                margin-bottom: 5px;
+				text-align: center;
+            }
+            .space {
+                background-color: #262F40;
+                border-radius: 8px;
+                padding: 10px;
+                margin-bottom: 5px;
+            }
+			paper-button[disabled] {
+				color: #A9AAA9;
+				background-color: #181E29 !important;
+			}
+            paper-button {
+				margin: 2px;
+				color: #FFFFFF;
+				font-family: 'Roboto', 'Noto', sans-serif;
+				font-weight: normal;
+				font-size: 14px;
+				-webkit-font-smoothing: antialiased;
+				background-color: var(--blue);
+				display: block;
+				text-align: center;
+			}
+            paper-input {
+                --primary-text-color: #FFFFFF;
+                margin-top: -5px;
+                padding: 0px 2px;
+            }
+			.showButton {
+                background-color: var(--green);
+            }
+            .hideButton {
+                background-color: var(--red);
+            }
+            .showHideSpace {
+                display: flex;
+                justify-content: center;
+            }
+		</style>
+	</custom-style>
+</head>
+<body>
+	<div class="space">
+		<div class="title">Next Up</div>
+		<div class="showHideSpace layout horizontal">
+			<paper-button raised id="showNextUp" class="showButton">Show</paper-button>
+        	<paper-button raised id="hideNextUp" class="hideButton">Hide</paper-button>
+		</div>
+		<div class="layout horizontal">
+			<paper-input label="Next P1 Name" class="nameInput" id="p1NextNameInput"></paper-input>
+			<paper-input label="Next P2 Name" class="nameInput" id="p2NextNameInput"></paper-input>
+		</div>
+		<paper-input label="Flavor Text" id="breakFlavorInput"></paper-input>
+		<paper-button id="updateNextNames">Update</paper-button>
+	</div>
+
+	<script src="breakscreen.js"></script>
+	<script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</body>
+</html>

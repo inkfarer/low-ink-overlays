@@ -1,0 +1,65 @@
+{
+    "name": "low-ink-overlays",
+    "version": "0.0.0",
+    "description": "",
+    "homepage": "https://github.com/inkfarer/low-ink-overlays",
+    "author": {
+        "name": "inkfarer",
+        "email": "inkfarer@gmail.com"
+    },
+    "files": [
+        "dashboard",
+        "graphics",
+        "extension.js",
+        "extension"
+    ],
+    "keywords": [
+        "",
+        "nodecg-bundle"
+    ],
+    "nodecg": {
+        "compatibleRange": "^1.1.1",
+        "dashboardPanels": [{
+                "name": "scoring",
+                "title": "Scoring",
+                "width": 2,
+                "file": "scoring.html",
+                "workspace": "low ink stream",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "music",
+                "title": "Music",
+                "width": 3,
+                "file": "music.html",
+                "workspace": "low ink stream",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "breakscreen",
+                "title": "Break Screen",
+                "width": 2,
+                "file": "breakscreen.html",
+                "workspace": "low ink stream",
+                "headerColor": "#262F40"
+            }
+        ],
+        "graphics": [{
+                "file": "main.html",
+                "width": 1920,
+                "height": 1080
+            },
+            {
+                "file": "break.html",
+                "width": 1920,
+                "height": 1080
+            }
+        ]
+    },
+    "dependencies": {
+        "gsap": "^3.0.5",
+        "lastfm": "^0.9.2"
+    },
+    "repository": "https://github.com/nodecg/nodecg.git",
+    "license": "MIT"
+}
