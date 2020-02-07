@@ -1,121 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-	<link rel="import" href="../bower_components/font-roboto/roboto.html">
-	<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-	<link rel="import" href="../bower_components/paper-button/paper-button.html">
-	<link rel="import" href="../bower_components/paper-input/paper-input.html">
-	<custom-style>
-		<style include="iron-flex iron-flex-alignment" is="custom-style">
-			:root {
-				--blue: #3F51B5;
-				--red: #C9513E;
-				--green: #5BA664;
-			}
-			body {
-				font-family: 'Roboto', 'Noto', sans-serif;
-			}
-			.beginNext {
-				background-color: var(--red);
-			}
-			paper-button {
-				margin: 2px;
-				color: #FFFFFF;
-				font-family: 'Roboto', 'Noto', sans-serif;
-				font-weight: normal;
-				font-size: 14px;
-				-webkit-font-smoothing: antialiased;
-				background-color: var(--blue);
-				display: block;
-				text-align: center;
-			}
-			.counter {
-				font-size: 1em;
-				margin-left: 5px;
-				margin-right: 5px;
-				margin-top: -30px;
-				--paper-input-font-size: 75px;
-				--paper-input-container-input-webkit-spinner: {display: none};
-				--primary-text-color: #FFFFFF;
-				--paper-input-container-input: {
-					font-size: 3em;
-					text-align: center;
-				}
-			}
-			.scoreMinus, .scorePlus {
-				min-width: 40px;
-				max-width: 40px;
-				max-height: 30px;
-			}
-			.scoreMinus {
-				background-color: var(--red);
-			}
-			.scorePlus {
-				background-color: var(--green);
-			}
-			paper-button[disabled] {
-				color: #A9AAA9;
-				background-color: #181E29 !important;
-			}
-			.nameInput {
-				margin-top: -10px;
-				margin-left: 5px;
-				margin-right: 5px;
-				--primary-text-color: #FFFFFF;
-				--paper-input-container-focus-color: var(--blue);
-			}
-			b {
-				text-align: center;
-				display: block;
-			}
-			.space {
+    <meta charset="UTF-8">
+    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../bower_components/font-roboto/roboto.html">
+    <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+    <link rel="import" href="../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <custom-style>
+        <style include="iron-flex iron-flex-alignment" is="custom-style">
+             :root {
+                --blue: #3F51B5;
+                --red: #C9513E;
+                --green: #5BA664;
+            }
+            
+            body {
+                font-family: 'Roboto', 'Noto', sans-serif;
+            }
+            
+            .beginNext {
+                background-color: var(--red);
+            }
+            
+            paper-button {
+                margin: 2px;
+                color: #FFFFFF;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                font-weight: normal;
+                font-size: 14px;
+                -webkit-font-smoothing: antialiased;
+                background-color: var(--blue);
+                display: block;
+                text-align: center;
+            }
+            
+            .counter {
+                font-size: 1em;
+                margin-left: 5px;
+                margin-right: 5px;
+                margin-top: -30px;
+                --paper-input-font-size: 75px;
+                --paper-input-container-input-webkit-spinner: {
+                    display: none
+                }
+                ;
+                --primary-text-color: #FFFFFF;
+                --paper-input-container-input: {
+                    font-size: 3em;
+                    text-align: center;
+                }
+            }
+            
+            .scoreMinus,
+            .scorePlus {
+                min-width: 40px;
+                max-width: 40px;
+                max-height: 30px;
+            }
+            
+            .scoreMinus {
+                background-color: var(--red);
+            }
+            
+            .scorePlus {
+                background-color: var(--green);
+            }
+            
+            paper-button[disabled] {
+                color: #A9AAA9;
+                background-color: #181E29 !important;
+            }
+            
+            .nameInput {
+                margin-top: -10px;
+                margin-left: 5px;
+                margin-right: 5px;
+                --primary-text-color: #FFFFFF;
+                --paper-input-container-focus-color: var(--blue);
+            }
+            
+            b {
+                text-align: center;
+                display: block;
+            }
+            
+            .space {
                 background-color: #262F40;
                 border-radius: 8px;
                 padding: 10px;
                 margin-bottom: 5px;
             }
-			#updateNextNames {
-				margin-bottom: 5px;
-			}
-		</style>
-	</custom-style>
+            
+            #updateNextNames {
+                margin-bottom: 5px;
+            }
+        </style>
+    </custom-style>
 </head>
-<body>
-	<div class="layout horizontal space">
-		<div class="layout vertical">
-			<paper-button class="scorePlus" id="p1PlusB" raised>+</paper-button>
-			<paper-button class="scoreMinus" id="p1MinusB" raised>-</paper-button>
-		</div>
-		<paper-input class="counter" value="0" id="p1Display" type="number"></paper-input>
-		<div style= "color: #FFFFFF; font-size: 2.5em;"> : </div>
-		<paper-input class="counter" value="0" id="p2Display" type="number"></paper-input>
-		<div class="layout vertical">
-			<paper-button class="scorePlus" id="p2PlusB" raised>+</paper-button>
-			<paper-button class="scoreMinus" id="p2MinusB" raised>-</paper-button>
-		</div>
-	</div>
-	<div class="layout vertical">
-		<div class="space">
-			<div class="layout horizontal">
-				<paper-input label="Player 1 Name" class="nameInput" id="p1NameInput"></paper-input>
-				<paper-input label="Player 2 Name" class="nameInput" id="p2NameInput"></paper-input>
-			</div>
-			<paper-input class="nameInput" label="Flavor Text" id="flavorInput"></paper-input>
-			<paper-button id="updateNames">Update</paper-button>
-		</div>
-		<div class="space">
-			<b>Next Match</b>
-			<div class="layout horizontal">
-				<paper-input label="Next P1 Name" class="nameInput" id="p1NextNameInput"></paper-input>
-				<paper-input label="Next P2 Name" class="nameInput" id="p2NextNameInput"></paper-input>
-			</div>
-			<paper-button id="updateNextNames">Update</paper-button>
-			<paper-button id="beginNext" style="background-color: var(--red)">Begin next match</paper-button>
-		</div>
-	</div>
 
-	<script src="scoring.js"></script>
+<body>
+    <div class="layout horizontal space">
+        <div class="layout vertical">
+            <paper-button class="scorePlus" id="teamAPlusB" raised>+</paper-button>
+            <paper-button class="scoreMinus" id="teamAMinusB" raised>-</paper-button>
+        </div>
+        <paper-input class="counter" value="0" id="teamADisplay" type="number"></paper-input>
+        <div style="color: #FFFFFF; font-size: 2.5em;"> : </div>
+        <paper-input class="counter" value="0" id="teamBDisplay" type="number"></paper-input>
+        <div class="layout vertical">
+            <paper-button class="scorePlus" id="teamBPlusB" raised>+</paper-button>
+            <paper-button class="scoreMinus" id="teamBMinusB" raised>-</paper-button>
+        </div>
+    </div>
+    <div class="layout vertical">
+        <div class="space">
+            <div class="layout horizontal">
+                <paper-input label="Team A Name" class="nameInput" id="teamANameInput"></paper-input>
+                <paper-input label="Team B Name" class="nameInput" id="teamBNameInput"></paper-input>
+            </div>
+            <paper-input class="nameInput" label="Flavor Text" id="flavorInput"></paper-input>
+            <paper-button id="updateNames">Update</paper-button>
+        </div>
+        <div class="space">
+            <b>Next Match</b>
+            <div class="layout horizontal">
+                <paper-input label="Next Team A Name" class="nameInput" id="teamANextNameInput"></paper-input>
+                <paper-input label="Next Team B Name" class="nameInput" id="teamBNextNameInput"></paper-input>
+            </div>
+            <paper-button id="updateNextNames">Update</paper-button>
+            <paper-button id="beginNext" style="background-color: var(--red)">Begin next match</paper-button>
+        </div>
+    </div>
+
+    <script src="scoring.js"></script>
 </body>
+
 </html>

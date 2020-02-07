@@ -1,59 +1,59 @@
-const scoreA = nodecg.Replicant('scoreA', {defaultValue: 0});
-const scoreB = nodecg.Replicant('scoreB', {defaultValue: 0});
-const nameA = nodecg.Replicant('nameA', {defaultValue: ""});
-const nameB = nodecg.Replicant('nameB', {defaultValue: ""});
+const teamAScore = nodecg.Replicant('teamAScore', {defaultValue: 0});
+const teamBScore = nodecg.Replicant('teamBScore', {defaultValue: 0});
+const teamAName = nodecg.Replicant('teamAName', {defaultValue: ""});
+const teamBName = nodecg.Replicant('teamBName', {defaultValue: ""});
 const flavorText = nodecg.Replicant('flavorText', {defaultValue: ""});
-const nextNameA = nodecg.Replicant('nextNameA', {defaultValue: ""});
-const nextNameB = nodecg.Replicant('nextNameB', {defaultValue: ""});
+const nextTeamAName = nodecg.Replicant('nextTeamAName', {defaultValue: ""});
+const nextTeamBName = nodecg.Replicant('nextTeamBName', {defaultValue: ""});
 const clrRed = "#C9513E";
 const clrBlue = "#3F51B5";
 
 //onchange, onclick, etc. goes gere
 
 //plus and minus buttons... could be done more gracefully but it's just 4 buttons
-p1PlusB.onclick = () => { scoreA.value++; };
-p1MinusB.onclick = () => { scoreA.value--; };
-p2PlusB.onclick = () => { scoreB.value++; };
-p2MinusB.onclick = () => { scoreB.value--; };
+teamAPlusB.onclick = () => { teamAScore.value++; };
+teamAMinusB.onclick = () => { teamAScore.value--; };
+teamBPlusB.onclick = () => { teamBScore.value++; };
+teamBMinusB.onclick = () => { teamBScore.value--; };
 
 //changing scores by their inputs
-p1Display.addEventListener('input', (event) => { scoreA.value = Number(event.target.value); });
-p2Display.addEventListener('input', (event) => { scoreB.value = Number(event.target.value); });
+teamADisplay.addEventListener('change', (event) => { teamAScore.value = Number(event.target.value); });
+teamBDisplay.addEventListener('change', (event) => { teamBScore.value = Number(event.target.value); });
 
 //when text boxes get typed in, remind user to update
-const toAddListeners = ["p1NameInput", "p2NameInput", "flavorInput"];
+const toAddListeners = ["teamANameInput", "teamBNameInput", "flavorInput"];
 toAddListeners.forEach(element => { document.getElementById(element).addEventListener('input', () => { changeButtonColor(clrRed, "updateNames"); })});
-const toAddListenersNext = ["p1NextNameInput", "p2NextNameInput"];
+const toAddListenersNext = ["teamANextNameInput", "teamBNextNameInput"];
 toAddListenersNext.forEach(element => { document.getElementById(element).addEventListener('input', () => {changeButtonColor(clrRed, "updateNextNames"); })});
 
 //handle replicant changes
-scoreA.on('change', (newValue) => { document.getElementById("p1Display").value = newValue; });
-scoreB.on('change', (newValue) => { document.getElementById("p2Display").value = newValue; });
-nameA.on('change', (newValue) => { p1NameInput.value = newValue; });
-nameB.on('change', (newValue) => { p2NameInput.value = newValue; });
-nextNameA.on('change', (newValue) => { p1NextNameInput.value = newValue; });
-nextNameB.on('change', (newValue) => { p2NextNameInput.value = newValue; });
+teamAScore.on('change', (newValue) => { document.getElementById("teamADisplay").value = newValue; });
+teamBScore.on('change', (newValue) => { document.getElementById("teamBDisplay").value = newValue; });
+teamAName.on('change', (newValue) => { teamANameInput.value = newValue; });
+teamBName.on('change', (newValue) => { teamBNameInput.value = newValue; });
+nextTeamAName.on('change', (newValue) => { teamANextNameInput.value = newValue; });
+nextTeamBName.on('change', (newValue) => { teamBNextNameInput.value = newValue; });
 flavorText.on('change', (newValue) => { flavorInput.value = newValue; });
 
 //buttons
 updateNames.onclick = () => {
-    nameA.value = p1NameInput.value;
-    nameB.value = p2NameInput.value;
+    teamAName.value = teamANameInput.value;
+    teamBName.value = teamBNameInput.value;
     flavorText.value = flavorInput.value;
-    changeButtonColor(clrBlue);
+    changeButtonColor(clrBlue, "updateNames");
 };
 
 beginNext.onclick = () => {
-    scoreA.value = 0; scoreB.value = 0;
-    nameA.value = p1NextNameInput.value;
-    nameB.value = p2NextNameInput.value;
-    p2NextNameInput.value = ""; p2NextNameInput.value = "";
+    teamAScore.value = 0; teamBScore.value = 0;
+    teamAName.value = teamANextNameInput.value;
+    teamBName.value = teamBNextNameInput.value;
+    teamANextNameInput.value = ""; teamBNextNameInput.value = "";
 }
 
 updateNextNames.onclick = () => {
-    nextNameA.value = p1NextNameInput.value;
-    nextNameB.value = p2NextNameInput.value;
-    changeButtonColor(clrBlue, "updateNextNames")
+    nextTeamAName.value = teamANextNameInput.value;
+    nextTeamBName.value = teamBNextNameInput.value;
+    changeButtonColor(clrBlue, "updateNextNames");
 }
 
 //everything else
