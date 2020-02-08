@@ -52,15 +52,24 @@
                 border-radius: 2px;
                 padding: 5px 0px;
             }
+            
+            .space {
+                background-color: #262F40;
+                border-radius: 8px;
+                padding: 10px;
+                margin-bottom: 5px;
+            }
         </style>
     </custom-style>
 </head>
 
 <body>
-    <paper-input label="Tournament ID" id="tourneyIdInput"></paper-input>
-    <paper-button raised id="submitId">submit</paper-button>
-    <div id="submitStatus" class="statusDisplay">STATUS</div>
-    <div id="loadedDisplay" class="statusDisplay">SAVED DATA ID<br><span id="nowLoaded">none</span></div>
+    <div class="space">
+        <paper-input label="Tournament ID" id="tourneyIdInput"></paper-input>
+        <paper-button raised id="submitId">submit</paper-button>
+        <div id="submitStatus" class="statusDisplay">STATUS</div>
+        <div id="loadedDisplay" class="statusDisplay">SAVED DATA ID<br><span id="nowLoaded">none</span></div>
+    </div>
 
     <script src="battlefyImport.js"></script>
 </body>

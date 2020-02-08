@@ -53,8 +53,8 @@
             },
             {
                 "name": "maplist",
-                "title": "Map List",
-                "width": 2,
+                "title": "Map Lists",
+                "width": 6,
                 "file": "maplists.html",
                 "workspace": "low ink setup",
                 "headerColor": "#262F40"
