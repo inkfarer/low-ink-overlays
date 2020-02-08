@@ -44,6 +44,14 @@
                 "headerColor": "#262F40"
             },
             {
+                "name": "winners",
+                "title": "Map Winners",
+                "width": 4,
+                "file": "mapWinners.html",
+                "workspace": "low ink stream",
+                "headerColor": "#262F40"
+            },
+            {
                 "name": "battlefyimport",
                 "title": "Import tournament data",
                 "width": 2,

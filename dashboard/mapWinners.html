@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../bower_components/font-roboto/roboto.html">
+    <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+    <link rel="import" href="../bower_components/paper-button/paper-button.html">
+    <custom-style>
+        <style include="iron-flex iron-flex-alignment">
+             :root {
+                --blue: #3F51B5;
+                --red: #C9513E;
+                --green: #5BA664;
+            }
+            
+            .title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            
+            .space {
+                background-color: #262F40;
+                border-radius: 8px;
+                padding: 10px;
+                margin-bottom: 5px;
+            }
+            
+            paper-button[disabled] {
+                color: #A9AAA9;
+                background-color: #181E29 !important;
+            }
+            
+            paper-button {
+                margin: 2px;
+                color: #FFFFFF;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                font-weight: normal;
+                font-size: 14px;
+                -webkit-font-smoothing: antialiased;
+                background-color: var(--blue);
+                display: block;
+                text-align: center;
+            }
+            
+            #maplistName {
+                float: left;
+            }
+            
+            #toggles {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 5px;
+            }
+            
+            .noWinButton {
+                background-color: var(--blue);
+            }
+            
+            .AWinButton {
+                background-color: var(--green);
+                width: 100%;
+            }
+            
+            .BWinButton {
+                background-color: var(--red);
+                width: 100%;
+            }
+            
+            .wbContainer {
+                width: 100%;
+                display: flex;
+                align-content: center;
+            }
+            
+            span.center {
+                display: block;
+                text-align: center;
+            }
+            
+            #reset {
+                float: right;
+                background-color: var(--red);
+            }
+            
+            #nameSpace {
+                height: 40px;
+            }
+        </style>
+    </custom-style>
+</head>
+
+<body>
+    <div id="nameSpace" class="space">
+        <div id="maplistName">List Name</div>
+        <paper-button id="reset" raised>RESET</paper-button>
+    </div>
+    <div id="toggles" class="space">
+
+    </div>
+    <script src="mapWinners.js"></script>
+</body>
+
+</html>
