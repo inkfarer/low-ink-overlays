@@ -7,6 +7,7 @@ const nextTeamAName = nodecg.Replicant('nextTeamAName', {defaultValue: ""});
 const nextTeamBName = nodecg.Replicant('nextTeamBName', {defaultValue: ""});
 const clrRed = "#C9513E";
 const clrBlue = "#3F51B5";
+const battlefyData = nodecg.Replicant('battlefyData');
 
 //onchange, onclick, etc. goes gere
 
@@ -21,38 +22,45 @@ teamADisplay.addEventListener('change', (event) => { teamAScore.value = Number(e
 teamBDisplay.addEventListener('change', (event) => { teamBScore.value = Number(event.target.value); });
 
 //when text boxes get typed in, remind user to update
-const toAddListeners = ["teamANameInput", "teamBNameInput", "flavorInput"];
-toAddListeners.forEach(element => { document.getElementById(element).addEventListener('input', () => { changeButtonColor(clrRed, "updateNames"); })});
-const toAddListenersNext = ["teamANextNameInput", "teamBNextNameInput"];
-toAddListenersNext.forEach(element => { document.getElementById(element).addEventListener('input', () => {changeButtonColor(clrRed, "updateNextNames"); })});
+document.getElementById("flavorInput").addEventListener('input', () => { changeButtonColor(clrRed, "updateNames"); });
+const toAddChangeListeners = ["teamASelect", "teamBSelect"];
+toAddChangeListeners.forEach(element => {document.getElementById(element).addEventListener('change', () => {changeButtonColor(clrRed, "updateNames"); })})
+const toAddListenersNext = ["teamANextSelect", "teamBNextSelect"];
+toAddListenersNext.forEach(element => {document.getElementById(element).addEventListener('change', () => {changeButtonColor(clrRed, "updateNextNames")})})
 
 //handle replicant changes
-teamAScore.on('change', (newValue) => { document.getElementById("teamADisplay").value = newValue; });
-teamBScore.on('change', (newValue) => { document.getElementById("teamBDisplay").value = newValue; });
-teamAName.on('change', (newValue) => { teamANameInput.value = newValue; });
-teamBName.on('change', (newValue) => { teamBNameInput.value = newValue; });
-nextTeamAName.on('change', (newValue) => { teamANextNameInput.value = newValue; });
-nextTeamBName.on('change', (newValue) => { teamBNextNameInput.value = newValue; });
-flavorText.on('change', (newValue) => { flavorInput.value = newValue; });
+teamAScore.on('change', newValue => { document.getElementById("teamADisplay").value = newValue; });
+teamBScore.on('change', newValue => { document.getElementById("teamBDisplay").value = newValue; });
+teamAName.on('change', newValue => { teamASelect.value = newValue; });
+teamBName.on('change', newValue => { teamBSelect.value = newValue; });
+nextTeamAName.on('change', newValue => { teamANextSelect.value = newValue; });
+nextTeamBName.on('change', newValue => { teamBNextSelect.value = newValue; });
+flavorText.on('change', newValue => { flavorInput.value = newValue; });
+battlefyData.on('change', newValue => {
+    clearTeamSelectors();
+    for (let i = 1; i < newValue.length; i++) {
+        const element = newValue[i];
+        addTeamSelector(element.name);
+    }
+})
 
 //buttons
 updateNames.onclick = () => {
-    teamAName.value = teamANameInput.value;
-    teamBName.value = teamBNameInput.value;
+    teamAName.value = teamASelect.value;
+    teamBName.value = teamBSelect.value;
     flavorText.value = flavorInput.value;
     changeButtonColor(clrBlue, "updateNames");
 };
 
 beginNext.onclick = () => {
     teamAScore.value = 0; teamBScore.value = 0;
-    teamAName.value = teamANextNameInput.value;
-    teamBName.value = teamBNextNameInput.value;
-    teamANextNameInput.value = ""; teamBNextNameInput.value = "";
+    teamAName.value = teamANextSelect.value;
+    teamBName.value = teamBNextSelect.value;
 }
 
 updateNextNames.onclick = () => {
-    nextTeamAName.value = teamANextNameInput.value;
-    nextTeamBName.value = teamBNextNameInput.value;
+    nextTeamAName.value = teamANextSelect.value;
+    nextTeamBName.value = teamBNextSelect.value;
     changeButtonColor(clrBlue, "updateNextNames");
 }
 
@@ -60,4 +68,22 @@ updateNextNames.onclick = () => {
 
 function changeButtonColor(color, id) {
     document.getElementById(id).style.backgroundColor = color;
+}
+
+function clearTeamSelectors() {
+    let selectors = document.getElementsByClassName("teamSelector");
+    for (let i = 0; i < selectors.length; i++) {
+        const element = selectors[i];
+        element.innerHTML = "";
+    }
+}
+
+function addTeamSelector(name) {
+    var elements = document.querySelectorAll(".teamSelector");
+    Array.from(elements).forEach(function(item) {
+        var opt = document.createElement("option");
+        opt.value = name;
+        opt.text = name;
+        item.appendChild(opt);
+    });
 }

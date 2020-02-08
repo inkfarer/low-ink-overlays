@@ -96,6 +96,46 @@
             #updateNextNames {
                 margin-bottom: 5px;
             }
+            
+            .label {
+                color: #737373;
+                font-size: 12px;
+                margin-left: 5px;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                margin-top: 7px;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+            }
+            
+            select {
+                width: 100%;
+                font-size: 16px;
+                margin-bottom: 5px;
+                margin-left: 2px;
+                border: 0px;
+                border-bottom: 1px solid #737373;
+                outline: 0px;
+                color: white;
+                background-color: rgba(0, 0, 0, 0);
+                padding: 4px;
+                padding-left: 0px;
+                font-family: 'Roboto', 'Noto', sans-serif;
+            }
+            
+            option {
+                color: black;
+            }
+            
+            .teamSelectBox {
+                width: 95%;
+            }
+            
+            .teamSelectorsBox {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                justify-content: center;
+                gap: 2px;
+            }
         </style>
     </custom-style>
 </head>
@@ -116,18 +156,38 @@
     </div>
     <div class="layout vertical">
         <div class="space">
-            <div class="layout horizontal">
+            <!--<div class="layout horizontal">
                 <paper-input label="Team A Name" class="nameInput" id="teamANameInput"></paper-input>
                 <paper-input label="Team B Name" class="nameInput" id="teamBNameInput"></paper-input>
+            </div>-->
+            <div class="teamSelectorsBox">
+                <div class="layout vertical teamSelectBox">
+                    <div class="label">Team A</div>
+                    <select id="teamASelect" class="teamSelector"></select>
+                </div>
+                <div class="layout vertical teamSelectBox">
+                    <div class="label">Team B</div>
+                    <select id="teamBSelect" class="teamSelector"></select>
+                </div>
             </div>
             <paper-input class="nameInput" label="Flavor Text" id="flavorInput"></paper-input>
             <paper-button id="updateNames">Update</paper-button>
         </div>
         <div class="space">
             <b>Next Match</b>
-            <div class="layout horizontal">
+            <!--<div class="layout horizontal">
                 <paper-input label="Next Team A Name" class="nameInput" id="teamANextNameInput"></paper-input>
                 <paper-input label="Next Team B Name" class="nameInput" id="teamBNextNameInput"></paper-input>
+            </div>-->
+            <div class="teamSelectorsBox">
+                <div class="layout vertical teamSelectBox">
+                    <div class="label">Next Team A</div>
+                    <select id="teamANextSelect" class="teamSelector"></select>
+                </div>
+                <div class="layout vertical teamSelectBox">
+                    <div class="label">Next Team B</div>
+                    <select id="teamBNextSelect" class="teamSelector"></select>
+                </div>
             </div>
             <paper-button id="updateNextNames">Update</paper-button>
             <paper-button id="beginNext" style="background-color: var(--red)">Begin next match</paper-button>

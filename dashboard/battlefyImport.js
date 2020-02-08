@@ -34,7 +34,7 @@ submitId.onclick = () => {
 					}
 					teams.push(teamInfo);
 				}
-				console.log(teams);
+				//console.log(teams);
 				battlefyData.value = teams;
 				setStatusSuccess();
 			})

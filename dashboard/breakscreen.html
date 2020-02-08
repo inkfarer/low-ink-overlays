@@ -1,78 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
     <link rel="import" href="../bower_components/paper-button/paper-button.html">
     <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
     <custom-style>
-		<style include="iron-flex iron-flex-alignment">
-			:root {
-				--blue: #3F51B5;
-				--red: #C9513E;
-				--green: #5BA664;
-			}
+        <style include="iron-flex iron-flex-alignment">
+             :root {
+                --blue: #3F51B5;
+                --red: #C9513E;
+                --green: #5BA664;
+            }
+            
             .title {
                 font-weight: bold;
                 margin-bottom: 5px;
-				text-align: center;
+                text-align: center;
             }
+            
             .space {
                 background-color: #262F40;
                 border-radius: 8px;
                 padding: 10px;
                 margin-bottom: 5px;
             }
-			paper-button[disabled] {
-				color: #A9AAA9;
-				background-color: #181E29 !important;
-			}
+            
+            paper-button[disabled] {
+                color: #A9AAA9;
+                background-color: #181E29 !important;
+            }
+            
             paper-button {
-				margin: 2px;
-				color: #FFFFFF;
-				font-family: 'Roboto', 'Noto', sans-serif;
-				font-weight: normal;
-				font-size: 14px;
-				-webkit-font-smoothing: antialiased;
-				background-color: var(--blue);
-				display: block;
-				text-align: center;
-			}
+                margin: 2px;
+                color: #FFFFFF;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                font-weight: normal;
+                font-size: 14px;
+                -webkit-font-smoothing: antialiased;
+                background-color: var(--blue);
+                display: block;
+                text-align: center;
+            }
+            
             paper-input {
                 --primary-text-color: #FFFFFF;
                 margin-top: -5px;
                 padding: 0px 2px;
             }
-			.showButton {
+            
+            .showButton {
                 background-color: var(--green);
             }
+            
             .hideButton {
                 background-color: var(--red);
             }
+            
             .showHideSpace {
                 display: flex;
                 justify-content: center;
             }
-		</style>
-	</custom-style>
+            
+            .label {
+                color: #737373;
+                font-size: 12px;
+                margin-left: 5px;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                margin-top: 7px;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+            }
+            
+            select {
+                width: 100%;
+                font-size: 16px;
+                margin-bottom: 5px;
+                margin-left: 2px;
+                border: 0px;
+                border-bottom: 1px solid #737373;
+                outline: 0px;
+                color: white;
+                background-color: rgba(0, 0, 0, 0);
+                padding: 4px;
+                padding-left: 0px;
+                font-family: 'Roboto', 'Noto', sans-serif;
+            }
+            
+            option {
+                color: black;
+            }
+            
+            .teamSelectBox {
+                width: 100%;
+            }
+            
+            .teamSelectorsBox {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                justify-content: center;
+                gap: 2px;
+            }
+        </style>
+    </custom-style>
 </head>
-<body>
-	<div class="space">
-		<div class="title">Next Up</div>
-		<div class="showHideSpace layout horizontal">
-			<paper-button raised id="showNextUp" class="showButton">Show</paper-button>
-        	<paper-button raised id="hideNextUp" class="hideButton">Hide</paper-button>
-		</div>
-		<div class="layout horizontal">
-			<paper-input label="Next P1 Name" class="nameInput" id="p1NextNameInput"></paper-input>
-			<paper-input label="Next P2 Name" class="nameInput" id="p2NextNameInput"></paper-input>
-		</div>
-		<paper-input label="Flavor Text" id="breakFlavorInput"></paper-input>
-		<paper-button id="updateNextNames">Update</paper-button>
-	</div>
 
-	<script src="breakscreen.js"></script>
-	<script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+<body>
+    <div class="space">
+        <div class="title">Main Scene</div>
+        <div class="showHideSpace layout horizontal">
+            <paper-button raised id="showMain" class="showButton">Show</paper-button>
+        </div>
+        <paper-input label="Flavor Text" id="breakFlavorInput"></paper-input>
+        <paper-input label="Casters" id="casterInput"></paper-input>
+        <paper-button id="updateMainScene">Update</paper-button>
+    </div>
+    <div class="space">
+        <div class="title">Next Teams</div>
+        <div class="showHideSpace layout horizontal">
+            <paper-button raised id="showNextUp" class="showButton">Show</paper-button>
+        </div>
+        <div class="teamSelectorsBox">
+            <div class="layout vertical teamSelectBox">
+                <div class="label">Next Team A</div>
+                <select id="teamANextSelect" class="teamSelector"></select>
+            </div>
+            <div class="layout vertical teamSelectBox">
+                <div class="label">Next Team B</div>
+                <select id="teamBNextSelect" class="teamSelector"></select>
+            </div>
+        </div>
+        <paper-button id="updateNextNames">Update</paper-button>
+    </div>
+    <div class="space">
+        <div class="title">Upcoming Stages</div>
+        <div class="showHideSpace layout horizontal">
+            <paper-button raised id="showMaps" class="showButton">Show</paper-button>
+        </div>
+        <div class="layout vertical teamSelectBox">
+            <div class="label">Map list</div>
+            <select id="mapListSelect" class="mapSelector"></select>
+        </div>
+        <paper-button id="updateMaps">Update</paper-button>
+    </div>
+
+    <script src="breakscreen.js"></script>
+    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 </body>
+
 </html>
