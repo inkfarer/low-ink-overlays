@@ -175,7 +175,7 @@ function createMapList(numberOfMaps, id) {
 	}
 	mapListDiv.appendChild(removeButton);
 	
-	mapsGrid.appendChild(mapListDiv);
+	mapsGrid.prepend(mapListDiv);
 }
 
 function findMapList(id) {
