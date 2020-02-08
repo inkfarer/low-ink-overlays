@@ -8,6 +8,7 @@
     <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
     <link rel="import" href="../bower_components/paper-button/paper-button.html">
     <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/nodecg-toggle/nodecg-toggle.html">
     <custom-style>
         <style include="iron-flex iron-flex-alignment" is="custom-style">
              :root {
@@ -136,6 +137,25 @@
                 justify-content: center;
                 gap: 2px;
             }
+            
+            nodecg-toggle {
+                margin: 0 auto;
+                margin-top: 10px;
+                --paper-toggle-button-label-color: white;
+                --paper-toggle-button-checked-bar-color: var(--blue);
+                --paper-toggle-button-checked-button-color: var(--blue);
+                --paper-toggle-button-checked-ink-color: var(--blue);
+            }
+            
+            #showScoreboard {
+                background-color: var(--green);
+                width: 100%;
+            }
+            
+            #hideScoreboard {
+                background-color: var(--red);
+                width: 100%;
+            }
         </style>
     </custom-style>
 </head>
@@ -156,10 +176,6 @@
     </div>
     <div class="layout vertical">
         <div class="space">
-            <!--<div class="layout horizontal">
-                <paper-input label="Team A Name" class="nameInput" id="teamANameInput"></paper-input>
-                <paper-input label="Team B Name" class="nameInput" id="teamBNameInput"></paper-input>
-            </div>-->
             <div class="teamSelectorsBox">
                 <div class="layout vertical teamSelectBox">
                     <div class="label">Team A</div>
@@ -170,8 +186,22 @@
                     <select id="teamBSelect" class="teamSelector"></select>
                 </div>
             </div>
+            <div class="teamSelectorsBox">
+                <div class="layout vertical teamSelectBox">
+                    <div class="label">Team A color</div>
+                    <select id="teamAColorSelect" class="colorSelect"></select>
+                </div>
+                <div class="layout vertical teamSelectBox">
+                    <div class="label">Team B color</div>
+                    <select id="teamBColorSelect" class="colorSelect"></select>
+                </div>
+            </div>
             <paper-input class="nameInput" label="Flavor Text" id="flavorInput"></paper-input>
             <paper-button id="updateNames">Update</paper-button>
+            <div class="layout horizontal">
+                <paper-button id="showScoreboard">SHOW</paper-button>
+                <paper-button id="hideScoreboard">HIDE</paper-button>
+            </div>
         </div>
         <div class="space">
             <b>Next Match</b>
@@ -191,6 +221,15 @@
             </div>
             <paper-button id="updateNextNames">Update</paper-button>
             <paper-button id="beginNext" style="background-color: var(--red)">Begin next match</paper-button>
+        </div>
+        <div class="space">
+            <b>Manual team names</b>
+            <nodecg-toggle replicant-name="manualTeamNameInput" noink>Manual team name input</nodecg-toggle>
+            <div class="layout horizontal">
+                <paper-input label="Team A Name" class="nameInput" id="teamANameInput"></paper-input>
+                <paper-input label="Team B Name" class="nameInput" id="teamBNameInput"></paper-input>
+            </div>
+            <paper-button id="updateManual">Update</paper-button>
         </div>
     </div>
 
