@@ -8,6 +8,10 @@
     <link rel="import" href="../bower_components/sc-fitted-text/sc-fitted-text.html">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <style>
+         :root {
+            --lowInkOrange: #F37002;
+        }
+        
         body {
             font-family: 'Monsterrat', sans-serif;
             font-weight: 700;
@@ -17,7 +21,7 @@
             position: absolute;
             top: 40px;
             left: 50px;
-            height: 150px;
+            height: 106px;
             width: 430px;
             overflow: hidden;
         }
@@ -39,7 +43,7 @@
             background-color: #111;
         }
         
-        .scContents {
+        .scNames {
             background-color: #222222;
             position: relative;
             top: 0px;
@@ -71,14 +75,14 @@
         .nameDisplay {
             color: white;
             position: relative;
-            left: 37px;
+            left: 40px;
             font-size: 1.6em;
         }
         
         .colorDisplay {
             position: absolute;
-            left: 7px;
-            margin-top: 4px;
+            left: 10px;
+            margin-top: 3px;
             width: 22px;
             height: 22px;
             border-radius: 5px;
@@ -100,8 +104,24 @@
         
         .scoreDisplayText {
             color: white;
-            font-size: 2.1em;
+            font-size: 2em;
             width: 40px;
+        }
+        
+        .scLine {
+            background-color: var(--lowInkOrange);
+            height: 106px;
+            width: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+        
+        #scContents {
+            position: relative;
+            top: 0;
+            left: 0;
         }
     </style>
 </head>
@@ -109,23 +129,26 @@
 <body>
     <div class="scWrapper">
         <!--any decorations will go here-->
-        <div class="flavorTextBG">
-            <sc-fitted-text id="flavorTextDisplay" max-width="415"></sc-fitted-text>
-        </div>
-        <div class="scContents">
-            <div class="teamInfoGrid">
-                <div class="teamInfo">
-                    <div class="colorDisplay" id="teamAcolorDisplay"></div>
-                    <sc-fitted-text class="nameDisplay" id="teamAnameDisplay"></sc-fitted-text>
-                </div>
-                <div class="teamInfo">
-                    <div class="colorDisplay" id="teamBcolorDisplay"></div>
-                    <sc-fitted-text class="nameDisplay" id="teamBnameDisplay"></sc-fitted-text>
-                </div>
+        <div class="scLine"></div>
+        <div id="scContents">
+            <div class="flavorTextBG">
+                <sc-fitted-text id="flavorTextDisplay" max-width="415"></sc-fitted-text>
             </div>
-            <div class="scoreDisplay">
-                <sc-fitted-text id="teamAScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></sc-fitted-text>
-                <sc-fitted-text id="teamBScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></sc-fitted-text>
+            <div class="scNames">
+                <div class="teamInfoGrid">
+                    <div class="teamInfo">
+                        <div class="colorDisplay" id="teamAcolorDisplay"></div>
+                        <sc-fitted-text class="nameDisplay" id="teamAnameDisplay" max-width="330"></sc-fitted-text>
+                    </div>
+                    <div class="teamInfo">
+                        <div class="colorDisplay" id="teamBcolorDisplay"></div>
+                        <sc-fitted-text class="nameDisplay" id="teamBnameDisplay" max-width="330"></sc-fitted-text>
+                    </div>
+                </div>
+                <div class="scoreDisplay">
+                    <sc-fitted-text id="teamAScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></sc-fitted-text>
+                    <sc-fitted-text id="teamBScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></sc-fitted-text>
+                </div>
             </div>
         </div>
     </div>
