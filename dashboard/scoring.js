@@ -1,10 +1,21 @@
+const emptyTeamInfo = {
+    name: "",
+    logoUrl: "",
+    players: [
+        {
+            name: "",
+            username: ""
+        }
+    ]
+};
+
 const teamAScore = nodecg.Replicant('teamAScore', {defaultValue: 0});
 const teamBScore = nodecg.Replicant('teamBScore', {defaultValue: 0});
-const teamAName = nodecg.Replicant('teamAName', {defaultValue: ""});
-const teamBName = nodecg.Replicant('teamBName', {defaultValue: ""});
-const flavorText = nodecg.Replicant('flavorText', {defaultValue: ""});
-const nextTeamAName = nodecg.Replicant('nextTeamAName', {defaultValue: ""});
-const nextTeamBName = nodecg.Replicant('nextTeamBName', {defaultValue: ""});
+const teamAInfo = nodecg.Replicant('teamAInfo', {defaultValue: emptyTeamInfo});
+const teamBInfo = nodecg.Replicant('teamBInfo', {defaultValue: emptyTeamInfo});
+const flavorText = nodecg.Replicant('flavorText', {defaultValue: "Low Ink"});
+const nextTeamAInfo = nodecg.Replicant('nextTeamAInfo', {defaultValue: emptyTeamInfo});
+const nextTeamBInfo = nodecg.Replicant('nextTeamBINfo', {defaultValue: emptyTeamInfo});
 const clrRed = "#C9513E";
 const clrBlue = "#3F51B5";
 const colors = ["Default pink",
@@ -46,12 +57,13 @@ toAddListenersManual.forEach(element => {document.getElementById(element).addEve
 //handle replicant changes
 teamAScore.on('change', newValue => { document.getElementById("teamADisplay").value = newValue; });
 teamBScore.on('change', newValue => { document.getElementById("teamBDisplay").value = newValue; });
-teamAName.on('change', newValue => { teamASelect.value = newValue; });
-teamBName.on('change', newValue => { teamBSelect.value = newValue; });
-nextTeamAName.on('change', newValue => { teamANextSelect.value = newValue; });
-nextTeamBName.on('change', newValue => { teamBNextSelect.value = newValue; });
+teamAInfo.on('change', newValue => { teamASelect.value = newValue.name; });
+teamBInfo.on('change', newValue => { teamBSelect.value = newValue.name; });
+nextTeamAInfo.on('change', newValue => { teamANextSelect.value = newValue.name; });
+nextTeamBInfo.on('change', newValue => { teamBNextSelect.value = newValue.name; });
 flavorText.on('change', newValue => { flavorInput.value = newValue; });
 battlefyData.on('change', newValue => {
+    console.log(newValue);
     clearTeamSelectors();
     for (let i = 1; i < newValue.length; i++) {
         const element = newValue[i];
@@ -60,11 +72,11 @@ battlefyData.on('change', newValue => {
 })
 manualTeamNameInput.on('change', newValue => {
     if (newValue) {
-        teamAName.value = teamANameInput.value;
-        teamBName.value = teamBNameInput.value;
+        teamAInfo.value.name = teamANameInput.value;
+        teamBInfo.value.name = teamBNameInput.value;
     } else {
-        teamAName.value = teamASelect.value;
-        teamBName.value = teamBSelect.value;
+        teamAInfo.value = battlefyData.value[findTeamObjectByName(teamASelect.value)];
+        teamBInfo.value = battlefyData.value[findTeamObjectByName(teamBSelect.value)];
     }
 });
 scoreboardShown.on('change', newValue => {
@@ -79,8 +91,8 @@ teamBColor.on('change', newValue => {
 
 //buttons
 updateNames.onclick = () => {
-    teamAName.value = teamASelect.value;
-    teamBName.value = teamBSelect.value;
+    teamAInfo.value = battlefyData.value[findTeamObjectByName(teamASelect.value)];
+    teamBInfo.value = battlefyData.value[findTeamObjectByName(teamBSelect.value)];
     flavorText.value = flavorInput.value;
     teamAColor.value = teamAColorSelect.value;
     teamBColor.value = teamBColorSelect.value;
@@ -89,20 +101,20 @@ updateNames.onclick = () => {
 
 beginNext.onclick = () => {
     teamAScore.value = 0; teamBScore.value = 0;
-    teamAName.value = teamANextSelect.value;
-    teamBName.value = teamBNextSelect.value;
+    teamAInfo.value = battlefyData.value[findTeamObjectByName(teamANextSelect.value)];
+    teamBInfo.value = battlefyData.value[findTeamObjectByName(teamBNextSelect.value)];
 };
 
 updateNextNames.onclick = () => {
-    nextTeamAName.value = teamANextSelect.value;
-    nextTeamBName.value = teamBNextSelect.value;
+    nextTeamAInfo.value = battlefyData.value[findTeamObjectByName(teamANextSelect.value)];
+    nextTeamBInfo.value = battlefyData.value[findTeamObjectByName(teamBNextSelect.value)];
     changeButtonColor(clrBlue, "updateNextNames");
 };
 
 updateManual.onclick = () => {
     if (manualTeamNameInput.value) {
-        teamAName.value = teamANameInput.value;
-        teamBName.value = teamBNameInput.value;
+        teamAInfo.value.name = teamANameInput.value;
+        teamBInfo.value.name = teamBNameInput.value;
     }
     changeButtonColor(clrBlue, "updateManual");
 };
@@ -165,16 +177,12 @@ function addColorSelectors() {
 
 addColorSelectors();
 
-/*var colorNameToHex = {
-    "Light Blue":"#0199B8",
-    "Purple":"#9208B2",
-    "Yellow":"#BBC905",
-    "Pink":"#CB0856",
-    "Orange":"#FB5C03",
-    "Turquoise":"#0CAE6E",
-    "Sky Blue":"#007EDC",
-    "Mustard":"#CE8003",
-    "Default pink":"#f02d7d",
-    "Default green":"#19D719",
-    "Big blue": "#0006FF"
-}*/
+function findTeamObjectByName(name) {
+    for (let i = 1; i < battlefyData.value.length; i++) {
+        const element = battlefyData.value[i];
+        if (element.name == name) {
+            return i;
+        }
+    }
+    return null;
+}
