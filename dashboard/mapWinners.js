@@ -1,25 +1,26 @@
 // map winners: 0 = no win, 1 = team a win, 2 = team b win
 const mapWinners = nodecg.Replicant('mapWinners', { defaultValue: [0, 0, 0, 0, 0, 0, 0] });
 const currentMaplist = nodecg.Replicant('currentMaplist', {
-    defaultValue: [
+    defaultValue:
         [
             { id: 0, name: 'Default map list' },
             { map: 'Ancho-V Games', mode: 'Clam Blitz' },
             { map: 'Ancho-V Games', mode: 'Tower Control' },
             { map: 'Wahoo World', mode: 'Rainmaker' }
         ]
-    ]
 });
 
-currentMaplist.on('change', newValue => {
-    document.getElementById('maplistName').innerText = newValue[0].name;
-    removeToggles();
-    for (let i = 1; i < newValue.length; i++) {
-        mapWinners.value[i - 1] = 0;
+NodeCG.waitForReplicants(mapWinners).then(() => {
+    currentMaplist.on('change', newValue => {
+        document.getElementById('maplistName').innerText = newValue[0].name;
+        removeToggles();
+        for (let i = 1; i < newValue.length; i++) {
+            mapWinners.value[i - 1] = 0;
 
-        const element = newValue[i];
-        addToggle(element, i - 1);
-    }
+            const element = newValue[i];
+            addToggle(element, i - 1);
+        }
+    });
 });
 
 function addToggle(maplistElement, mapIndex) {
