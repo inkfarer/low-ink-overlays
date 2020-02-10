@@ -8,15 +8,214 @@
     <link rel="import" href="../bower_components/sc-fitted-text/sc-fitted-text.html">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:700,600|Work+Sans:400&display=swap" rel="stylesheet">
     <style>
+         :root {
+            --lowInkOrange: #F37002;
+        }
+        
         body {
             width: 1920px;
             height: 1080px;
             overflow: hidden;
+            background-color: #191919;
+            margin: 0;
+        }
+        
+        .logo {
+            width: 650px;
+            height: 650px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 150px;
+            filter: drop-shadow(0px 0px 10px #111);
+        }
+        
+        #squidarrows {
+            left: 0px;
+            top: 0;
+            position: absolute;
+            height: 1080px;
+            z-index: -10;
+        }
+        
+        #squidarrowswrapper {
+            position: absolute;
+            overflow: hidden;
+            width: 1920px;
+            height: 1080px;
+            top: 0;
+            left: 0;
+        }
+        
+        .mainSceneGrid {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr;
+            position: absolute;
+            right: 150px;
+            width: 800px;
+            top: 170px;
+            height: 850px;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        .mainSceneBigText {
+            color: white;
+            font-size: 10em;
+            font-family: 'lemon/milk';
+            position: relative;
+            top: -25px;
+            left: 15px;
+        }
+        
+        .mainSceneBigBG {
+            background-color: #111;
+            width: 700px;
+            height: 170px;
+            filter: drop-shadow(-10px 10px 0 var(--lowInkOrange));
+        }
+        
+        .mainSceneBG {
+            background-color: #111;
+            padding: 4px 0;
+        }
+        
+        #breakFlavorTextBG {
+            width: 100px;
+        }
+        
+        .breakMainSmallText {
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.5em;
+            margin-left: 10px;
+        }
+        
+        #measurer,
+        .measurer {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            z-index: 99999;
+            /*begone*/
+            position: absolute;
+            visibility: visible;
+        }
+        
+        .mainSceneIconBG {
+            background-color: var(--lowInkOrange);
+            height: 57px;
+            width: 57px;
+            float: right;
+            position: relative;
+        }
+        
+        .mainSceneIcon {
+            height: 45px;
+            width: 45px;
+            position: relative;
+            top: 6px;
+            left: 6px;
+        }
+        
+        .mainSceneIconRaster {
+            width: 45px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .mainSceneMusic {
+            display: block;
+        }
+        
+        .withIcon {
+            margin-right: 57px;
+        }
+        
+        .mainSceneWrapper {
+            filter: drop-shadow(-3px 3px 0 var(--lowInkOrange));
+        }
+        
+        #topBar {
+            display: grid;
+            grid-template-columns: 1fr 15fr;
+            align-content: center;
+            align-items: center;
+            width: 1920px;
+            height: 80px;
+            background-color: #111;
+            filter: drop-shadow(0px 5px 0 var(--lowInkOrange));
+            position: absolute;
+            left: 0;
+            top: -80px;
+        }
+        
+        .smallIcon {
+            height: 60px;
+            margin-left: 30px;
+        }
+        
+        #topBarText {
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
         }
     </style>
 </head>
 
 <body>
+    <div id="mainScene">
+        <img class="logo" src="lowink-upscale2.png">
+        <div class="mainSceneGrid">
+            <div class="mainSceneBigBG">
+                <div class="mainSceneBigText">LOW INK</div>
+            </div>
+            <div class="mainSceneFlavorText mainSceneWrapper">
+                <div class="mainSceneBG" id="breakFlavorTextBG">
+                    <sc-fitted-text class="breakMainSmallText" id="breakFlavorText" max-width="720" text="OWo"></sc-fitted-text>
+                </div>
+            </div>
+            <div class="mainSceneCasterNames mainSceneWrapper">
+                <div class="mainSceneIconBG">
+                    <img src="microphone.svg" class="mainSceneIcon">
+                </div>
+                <div class="mainSceneBG withIcon" id="breakCasterNamesBG">
+                    <sc-fitted-text class="breakMainSmallText" id="breakCasterNames" max-width="720" text="uWu"></sc-fitted-text>
+                </div>
+            </div>
+            <div class="mainSceneSupport mainSceneWrapper">
+                <div class="mainSceneIconBG">
+                    <img src="logoTwitter.png" class="mainSceneIconRaster" id="socialIcon">
+                </div>
+                <div class="mainSceneBG withIcon" id="breakSupportBG">
+                    <sc-fitted-text class="breakMainSmallText" id="breakSupport" max-width="720" text="uWu"></sc-fitted-text>
+                </div>
+            </div>
+            <div class="mainSceneMusic mainSceneWrapper" id="music">
+                <div class="mainSceneIconBG">
+                    <img src="music.svg" class="mainSceneIcon">
+                </div>
+                <div class="mainSceneBG withIcon" id="breakSongTextBG">
+                    <sc-fitted-text class="breakMainSmallText" id="breakSongText" max-width="720" text="AwA"></sc-fitted-text>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="topBar">
+        <img class="smallIcon" src="lowink-upscale2.png">
+        <div id="topBarText">OwO</div>
+    </div>
+
+    <div id="squidarrowswrapper">
+        <img src="squidarrows.png" id="squidarrows">
+    </div>
+
     <script src="break.js"></script>
 </body>
 
