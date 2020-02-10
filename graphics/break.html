@@ -27,7 +27,7 @@
             top: 50%;
             transform: translateY(-50%);
             left: 150px;
-            filter: drop-shadow(0px 0px 10px #111);
+            filter: drop-shadow(0px 0px 5px var(--lowInkOrange));
         }
         
         #squidarrows {
@@ -152,6 +152,7 @@
             position: absolute;
             left: 0;
             top: -80px;
+            z-index: 9999;
         }
         
         .smallIcon {
@@ -164,6 +165,113 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5em;
             font-weight: 700;
+        }
+        
+        #topBarInfoText {
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            position: absolute;
+            right: 100px;
+        }
+        
+        #topBarInfoIcon {
+            position: absolute;
+            right: 30px;
+            height: 60px;
+        }
+        
+        #mainScene {
+            height: 1080px;
+            width: 1920px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        #nextUp {
+            height: 1080px;
+            width: 1920px;
+            position: absolute;
+            top: -1080px;
+            left: 0;
+        }
+        
+        .versus {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: 100px;
+            color: white;
+            font-family: 'lemon/milk';
+            font-size: 10em;
+            text-shadow: 0px 0px 10px var(--lowInkOrange);
+        }
+        
+        #teamAInfo {
+            left: 250px;
+        }
+        
+        #teamBInfo {
+            right: 250px;
+        }
+        
+        .teamInfo {
+            width: 500px;
+            height: 600px;
+            position: absolute;
+            top: 350px;
+            background-color: #111;
+            filter: drop-shadow(-5px 5px 0px var(--lowInkOrange));
+            overflow: hidden;
+        }
+        
+        .teamImage {
+            width: 80%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.25;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .rightAlign {
+            text-align: right;
+        }
+        
+        .teamName {
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.75em;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 25px;
+        }
+        
+        .teamPlayer {
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2em;
+            margin-top: 15px;
+            margin-left: 35px;
+            margin-right: 35px;
+        }
+        
+        .nextUpTitle {
+            font-family: 'lemon/milk';
+            font-size: 7em;
+            text-align: center;
+            color: white;
+            position: absolute;
+            width: 100%;
+            top: 150px;
+            text-shadow: 0px 0px 10px var(--lowInkOrange);
         }
     </style>
 </head>
@@ -196,7 +304,7 @@
                     <sc-fitted-text class="breakMainSmallText" id="breakSupport" max-width="720" text="uWu"></sc-fitted-text>
                 </div>
             </div>
-            <div class="mainSceneMusic mainSceneWrapper" id="music">
+            <div class="mainSceneMusic mainSceneWrapper" id="musicWrapper">
                 <div class="mainSceneIconBG">
                     <img src="music.svg" class="mainSceneIcon">
                 </div>
@@ -209,7 +317,24 @@
 
     <div id="topBar">
         <img class="smallIcon" src="lowink-upscale2.png">
-        <div id="topBarText">OwO</div>
+        <sc-fitted-text id="topBarText" align="left" max-width="840"></sc-fitted-text>
+        <sc-fitted-text id="topBarInfoText" text="OwO" align="right" max-width="840"></sc-fitted-text>
+        <img id="topBarInfoIcon" src="microphone.svg">
+    </div>
+
+    <div id="nextUp">
+        <div class="nextUpTitle">NEXT UP</div>
+        <div id="teamAInfo" class="teamInfo">
+            <img class="teamImage" id="teamAImage" src="">
+            <sc-fitted-text class="teamName" id="teamAName" text="WHOa GAMERS!!!" max-width="450" align="right"></sc-fitted-text>
+        </div>
+
+        <div class="versus">VS</div>
+
+        <div id="teamBInfo" class="teamInfo">
+            <img class="teamImage" id="teamBImage" src="">
+            <sc-fitted-text class="teamName" id="teamBName" text="WHOa GAMERS!!!" max-width="450" align="left"></sc-fitted-text>
+        </div>
     </div>
 
     <div id="squidarrowswrapper">

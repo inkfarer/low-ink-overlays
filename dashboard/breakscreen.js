@@ -1,7 +1,18 @@
+const emptyTeamInfo = {
+    name: "",
+    logoUrl: "",
+    players: [
+        {
+            name: "",
+            username: ""
+        }
+    ]
+};
+
 const clrRed = '#C9513E';
 const clrBlue = '#3F51B5';
-const nextTeamAName = nodecg.Replicant('nextTeamAName', { defaultValue: '' });
-const nextTeamBName = nodecg.Replicant('nextTeamBName', { defaultValue: '' });
+const nextTeamAInfo = nodecg.Replicant('nextTeamAInfo', {defaultValue: emptyTeamInfo});
+const nextTeamBInfo = nodecg.Replicant('nextTeamBINfo', {defaultValue: emptyTeamInfo});
 const bigTextValue = nodecg.Replicant('bigTextValue', { defaultValue: 'Be right back!' });
 const battlefyData = nodecg.Replicant('battlefyData');
 const maplists = nodecg.Replicant('maplists', {
@@ -36,8 +47,8 @@ battlefyData.on('change', newValue => {
         addTeamSelector(element.name);
     }
 });
-nextTeamAName.on('change', newValue => { teamANextSelect.value = newValue; });
-nextTeamBName.on('change', newValue => { teamBNextSelect.value = newValue; });
+nextTeamAInfo.on('change', newValue => { teamANextSelect.value = newValue.name; });
+nextTeamBInfo.on('change', newValue => { teamBNextSelect.value = newValue.name; });
 maplists.on('change', newValue => {
     clearMapListSelector();
     for (let i = 0; i < newValue.length; i++) {
@@ -64,8 +75,8 @@ updateMainScene.onclick = () => {
     changeButtonColor(clrBlue, "updateMainScene");
 };
 updateNextNames.onclick = () => {
-    nextTeamAName.value = teamANextSelect.value;
-    nextTeamBName.value = teamBNextSelect.value;
+    nextTeamAInfo.value = battlefyData.value[findTeamObjectByName(teamANextSelect.value)];
+    nextTeamBInfo.value = battlefyData.value[findTeamObjectByName(teamBNextSelect.value)];
     changeButtonColor(clrBlue, "updateNextNames");
 };
 updateMaps.onclick = () => {
@@ -141,4 +152,14 @@ function disableButtons(currentScene) {
     } else if (currentScene === "maps") {
         showMaps.disabled = true;
     }
+}
+
+function findTeamObjectByName(name) {
+    for (let i = 1; i < battlefyData.value.length; i++) {
+        const element = battlefyData.value[i];
+        if (element.name == name) {
+            return i;
+        }
+    }
+    return null;
 }

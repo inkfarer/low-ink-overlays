@@ -1,3 +1,14 @@
+const emptyTeamInfo = {
+    name: "",
+    logoUrl: "",
+    players: [
+        {
+            name: "",
+            username: ""
+        }
+    ]
+};
+
 const bigTextValue = nodecg.Replicant('bigTextValue', { defaultValue: 'Be right back!' });
 const casterNames = nodecg.Replicant('casterNames', { defaultValue: "" });
 const nowPlaying = nodecg.Replicant('nowPlaying');
@@ -7,18 +18,21 @@ const nowPlayingManual = nodecg.Replicant('nowPlayingManual', {defaultValue: {
 }});
 const mSongEnabled = nodecg.Replicant('mSongEnabled', {defaultValue: false});
 const musicShown = nodecg.Replicant('musicShown', {defaultValue: true});
+const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: 'mainScene' });
+const nextTeamAInfo = nodecg.Replicant('nextTeamAInfo', {defaultValue: emptyTeamInfo});
+const nextTeamBInfo = nodecg.Replicant('nextTeamBINfo', {defaultValue: emptyTeamInfo});
 
 //replicant changes
 bigTextValue.on('change', newValue => {
 	changeBreakMainText('breakFlavorText', newValue, "breakFlavorTextBG");
-	topBarText.innerText = newValue;
+	topBarText.text = newValue;
 });
 casterNames.on('change', newValue => {
 	changeBreakMainText('breakCasterNames', newValue, 'breakCasterNamesBG');
 });
 nowPlaying.on('change', newValue => {
-	if (!nowPlayingManual.value) {
-		if (newValue.artist === undefined && newValue.song === undefined) {
+	if (!mSongEnabled.value) {
+		if (newValue.artist == undefined && newValue.song == undefined) {
 			changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
 		} else {
 			const songName = newValue.artist + " - " + newValue.song;
@@ -39,8 +53,8 @@ mSongEnabled.on('change', newValue => {
 	}		
 });
 nowPlayingManual.on('change', newValue => {
-	if (nowPlayingManual.value) {
-		if (newValue.artist === undefined && newValue.song === undefined) {
+	if (mSongEnabled.value) {
+		if (newValue.artist == undefined && newValue.song == undefined) {
 			changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
 		} else {
 			const songName = newValue.artist + " - " + newValue.song;
@@ -55,6 +69,33 @@ musicShown.on('change', newValue => {
 	} else {
 		gsap.to('#musicWrapper', 0.5, {opacity: 0});
 	}
+});
+currentBreakScene.on('change', newValue => {
+	if (newValue === "mainScene") {
+		hideNextUp();
+		hideTopBar();
+		showMainScene(0);
+	} else if (newValue === "nextUp") {
+		showTopBar(1.25);
+		hideMainScene();
+		showNextUp();
+	} else if (newValue === "maps") {
+		showTopBar(1.25);
+		hideMainScene();
+	}
+});
+
+nextTeamAInfo.on('change', newValue => {
+	console.log(newValue);
+	teamAImage.src = newValue.logoUrl;
+	teamAName.text = newValue.name;
+	addTeamPlayers('A', newValue.players);
+});
+nextTeamBInfo.on('change', newValue => {
+	console.log(newValue);
+	teamBImage.src = newValue.logoUrl;
+	teamBName.text = newValue.name;
+	addTeamPlayers('B', newValue.players);
 });
 
 //looping background
@@ -97,7 +138,42 @@ function addSocialAnim(number) {
 }
 
 window.onload = function() {
-    startSocialSlides();
+	startSocialSlides();
+	startTopBarTextLoop();
+}
+
+//top bar looping text
+
+function startTopBarTextLoop() {
+	for (let i = 0; i < 2; i++) {
+		addTopBarAnim(i);
+	}
+}
+
+const topBarInfoTL = gsap.timeline();
+function addTopBarAnim(i) {
+	topBarInfoTL.add(gsap.to('#topBarInfoText, #topBarInfoIcon', 0.5, {opacity: 0, onComplete: function() {
+		if (i === 0) {
+			topBarInfoText.text = casterNames.value;
+			topBarInfoIcon.src = 'microphone.svg';
+		} else if (i === 1) {
+			if (mSongEnabled.value) {
+				topBarInfoText.text = nowPlayingManual.value.artist + ' - ' + nowPlayingManual.value.song;
+			} else {
+				if (nowPlaying.value.artist === undefined && nowPlaying.value.song === undefined) {
+					topBarInfoText.text = 'Nothing is playing at the moment.';
+				} else {
+					topBarInfoText.text = nowPlaying.value.artist + ' - ' + nowPlaying.value.song;
+				}
+			}
+			topBarInfoIcon.src = 'music.svg';
+		}
+	}}))
+	.add(gsap.to('#topBarInfoText, #topBarInfoIcon', 0.5, {opacity: 1, delay: 0.5}))
+	.add(gsap.to({}, 5, {}));
+	if (i == 1) {
+		topBarInfoTL.to({}, 0.01, {delay: -0.01, onComplete: function() {startTopBarTextLoop()}});
+	}
 }
 
 //misc functions
@@ -134,18 +210,78 @@ function changeBreakMainText(id, text, BGelement) {
 	.add(gsap.to('#' + id, 0.5, {opacity: 1}));
 }
 
+function addTeamPlayers(teamNo, players) {
+	//clear existing
+	var selector;
+	if (teamNo === 'A') {
+		selector = 'sc-fitted-text.teamPlayer.teamPlayerA';
+	} else if (teamNo === 'B') {
+		selector = 'sc-fitted-text.teamPlayer.teamPlayerB';
+	}
+	const existing = document.querySelectorAll(selector);
+	for (let i = 0; i < existing.length; i++) {
+		const element = existing[i];
+		element.parentNode.removeChild(element);
+	}
+
+	for (let i = 0; i < players.length; i++) {
+		const element = players[i];
+		const playerText = document.createElement('sc-fitted-text');
+		playerText.text = element.name;
+		playerText.maxWidth = "430"
+		playerText.classList.add('teamPlayer');
+		if (teamNo === 'A') {
+			playerText.align = "right";
+			playerText.classList.add('teamPlayerA');
+			teamAInfo.appendChild(playerText);
+		} else if (teamNo === 'B') {
+			playerText.align = "left";
+			playerText.classList.add('teamPlayerB')
+			teamBInfo.appendChild(playerText);
+		}
+	}
+}
+
+
 function hideMainScene() {
-	gsap.to("#mainScene", 1.5, {ease: 'power3.in',  top: 1080});
+	gsap.to("#mainScene", 1.5, {ease: 'power3.inOut',  top: 1080});
 }
 
-function showMainScene() {
-	gsap.fromTo("#mainScene", {top: -1080}, {top: 0, duration: 2, ease: 'power3.out'});
+function showMainScene(delay) {
+	gsap.fromTo("#mainScene", {top: -1080}, {top: 0, duration: 1.5, ease: 'power3.inOut', delay: delay});
 }
 
-function showTopBar() {
-	gsap.to("#topBar", 0.5, {ease: 'power3.out', top: 0});
+function showTopBar(delay) {
+	gsap.to("#topBar", 0.5, {ease: 'power3.out', top: 0, delay: delay});
 }
 
 function hideTopBar() {
-	gsap.to("#topBar", 0.5, {ease: 'power3.in', top: -80});
+	gsap.to("#topBar", 0.5, {ease: 'power3.inOut', top: -80});
+}
+
+function showNextUp(delay) {
+	gsap.fromTo("#nextUp", {top: -1080}, {top: 0, duration: 1.5, ease: 'power3.inOut', delay: delay});
+
+	const namesA = document.querySelectorAll('sc-fitted-text.teamPlayer.teamPlayerA');
+	const namesB = document.querySelectorAll('sc-fitted-text.teamPlayer.teamPlayerB');
+
+	for (let i = 0; i < namesA.length; i++) { namesA[i].style.opacity = "0"; }
+	for (let i = 0; i < namesB.length; i++) { namesB[i].style.opacity = "0"; }
+
+	setTimeout(function() {
+		
+		for (let i = 0; i < namesA.length; i++) {
+			const element = namesA[i];
+			gsap.fromTo(element, {marginRight: 60, opacity: 0}, {duration: 0.3, marginRight: 35, opacity: 1, delay: i*0.1});
+		}
+
+		for (let i = 0; i < namesB.length; i++) {
+			const element = namesB[i];
+			gsap.fromTo(element, {marginLeft: 60, opacity: 0}, {duration: 0.3, marginLeft: 35, opacity: 1, delay: i*0.1});
+		}
+	}, 1100);
+}
+
+function hideNextUp() {
+	gsap.to("#nextUp", 1.5, {ease: 'power3.inOut',  top: 1080});
 }
