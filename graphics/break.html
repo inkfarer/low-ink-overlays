@@ -10,6 +10,7 @@
     <style>
          :root {
             --lowInkOrange: #F37002;
+            /*NOTE TO SELF: RGB LOW INK WILL BE A THING*/
         }
         
         body {
@@ -182,22 +183,6 @@
             height: 60px;
         }
         
-        #mainScene {
-            height: 1080px;
-            width: 1920px;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        #nextUp {
-            height: 1080px;
-            width: 1920px;
-            position: absolute;
-            top: -1080px;
-            left: 0;
-        }
-        
         .versus {
             position: absolute;
             top: 50%;
@@ -263,21 +248,132 @@
             margin-right: 35px;
         }
         
-        .nextUpTitle {
+        .sceneTitle {
             font-family: 'lemon/milk';
-            font-size: 7em;
             text-align: center;
             color: white;
             position: absolute;
             width: 100%;
-            top: 150px;
             text-shadow: 0px 0px 10px var(--lowInkOrange);
+        }
+        
+        .nextUpTitle {
+            font-size: 7em;
+            top: 150px;
+        }
+        
+        .nextMapsTitle {
+            font-size: 5em;
+            top: 120px;
+        }
+        
+        .sceneWrapper {
+            height: 1080px;
+            width: 1920px;
+            position: absolute;
+            top: -1080px;
+            left: 0;
+        }
+        
+        .upcomingStagesGrid {
+            height: 700px;
+            display: grid;
+            align-self: center;
+            margin: 0 auto;
+            position: relative;
+            gap: 20px;
+            width: 1700px;
+            top: 275px;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr;
+            filter: drop-shadow(-5px 5px 0px var(--lowInkOrange));
+        }
+        
+        .stageBox {
+            background-color: #111;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .mapsStagePic {
+            height: 700px;
+            z-index: -1;
+            margin-left: -480px;
+        }
+        
+        .mapsStagePic3Maps {
+            margin-left: -410px !important;
+        }
+        
+        .mapsStagePic5Maps {
+            margin-left: -480px !important;
+        }
+        
+        .mapsModeName {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            position: absolute;
+            left: 10px;
+            bottom: 15px;
+            font-size: 1.5em;
+            z-index: 10;
+        }
+        
+        .mapsStageName {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            position: absolute;
+            left: 10px;
+            bottom: 50px;
+            font-size: 2em;
+            z-index: 10;
+        }
+        
+        .mapsWinnerName {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            position: absolute;
+            right: 10px;
+            top: 15px;
+            font-size: 2em;
+            z-index: 10;
+            text-align: right;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            max-height: 4.8em;
+            top: 10px;
+            word-break: break-word;
+        }
+        
+        .mapsNameGradient {
+            position: absolute;
+            height: 250px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+            bottom: 0;
+            left: 0;
+            width: 1000px;
+            z-index: 0;
+        }
+        
+        .winnerGradient {
+            position: absolute;
+            height: 250px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%);
+            top: 0;
+            left: 0;
+            width: 1000px;
+            z-index: 0;
         }
     </style>
 </head>
 
 <body>
-    <div id="mainScene">
+    <div id="mainScene" class="sceneWrapper">
         <img class="logo" src="lowink-upscale2.png">
         <div class="mainSceneGrid">
             <div class="mainSceneBigBG">
@@ -322,8 +418,8 @@
         <img id="topBarInfoIcon" src="microphone.svg">
     </div>
 
-    <div id="nextUp">
-        <div class="nextUpTitle">NEXT UP</div>
+    <div id="nextUp" class="sceneWrapper">
+        <div class="sceneTitle nextUpTitle">NEXT UP</div>
         <div id="teamAInfo" class="teamInfo">
             <img class="teamImage" id="teamAImage" src="">
             <sc-fitted-text class="teamName" id="teamAName" text="WHOa GAMERS!!!" max-width="450" align="right"></sc-fitted-text>
@@ -334,6 +430,13 @@
         <div id="teamBInfo" class="teamInfo">
             <img class="teamImage" id="teamBImage" src="">
             <sc-fitted-text class="teamName" id="teamBName" text="WHOa GAMERS!!!" max-width="450" align="left"></sc-fitted-text>
+        </div>
+    </div>
+
+    <div id="nextMaps" class="sceneWrapper">
+        <div class="sceneTitle nextMapsTitle">upcoming stages</div>
+        <div id="upcomingStagesGrid" class="upcomingStagesGrid">
+
         </div>
     </div>
 
