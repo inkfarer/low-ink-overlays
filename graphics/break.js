@@ -179,6 +179,22 @@ mapWinners.on('change', (newValue, oldValue) => {
 	}
 });
 
+teamAInfo.on('change', newValue => {
+	for (let i = 0; i < currentMaplist.value.length - 1; i++) {
+		if (mapWinners.value[i] != 0) {
+			updateWinner(i, mapWinners.value[i]);
+		}
+	}
+});
+
+teamBInfo.on('change', newValue => {
+	for (let i = 0; i < currentMaplist.value.length - 1; i++) {
+		if (mapWinners.value[i] != 0) {
+			updateWinner(i, mapWinners.value[i]);
+		}
+	}
+});
+
 //looping background
 var arrowTl = gsap.timeline({repeat: -1});
 arrowTl.to('#squidarrows', 20, {ease: Power0.easeNone, left: -600});
