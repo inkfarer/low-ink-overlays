@@ -7,6 +7,7 @@
     <link rel="import" href="../bower_components/paper-input/paper-input.html">
     <link rel="import" href="../bower_components/paper-button/paper-button.html">
     <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+    <link rel="import" href="../bower_components/nodecg-toggle/nodecg-toggle.html">
     <custom-style>
         <style include="iron-flex iron-flex-alignment">
              :root {
@@ -103,6 +104,15 @@
                 justify-content: center;
                 gap: 2px;
             }
+            
+            nodecg-toggle {
+                margin: 0 auto;
+                margin-top: 10px;
+                --paper-toggle-button-label-color: white;
+                --paper-toggle-button-checked-bar-color: var(--blue);
+                --paper-toggle-button-checked-button-color: var(--blue);
+                --paper-toggle-button-checked-ink-color: var(--blue);
+            }
         </style>
     </custom-style>
 </head>
@@ -144,6 +154,9 @@
             <select id="mapListSelect" class="mapSelector"></select>
         </div>
         <paper-button id="updateMaps">Update</paper-button>
+    </div>
+    <div class="space">
+        <nodecg-toggle replicant-name="RGBMode" noink>RGB Mode</nodecg-toggle>
     </div>
 
     <script src="breakscreen.js"></script>

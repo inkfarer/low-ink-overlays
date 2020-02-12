@@ -57,6 +57,7 @@ const currentMaplist = nodecg.Replicant('currentMaplist', {
 const mapWinners = nodecg.Replicant('mapWinners', { defaultValue: [0, 0, 0, 0, 0, 0, 0] });
 const teamAInfo = nodecg.Replicant('teamAInfo', { defaultValue: emptyTeamInfo });
 const teamBInfo = nodecg.Replicant('teamBInfo', { defaultValue: emptyTeamInfo });
+const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
 
 //replicant changes
 currentMaplist.on('change', newValue => {
@@ -192,6 +193,14 @@ teamBInfo.on('change', newValue => {
 		if (mapWinners.value[i] != 0) {
 			updateWinner(i, mapWinners.value[i]);
 		}
+	}
+});
+
+RGBMode.on('change', newValue => {
+	if (newValue) {
+		enableRGBMode();
+	} else {
+		disableRGBMode();
 	}
 });
 
@@ -456,6 +465,23 @@ function removeWinner(index) {
 
 function clearUpcomingStages() {
 	document.getElementById('upcomingStagesGrid').innerHTML = '';
+}
+
+var RGBTimeline = gsap.timeline({repeat: -1});
+function enableRGBMode() {
+	RGBTimeline = gsap.timeline({repeat: -1});
+	const rainbowColors = ['#F37002', '#FFFF00', '#00FF00', '#0000FF', '#2E2B5F', '#8B00FF', '#FF0000', '#F37002'];
+	for (let i = 0; i < rainbowColors.length; i++) {
+		const element = rainbowColors[i];
+		var duration = 1;
+		if (i == 0) { duration = 0;}
+		RGBTimeline.add(gsap.to(':root', {'--lowInkOrange':element, duration: duration, ease: 'none'}));
+	}
+}
+
+function disableRGBMode() {
+	RGBTimeline.kill();
+	gsap.to(':root', {'--lowInkOrange':'#F37002', duration: 1, ease: 'none'});
 }
 
 
