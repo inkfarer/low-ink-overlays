@@ -119,8 +119,10 @@ musicShown.on('change', newValue => {
 	const musicElem = document.getElementById('musicWrapper')
 	if (newValue) {
 		gsap.to('#musicWrapper', 0.5, {opacity: 1});
+		gsap.to('.mainSceneGrid', 0.5, {height: 850});
 	} else {
 		gsap.to('#musicWrapper', 0.5, {opacity: 0});
+		gsap.to('.mainSceneGrid', 0.5, {height: 1000});
 	}
 });
 
