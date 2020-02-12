@@ -11,17 +11,29 @@ const currentMaplist = nodecg.Replicant('currentMaplist', {
 });
 
 NodeCG.waitForReplicants(mapWinners).then(() => {
-    currentMaplist.on('change', newValue => {
+    currentMaplist.on('change', (newValue, oldValue) => {
         document.getElementById('maplistName').innerText = newValue[0].name;
         removeToggles();
         for (let i = 1; i < newValue.length; i++) {
-            mapWinners.value[i - 1] = 0;
+            if (oldValue) {
+                mapWinners.value[i - 1] = 0;
+            }
 
             const element = newValue[i];
             addToggle(element, i - 1);
         }
     });
 });
+
+mapWinners.on('change', newValue => {
+    for (let i = 0; i < newValue.length; i++) {
+        const element = newValue[i];
+        const buttons = getButtons(i);
+        if (buttons[0] != null) {
+            disableWinButtons(buttons[0], buttons[1], buttons[2], element);
+        }
+    }
+})
 
 function addToggle(maplistElement, mapIndex) {
     const toggleDiv = document.createElement('div');
@@ -109,7 +121,7 @@ function resetToggles() {
     for (let i = 0; i < currentMaplist.value.length - 1; i++) {
         mapWinners.value[i] = 0;
         const buttons = getButtons(i);
-        disableWinButtons(buttons[0], buttons[1], buttons[2], 0);
+        //disableWinButtons(buttons[0], buttons[1], buttons[2], 0);
     }
 };
 

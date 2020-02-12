@@ -418,8 +418,8 @@ function addWinner(index, value) {
 		winnerGradient.classList.add('winnerGradient');
 		mapElem.appendChild(winnerGradient);
 
-		gsap.fromTo(winnerName, {opacity: 0}, {duration: 0.5, opacity: 1});
-		gsap.fromTo(winnerGradient, {opacity: 0}, {duration: 0.5, opacity: 1});
+		gsap.fromTo(winnerName, {opacity: 0}, {duration: 0.3, opacity: 1});
+		gsap.fromTo(winnerGradient, {opacity: 0}, {duration: 0.3, opacity: 1});
 	}
 }
 
@@ -447,8 +447,8 @@ function removeWinner(index) {
 	const name = mapElem.querySelector('.mapsWinnerName');
 	const gradient = mapElem.querySelector('.winnerGradient');
 	
-	gsap.to(name, {duration: 0.5, opacity: 0});
-	gsap.to(gradient, {duration: 0.5, opacity: 0, onComplete: function() {
+	gsap.to(name, {duration: 0.3, opacity: 0});
+	gsap.to(gradient, {duration: 0.3, opacity: 0, onComplete: function() {
 		name.parentElement.removeChild(name);
 		gradient.parentElement.removeChild(gradient);
 	}});
