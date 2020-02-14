@@ -34,7 +34,6 @@ const colorNameToHex = {
 flavorText.on('change', newValue => { flavorTextDisplay.text = newValue; });
 teamAInfo.on('change', newValue => { teamAnameDisplay.text = newValue.name; });
 teamBInfo.on('change', newValue => { teamBnameDisplay.text = newValue.name; });
-// TODO: animate these
 teamAColor.on('change', newValue => { gsap.to("#teamAcolorDisplay", 0.5, { backgroundColor: colorNameToHex[newValue] }); });
 teamBColor.on('change', newValue => { gsap.to("#teamBcolorDisplay", 0.5, { backgroundColor: colorNameToHex[newValue] }); });
 
