@@ -12,15 +12,20 @@ const currentMaplist = nodecg.Replicant('currentMaplist', {
 
 NodeCG.waitForReplicants(mapWinners).then(() => {
     currentMaplist.on('change', (newValue, oldValue) => {
-        document.getElementById('maplistName').innerText = newValue[0].name;
-        removeToggles();
-        for (let i = 1; i < newValue.length; i++) {
-            if (oldValue) {
-                mapWinners.value[i - 1] = 0;
-            }
+        if (newValue) {
+            document.getElementById('maplistName').innerText = newValue[0].name;
+            removeToggles();
+            for (let i = 1; i < newValue.length; i++) {
+                if (oldValue) {
+                    mapWinners.value[i - 1] = 0;
+                }
 
-            const element = newValue[i];
-            addToggle(element, i - 1);
+                const element = newValue[i];
+                addToggle(element, i - 1);
+            }
+        } else {
+            removeToggles();
+            document.getElementById('maplistName').innerText = 'Undefined (Map list might have been deleted...)'
         }
     });
 });

@@ -252,7 +252,7 @@ maplists.on('change', (newValue, oldValue) => {
         for (let i = 0; i < oldValue.length; i++) {
             const element = oldValue[i];
             const current = JSON.parse(JSON.stringify(currentMaplist.value));
-            if (checkMapObjectEqual(current, element)) {
+            if (checkMapObjectEqual(current, element) && newValue[i]) {
                 currentMaplist.value = newValue[i];
             }
         }

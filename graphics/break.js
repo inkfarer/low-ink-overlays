@@ -71,50 +71,6 @@ currentMaplist.on('change', newValue => {
 	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 1, delay: 0.5});
 });
 
-bigTextValue.on('change', newValue => {
-	changeBreakMainText('breakFlavorText', newValue, "breakFlavorTextBG");
-	topBarText.text = newValue;
-});
-
-casterNames.on('change', newValue => {
-	changeBreakMainText('breakCasterNames', newValue, 'breakCasterNamesBG');
-});
-
-nowPlaying.on('change', newValue => {
-	if (!mSongEnabled.value) {
-		if (newValue.artist == undefined && newValue.song == undefined) {
-			changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
-		} else {
-			const songName = newValue.artist + " - " + newValue.song;
-			changeBreakMainText('breakSongText', songName, 'breakSongTextBG');
-		}		
-	}
-});
-
-mSongEnabled.on('change', newValue => {
-	var value;
-	if (newValue) { value = nowPlayingManual.value; }
-	 else { value = nowPlaying.value; }
-
-	if (value.artist === undefined && value.song === undefined) {
-		changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
-	} else {
-		const songName = value.artist + " - " + value.song;
-		changeBreakMainText('breakSongText', songName, 'breakSongTextBG');
-	}		
-});
-
-nowPlayingManual.on('change', newValue => {
-	if (mSongEnabled.value) {
-		if (newValue.artist == undefined && newValue.song == undefined) {
-			changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
-		} else {
-			const songName = newValue.artist + " - " + newValue.song;
-			changeBreakMainText('breakSongText', songName, 'breakSongTextBG');
-		}		
-	}
-});
-
 musicShown.on('change', newValue => {
 	const musicElem = document.getElementById('musicWrapper')
 	if (newValue) {
@@ -132,16 +88,19 @@ currentBreakScene.on('change', newValue => {
 		hideTopBar();
 		hideMaps();
 		showMainScene(0);
+		animSquidArrows();
 	} else if (newValue === "nextUp") {
 		showTopBar(1.25);
 		hideMainScene();
 		hideMaps();
 		showNextUp();
+		animSquidArrows();
 	} else if (newValue === "maps") {
 		showTopBar(1.25);
 		hideMainScene();
 		hideNextUp();
 		showMaps();
+		animSquidArrows();
 	}
 });
 
@@ -206,9 +165,58 @@ RGBMode.on('change', newValue => {
 	}
 });
 
+window.onload = function() {
+	startSocialSlides();
+	startTopBarTextLoop();
+	bigTextValue.on('change', newValue => {
+		changeBreakMainText('breakFlavorText', newValue, "breakFlavorTextBG");
+		topBarText.text = newValue;
+	});
+	
+	casterNames.on('change', newValue => {
+		changeBreakMainText('breakCasterNames', newValue, 'breakCasterNamesBG');
+	});
+	
+	nowPlaying.on('change', newValue => {
+		if (!mSongEnabled.value) {
+			if (newValue.artist == undefined && newValue.song == undefined) {
+				changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
+			} else {
+				const songName = newValue.artist + " - " + newValue.song;
+				changeBreakMainText('breakSongText', songName, 'breakSongTextBG');
+			}		
+		}
+	});
+	
+	mSongEnabled.on('change', newValue => {
+		var value;
+		if (newValue) { value = nowPlayingManual.value; }
+		 else { value = nowPlaying.value; }
+	
+		if (value.artist === undefined && value.song === undefined) {
+			changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
+		} else {
+			const songName = value.artist + " - " + value.song;
+			changeBreakMainText('breakSongText', songName, 'breakSongTextBG');
+		}		
+	});
+	
+	nowPlayingManual.on('change', newValue => {
+		if (mSongEnabled.value) {
+			if (newValue.artist == undefined && newValue.song == undefined) {
+				changeBreakMainText('breakSongText', 'No song is currently playing.', 'breakSongTextBG');
+			} else {
+				const songName = newValue.artist + " - " + newValue.song;
+				changeBreakMainText('breakSongText', songName, 'breakSongTextBG');
+			}		
+		}
+	});
+}
+
 //looping background
+
 var arrowTl = gsap.timeline({repeat: -1});
-arrowTl.to('#squidarrows', 20, {ease: Power0.easeNone, left: -600});
+arrowTl.to('#squidarrows', 15, {ease: Power0.easeNone, left: -605});
 
 //surrort texts
 
@@ -243,11 +251,6 @@ function addSocialAnim(number) {
     if (number == socialIcons.length - 1) {
         socialTL.to({}, 0.01, {delay: -0.01, onComplete: function() {startSocialSlides()}});
     }
-}
-
-window.onload = function() {
-	startSocialSlides();
-	startTopBarTextLoop();
 }
 
 //top bar looping text
@@ -536,4 +539,10 @@ function showMaps() {
 
 function hideMaps() {
 	gsap.to("#nextMaps", 1.5, {ease: 'power3.inOut',  top: 1080});
+}
+
+function animSquidArrows() {
+	gsap.to('#squidarrows', {duration: 1.5, bottom: -1085, ease: 'power3.inOut', onComplete: function() {
+		document.querySelector('#squidarrows').style.bottom = '0px';
+	}});
 }
