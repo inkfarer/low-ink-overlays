@@ -4,7 +4,12 @@ A [NodeCG](http://github.com/nodecg/nodecg) bundle.
 
 ## Screenshots
 
-* to be added
+* [Scoreboard (Main scene)](https://i.imgur.com/LBs1cyS.png)
+* [Break screen](https://i.imgur.com/N2joHF9.png)
+* [Upcoming teams](https://i.imgur.com/Q7laPh2.png)
+* [Upcoming stages](https://i.imgur.com/hadGiZY.jpg)
+* [Dashboard 1 (Setup)](https://i.imgur.com/BYyIjFK.png)
+* [Dashboard 2 (Live controls)](https://i.imgur.com/Vbsh79Z.png)
 
 ## Install
 
@@ -41,4 +46,4 @@ From the dashboard, URLs to the graphics can be found from the graphics tab. To 
 
 ## Credits
 
-Last.fm extension (extension/lastfm-playing.js) from [toth5-overlay.](https://github.com/TipoftheHats/toth5-overlay)
+Splatoon 2 map portraits are property of Nintendo and were downloaded from the [Splatoon wiki.](https://splatoonwiki.org/)
