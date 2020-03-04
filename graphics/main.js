@@ -27,7 +27,7 @@ const colorNameToHex = {
     "Mustard": "#CE8003",
     "Default pink": "#f02d7d",
     "Default green": "#19D719",
-    "Big blue": "#0006FF"
+    "Dark blue": "#0006FF"
 }
 
 //replicant changes

@@ -28,8 +28,26 @@ const colors = ["Default pink",
 "Turquoise",
 "Sky Blue",
 "Mustard",
-"Big blue"];
-const battlefyData = nodecg.Replicant('battlefyData');
+"Dark blue"];
+const battlefyData = nodecg.Replicant('battlefyData', {
+	defaultValue: [
+		{tourneyId: "none"},
+		{
+			name: "Placeholder Team 1",
+			logoUrl: "",
+			players: [
+				{name:"You should fix this before going live.", username: "You should fix this before going live."}
+			]
+		},
+		{
+			name: "Placeholder Team 2",
+			logoUrl: "",
+			players: [
+				{name:"You should fix this before going live.", username: "You should fix this before going live."}
+			]
+		}
+	]
+});
 const manualTeamNameInput = nodecg.Replicant('manualTeamNameInput');
 const scoreboardShown = nodecg.Replicant('scoreboardShown', {defaultValue: true});
 const teamAColor = nodecg.Replicant('teamAColor', {defaultValue: "Default pink"});

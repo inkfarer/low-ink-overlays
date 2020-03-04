@@ -1,4 +1,22 @@
-const battlefyData = nodecg.Replicant('battlefyData');
+const battlefyData = nodecg.Replicant('battlefyData', {
+	defaultValue: [
+		{tourneyId: "none"},
+		{
+			name: "Placeholder Team 1",
+			logoUrl: "",
+			players: [
+				{name:"You should fix this before going live.", username: "You should fix this before going live."}
+			]
+		},
+		{
+			name: "Placeholder Team 2",
+			logoUrl: "",
+			players: [
+				{name:"You should fix this before going live.", username: "You should fix this before going live."}
+			]
+		}
+	]
+});
 
 submitId.onclick = () => {
 	setStatusLoading();
@@ -54,6 +72,7 @@ tourneyIdInput.addEventListener('input', (event) => {
 })
 
 battlefyData.on('change', (newValue) => {
+	console.log(newValue);
 	if (newValue[0].tourneyId) {
 		nowLoaded.innerText = newValue[0].tourneyId;
 	} else {

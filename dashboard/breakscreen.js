@@ -14,7 +14,25 @@ const clrBlue = '#3F51B5';
 const nextTeamAInfo = nodecg.Replicant('nextTeamAInfo', {defaultValue: emptyTeamInfo});
 const nextTeamBInfo = nodecg.Replicant('nextTeamBINfo', {defaultValue: emptyTeamInfo});
 const bigTextValue = nodecg.Replicant('bigTextValue', { defaultValue: 'Be right back!' });
-const battlefyData = nodecg.Replicant('battlefyData');
+const battlefyData = nodecg.Replicant('battlefyData', {
+	defaultValue: [
+		{tourneyId: "none"},
+		{
+			name: "Placeholder Team 1",
+			logoUrl: "",
+			players: [
+				{name:"You should fix this before going live.", username: "You should fix this before going live."}
+			]
+		},
+		{
+			name: "Placeholder Team 2",
+			logoUrl: "",
+			players: [
+				{name:"You should fix this before going live.", username: "You should fix this before going live."}
+			]
+		}
+	]
+});
 const maplists = nodecg.Replicant('maplists', {
     defaultValue: [
         [

@@ -16,11 +16,6 @@
                 --yellow: #FDD835;
             }
             
-            b {
-                text-align: center;
-                display: block;
-            }
-            
             paper-input {
                 --primary-text-color: #FFFFFF;
                 --paper-input-container-focus-color: var(--blue);
@@ -59,6 +54,16 @@
                 padding: 10px;
                 margin-bottom: 5px;
             }
+
+            .title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+
+            li {
+                word-break: break-all;
+            }
         </style>
     </custom-style>
 </head>
@@ -69,6 +74,13 @@
         <paper-button raised id="submitId">submit</paper-button>
         <div id="submitStatus" class="statusDisplay">STATUS</div>
         <div id="loadedDisplay" class="statusDisplay">SAVED DATA ID<br><span id="nowLoaded">none</span></div>
+    </div>
+    <div class="space">
+        <div class="title">How to get a tournament ID</div>
+        <ul>
+            <li>Go to your tournament's Battlefy page</li>
+            <li>The ID can be found in the page's URL<br>(ex. https://battlefy.com/../<b>5e3d7c9c4174ff109642856f</b>/..)</li>
+        </ul>
     </div>
 
     <script src="battlefyImport.js"></script>
