@@ -19,7 +19,8 @@
     ],
     "nodecg": {
         "compatibleRange": "^1.1.1",
-        "dashboardPanels": [{
+        "dashboardPanels": [
+            {
                 "name": "scoring",
                 "title": "Scoring",
                 "width": 2,
@@ -68,7 +69,8 @@
                 "headerColor": "#262F40"
             }
         ],
-        "graphics": [{
+        "graphics": [
+            {
                 "file": "main.html",
                 "width": 1920,
                 "height": 1080

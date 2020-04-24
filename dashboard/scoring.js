@@ -81,7 +81,7 @@ nextTeamAInfo.on('change', newValue => { teamANextSelect.value = newValue.name; 
 nextTeamBInfo.on('change', newValue => { teamBNextSelect.value = newValue.name; });
 flavorText.on('change', newValue => { flavorInput.value = newValue; });
 battlefyData.on('change', newValue => {
-    console.log(newValue);
+    //console.log(newValue);
     clearTeamSelectors();
     for (let i = 1; i < newValue.length; i++) {
         const element = newValue[i];

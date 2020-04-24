@@ -15,6 +15,7 @@ const teamBColor = nodecg.Replicant('teamBColor', { defaultValue: "Default green
 const teamAScore = nodecg.Replicant('teamAScore', { defaultValue: 0 });
 const teamBScore = nodecg.Replicant('teamBScore', { defaultValue: 0 });
 const scoreboardShown = nodecg.Replicant('scoreboardShown', { defaultValue: true });
+const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
 
 const colorNameToHex = {
     "Light Blue": "#0199B8",
@@ -50,3 +51,28 @@ scoreboardShown.on('change', newValue => {
         gsap.to(".scLine", 0.5, { height: 0, top: 53, ease: "power2.in", delay: 0.7 });
     }
 });
+
+RGBMode.on('change', newValue => {
+	if (newValue) {
+		enableRGBMode();
+	} else {
+		disableRGBMode();
+	}
+});
+
+var RGBTimeline = gsap.timeline({repeat: -1});
+function enableRGBMode() {
+	RGBTimeline = gsap.timeline({repeat: -1});
+	const rainbowColors = ['#F37002', '#FFFF00', '#00FF00', '#0000FF', '#2E2B5F', '#8B00FF', '#FF0000', '#F37002'];
+	for (let i = 0; i < rainbowColors.length; i++) {
+		const element = rainbowColors[i];
+		var duration = 1;
+		if (i == 0) { duration = 0;}
+		RGBTimeline.add(gsap.to(':root', {'--lowInkOrange':element, duration: duration, ease: 'none'}));
+	}
+}
+
+function disableRGBMode() {
+	RGBTimeline.kill();
+	gsap.to(':root', {'--lowInkOrange':'#F37002', duration: 1, ease: 'none'});
+}

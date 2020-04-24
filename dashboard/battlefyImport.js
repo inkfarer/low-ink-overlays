@@ -30,6 +30,7 @@ submitId.onclick = () => {
 					setStatusFailure();
 					return;
 				}
+				//console.log(data);
 				let teams = [{tourneyId: tourneyIdInput.value}];
 				//we don't care about most of this data
 				//so hey, let's save a kilobyte of memory while we're here
@@ -72,7 +73,7 @@ tourneyIdInput.addEventListener('input', (event) => {
 })
 
 battlefyData.on('change', (newValue) => {
-	console.log(newValue);
+	//console.log(newValue);
 	if (newValue[0].tourneyId) {
 		nowLoaded.innerText = newValue[0].tourneyId;
 	} else {
