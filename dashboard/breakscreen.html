@@ -113,6 +113,20 @@
                 --paper-toggle-button-checked-button-color: var(--blue);
                 --paper-toggle-button-checked-ink-color: var(--blue);
             }
+
+            .timerContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .timerContainer > paper-input {
+                width: 50px;
+                margin-top: -3px;
+                text-align: center;
+                --paper-input-container-input-webkit-spinner: {
+                    display: none
+                }
+            }
         </style>
     </custom-style>
 </head>
@@ -125,6 +139,15 @@
         </div>
         <paper-input label="Flavor Text" id="breakFlavorInput"></paper-input>
         <paper-input label="Casters" id="casterInput"></paper-input>
+        <div class="title">Next Stage Timer</div>
+        <div class="timerContainer">
+            <paper-input class="hourInput" id="hourInput" label="Hour" type="number" value="0"></paper-input>
+            <paper-input class="minInput" id="minInput" label="Minute" type="number" value="0"></paper-input>
+            <div>
+                <div class="label">Day</div>
+                <select class="daySelect"></select>
+            </div>
+        </div>
         <paper-button id="updateMainScene">Update</paper-button>
     </div>
     <div class="space">

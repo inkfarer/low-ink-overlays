@@ -56,6 +56,13 @@ const currentMaplist = nodecg.Replicant('currentMaplist', {
 const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: 'mainScene' });
 const casterNames = nodecg.Replicant('casterNames', { defaultValue: "" });
 
+const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
+    hour: 0,
+    minute: 0,
+    day: 1,
+    month: 0
+}});
+
 // Replicant changes
 bigTextValue.on('change', newValue => { breakFlavorInput.value = newValue; });
 battlefyData.on('change', newValue => {
@@ -85,11 +92,16 @@ currentBreakScene.on('change', newValue => {
 casterNames.on('change', newValue => {
     casterInput.value = newValue;
 })
+nextStageTime.on('change', newValue => {
+    document.querySelector('.minInput').value = newValue.minute;
+    document.querySelector('.hourInput').value = newValue.hour;
+});
 
 //button onclicks
 updateMainScene.onclick = () => {
     bigTextValue.value = breakFlavorInput.value;
     casterNames.value = casterInput.value;
+    updateStageTime();
     changeButtonColor(clrBlue, "updateMainScene");
 };
 updateNextNames.onclick = () => {
@@ -109,8 +121,9 @@ showNextUp.onclick = () => { currentBreakScene.value = "nextUp"; }
 showMaps.onclick = () => { currentBreakScene.value = "maps"; }
 
 //remind to update
-const mainSceneItems = ["casterInput", "breakFlavorInput"];
+const mainSceneItems = ["casterInput", "breakFlavorInput", "hourInput", "minInput"];
 mainSceneItems.forEach(element => { document.getElementById(element).addEventListener('input', () => { changeButtonColor(clrRed, "updateMainScene"); }); });
+document.querySelector('.daySelect').addEventListener('change', () => { changeButtonColor(clrRed, "updateMainScene"); })
 const nextTeamsItems = ["teamANextSelect", "teamBNextSelect"];
 nextTeamsItems.forEach(element => { document.getElementById(element).addEventListener('change', () => { changeButtonColor(clrRed, "updateNextNames"); }); });
 mapListSelect.addEventListener('change', () => { changeButtonColor(clrRed, "updateMaps"); })
@@ -181,3 +194,47 @@ function findTeamObjectByName(name) {
     }
     return null;
 }
+
+function updateDaySelector() {
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const daySelect = document.querySelector('.daySelect');
+
+    const todayElem = getDayElem(today);
+    daySelect.appendChild(todayElem);
+
+    const tomorElem = getDayElem(tomorrow);
+    daySelect.appendChild(tomorElem);
+}
+
+function getDayElem(date) {
+    const dayElem = document.createElement('option');
+    dayElem.innerText = `${date.getDate()}/${date.getMonth() + 1}`;
+    dayElem.dataset.day = date.getDate();
+    dayElem.dataset.month = date.getMonth();
+    return dayElem;
+}
+
+function updateStageTime() {
+    const min = parseInt(document.querySelector('.minInput').value);
+    const hour = parseInt(document.querySelector('.hourInput').value);
+    const daySelect = document.querySelector('.daySelect');
+    const selText = daySelect.options[daySelect.selectedIndex];
+    if (selText) {
+        const day = selText.dataset.day;
+        const month = selText.dataset.month;
+
+        if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
+            nextStageTime.value = {
+                hour: hour,
+                minute: min,
+                day: day,
+                month: month
+            };
+        }
+    }
+}
+
+updateDaySelector();
