@@ -127,6 +127,13 @@
                     display: none
                 }
             }
+
+            .toggleContainer {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 10px;
+                margin-top: -5px;
+            }
         </style>
     </custom-style>
 </head>
@@ -147,6 +154,9 @@
                 <div class="label">Day</div>
                 <select class="daySelect"></select>
             </div>
+        </div>
+        <div class="toggleContainer">
+            <nodecg-toggle replicant-name="NSTimerShown" noink>Show Timer</nodecg-toggle>
         </div>
         <paper-button id="updateMainScene">Update</paper-button>
     </div>

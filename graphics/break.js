@@ -58,8 +58,43 @@ const mapWinners = nodecg.Replicant('mapWinners', { defaultValue: [0, 0, 0, 0, 0
 const teamAInfo = nodecg.Replicant('teamAInfo', { defaultValue: emptyTeamInfo });
 const teamBInfo = nodecg.Replicant('teamBInfo', { defaultValue: emptyTeamInfo });
 const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
+const NSTimerShown = nodecg.Replicant('NSTimerShown', {defaultValue: false});
+const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
+    hour: 0,
+    minute: 0,
+    day: 1,
+    month: 0
+}});
 
 //replicant changes
+var nextStageInterval = setInterval(() => {
+	const now = new Date();
+	const diff = new Date(nextStageTimeObj - now);
+	const diffMinutes = Math.ceil(diff / (1000 * 60));
+	if (lastDiff !== diffMinutes) {
+		lastDiff = diffMinutes;
+		var newText;
+		if (diffMinutes < 1) {
+			newText = 'Next round begins soon!';
+		} else if (diffMinutes == 1) {
+			newText = `Next round begins in ~${diffMinutes} minute...`;
+		} else {
+			newText = `Next round begins in ~${diffMinutes} minutes...`;
+		}
+		changeBreakMainText('mainSceneRoundTimerText', newText, 'mainSceneRoundTimerBG');
+	}
+}, 1000);
+var lastDiff;
+var nextStageTimeObj;
+nextStageTime.on('change', newValue => {
+	time = new Date();
+	time.setDate(newValue.day);
+	time.setHours(newValue.hour, newValue.minute, 0);
+	time.setMonth(newValue.month);
+
+	nextStageTimeObj = time;
+});
+
 currentMaplist.on('change', newValue => {
 	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 0, onComplete: function() {
 		clearUpcomingStages();
@@ -72,13 +107,35 @@ currentMaplist.on('change', newValue => {
 });
 
 musicShown.on('change', newValue => {
-	const musicElem = document.getElementById('musicWrapper')
+	//not very good, should be prettified
 	if (newValue) {
 		gsap.to('#musicWrapper', 0.5, {opacity: 1});
-		gsap.to('.mainSceneGrid', 0.5, {height: 850});
+		var gridTemplateRows;
+		if (NSTimerShown.value) { gridTemplateRows = '2fr 1fr 1fr 1fr 1fr 1fr'; }
+		else { gridTemplateRows = '2fr 1fr 0fr 1fr 1fr 1fr'; };
+		gsap.to('.mainSceneGrid', {duration: 0.5, ease: 'power2.out', gridTemplateRows: gridTemplateRows});
 	} else {
 		gsap.to('#musicWrapper', 0.5, {opacity: 0});
-		gsap.to('.mainSceneGrid', 0.5, {height: 1000});
+		var gridTemplateRows;
+		if (NSTimerShown.value) { gridTemplateRows = '2fr 1fr 1fr 1fr 1fr 0fr'; }
+		else { gridTemplateRows = '2fr 1fr 0fr 1fr 1fr 0fr'; };
+		gsap.to('.mainSceneGrid', {duration: 0.5, ease: 'power2.inOut', gridTemplateRows: gridTemplateRows});
+	}
+});
+
+NSTimerShown.on('change', newValue => {
+	if (newValue) {
+		gsap.to('.mainSceneRoundTimer', {duration: 0.5, opacity: 1});
+		var gridTemplateRows;
+		if (musicShown.value) { gridTemplateRows = '2fr 1fr 1fr 1fr 1fr 1fr'; }
+		else { gridTemplateRows = '2fr 1fr 1fr 1fr 1fr 0fr'; };
+		gsap.to('.mainSceneGrid', {duration: 0.5, ease: 'power2.out', gridTemplateRows: gridTemplateRows});
+	} else {
+		gsap.to('.mainSceneRoundTimer', {duration: 0.5, opacity: 0});
+		var gridTemplateRows;
+		if (musicShown.value) { gridTemplateRows = '2fr 1fr 0fr 1fr 1fr 1fr'; }
+		else { gridTemplateRows = '2fr 1fr 0fr 1fr 1fr 0fr'; };
+		gsap.to('.mainSceneGrid', {duration: 0.5, ease: 'power2.out', gridTemplateRows: gridTemplateRows});
 	}
 });
 
