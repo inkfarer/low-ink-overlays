@@ -9,8 +9,12 @@ const currentMaplist = nodecg.Replicant('currentMaplist', {
             { map: 'Wahoo World', mode: 'Rainmaker' }
         ]
 });
+const teamScores = nodecg.Replicant('teamScores', {defaultValue: {
+    teamA: 0,
+    teamB: 0
+}});
 
-NodeCG.waitForReplicants(mapWinners).then(() => {
+NodeCG.waitForReplicants(mapWinners, teamScores).then(() => {
     currentMaplist.on('change', (newValue, oldValue) => {
         if (newValue) {
             document.getElementById('maplistName').innerText = newValue[0].name;
@@ -28,17 +32,21 @@ NodeCG.waitForReplicants(mapWinners).then(() => {
             document.getElementById('maplistName').innerText = 'Undefined (Map list might have been deleted...)'
         }
     });
+    teamScores.on('change', (newValue, oldValue) => {
+        //const index = (newValue.teamA + newValue.teamB) - 1;
+        disableWinButtons2(mapWinners.value);
+    });
+    mapWinners.on('change', newValue => {
+        /*for (let i = 0; i < newValue.length; i++) {
+            const element = newValue[i];
+            const buttons = getButtons(i);
+            if (buttons[0] != null) {
+                disableWinButtons(buttons[0], buttons[1], buttons[2], element);
+            }
+        }*/
+        disableWinButtons2(newValue);
+    });
 });
-
-mapWinners.on('change', newValue => {
-    for (let i = 0; i < newValue.length; i++) {
-        const element = newValue[i];
-        const buttons = getButtons(i);
-        if (buttons[0] != null) {
-            disableWinButtons(buttons[0], buttons[1], buttons[2], element);
-        }
-    }
-})
 
 function addToggle(maplistElement, mapIndex) {
     const toggleDiv = document.createElement('div');
@@ -72,19 +80,19 @@ function addToggle(maplistElement, mapIndex) {
         const mapIndex = event.target.id.split('_')[1];
         mapWinners.value[mapIndex] = 0;
         const buttons = getButtons(mapIndex);
-        disableWinButtons(buttons[0], buttons[1], buttons[2], 0);
+        //disableWinButtons(buttons[0], buttons[1], buttons[2], 0);
     }
     AWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
         mapWinners.value[mapIndex] = 1;
         const buttons = getButtons(mapIndex);
-        disableWinButtons(buttons[0], buttons[1], buttons[2], 1);
+        //disableWinButtons(buttons[0], buttons[1], buttons[2], 1);
     }
     BWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
         mapWinners.value[mapIndex] = 2;
         const buttons = getButtons(mapIndex);
-        disableWinButtons(buttons[0], buttons[1], buttons[2], 2);
+        //disableWinButtons(buttons[0], buttons[1], buttons[2], 2);
     }
 
     const winButtonContainer = document.createElement('div');
@@ -93,7 +101,7 @@ function addToggle(maplistElement, mapIndex) {
     winButtonContainer.appendChild(BWinButton);
     toggleDiv.appendChild(winButtonContainer);
 
-    disableWinButtons(noWinButton, AWinButton, BWinButton, mapWinners.value[mapIndex]);
+    //disableWinButtons(noWinButton, AWinButton, BWinButton, mapWinners.value[mapIndex]);
 
     document.getElementById('toggles').appendChild(toggleDiv);
 }
@@ -109,7 +117,7 @@ function getButtons(id) {
     return [noWinButton, AWinButton, BWinButton];
 }
 
-function disableWinButtons(noWinButton, AWinButton, BWinButton, winner) {
+/*function disableWinButtons(noWinButton, AWinButton, BWinButton, winner) {
     noWinButton.disabled = false;
     AWinButton.disabled = false;
     BWinButton.disabled = false;
@@ -120,14 +128,28 @@ function disableWinButtons(noWinButton, AWinButton, BWinButton, winner) {
     } else if (winner === 2) {
         BWinButton.disabled = true;
     }
+}*/
+
+function disableWinButtons2(mapWinnerValue) {
+    const scoreSum = teamScores.value.teamA + teamScores.value.teamB;
+    for (let i = 1; i < currentMaplist.value.length; i++) {
+        const mapWinner = mapWinnerValue[i-1];
+        const buttons = getButtons(i-1);
+        if (i > scoreSum) {
+            for (let y = 0; y < buttons.length; y++) {
+                buttons[y].disabled = true;
+            }
+        } else {
+            for (let y = 0; y < buttons.length; y++) {
+                buttons[y].disabled = false;
+            }
+            buttons[mapWinner].disabled = true;
+        }
+    }
 }
 
 function resetToggles() {
-    for (let i = 0; i < currentMaplist.value.length - 1; i++) {
-        mapWinners.value[i] = 0;
-        const buttons = getButtons(i);
-        //disableWinButtons(buttons[0], buttons[1], buttons[2], 0);
-    }
+    mapWinners.value = [0, 0, 0, 0, 0, 0, 0];
 };
 
 function removeToggles() {

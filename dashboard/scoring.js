@@ -9,8 +9,10 @@ const emptyTeamInfo = {
     ]
 };
 
-const teamAScore = nodecg.Replicant('teamAScore', {defaultValue: 0});
-const teamBScore = nodecg.Replicant('teamBScore', {defaultValue: 0});
+const teamScores = nodecg.Replicant('teamScores', {defaultValue: {
+    teamA: 0,
+    teamB: 0
+}});
 const teamAInfo = nodecg.Replicant('teamAInfo', {defaultValue: emptyTeamInfo});
 const teamBInfo = nodecg.Replicant('teamBInfo', {defaultValue: emptyTeamInfo});
 const flavorText = nodecg.Replicant('flavorText', {defaultValue: "Low Ink"});
@@ -54,14 +56,10 @@ const teamAColor = nodecg.Replicant('teamAColor', {defaultValue: "Default pink"}
 const teamBColor = nodecg.Replicant('teamBColor', {defaultValue: "Default green"});
 
 //plus and minus buttons... could be done more gracefully but it's just 4 buttons
-teamAPlusB.onclick = () => { teamAScore.value++; };
-teamAMinusB.onclick = () => { teamAScore.value--; };
-teamBPlusB.onclick = () => { teamBScore.value++; };
-teamBMinusB.onclick = () => { teamBScore.value--; };
-
-//changing scores by their inputs
-teamADisplay.addEventListener('change', (event) => { teamAScore.value = Number(event.target.value); });
-teamBDisplay.addEventListener('change', (event) => { teamBScore.value = Number(event.target.value); });
+teamAPlusB.onclick = () => { teamScores.value.teamA++; };
+teamAMinusB.onclick = () => { teamScores.value.teamA--; };
+teamBPlusB.onclick = () => { teamScores.value.teamB++; };
+teamBMinusB.onclick = () => { teamScores.value.teamB--; };
 
 //when text boxes get typed in, remind user to update
 document.getElementById("flavorInput").addEventListener('input', () => { changeButtonColor(clrRed, "updateNames"); });
@@ -73,8 +71,10 @@ const toAddListenersManual = ["teamANameInput", "teamBNameInput"];
 toAddListenersManual.forEach(element => {document.getElementById(element).addEventListener('input', () => {changeButtonColor(clrRed, "updateManual")})});
 
 //handle replicant changes
-teamAScore.on('change', newValue => { document.getElementById("teamADisplay").value = newValue; });
-teamBScore.on('change', newValue => { document.getElementById("teamBDisplay").value = newValue; });
+teamScores.on('change', newValue => {
+    document.getElementById("teamADisplay").value = newValue.teamA;
+    document.getElementById("teamBDisplay").value = newValue.teamB;
+});
 teamAInfo.on('change', newValue => { teamASelect.value = newValue.name; });
 teamBInfo.on('change', newValue => { teamBSelect.value = newValue.name; });
 nextTeamAInfo.on('change', newValue => { teamANextSelect.value = newValue.name; });

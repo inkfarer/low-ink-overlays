@@ -12,8 +12,10 @@ const teamAInfo = nodecg.Replicant('teamAInfo', { defaultValue: emptyTeamInfo })
 const teamBInfo = nodecg.Replicant('teamBInfo', { defaultValue: emptyTeamInfo });
 const teamAColor = nodecg.Replicant('teamAColor', { defaultValue: "Default pink" });
 const teamBColor = nodecg.Replicant('teamBColor', { defaultValue: "Default green" });
-const teamAScore = nodecg.Replicant('teamAScore', { defaultValue: 0 });
-const teamBScore = nodecg.Replicant('teamBScore', { defaultValue: 0 });
+const teamScores = nodecg.Replicant('teamScores', {defaultValue: {
+    teamA: 0,
+    teamB: 0
+}});
 const scoreboardShown = nodecg.Replicant('scoreboardShown', { defaultValue: true });
 const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
 
@@ -38,8 +40,10 @@ teamBInfo.on('change', newValue => { teamBnameDisplay.text = newValue.name; });
 teamAColor.on('change', newValue => { gsap.to("#teamAcolorDisplay", 0.5, { backgroundColor: colorNameToHex[newValue] }); });
 teamBColor.on('change', newValue => { gsap.to("#teamBcolorDisplay", 0.5, { backgroundColor: colorNameToHex[newValue] }); });
 
-teamAScore.on('change', newValue => { teamAScoreDisplay.text = newValue; });
-teamBScore.on('change', newValue => { teamBScoreDisplay.text = newValue; });
+teamScores.on('change', newValue => {
+    teamAScoreDisplay.text = newValue.teamA;
+    teamBScoreDisplay.text = newValue.teamB;
+});
 
 scoreboardShown.on('change', newValue => {
     if (newValue) {

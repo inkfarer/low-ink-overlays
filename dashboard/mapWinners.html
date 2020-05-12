@@ -7,6 +7,7 @@
     <link rel="import" href="../bower_components/font-roboto/roboto.html">
     <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
     <link rel="import" href="../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../bower_components/nodecg-toggle/nodecg-toggle.html">
     <custom-style>
         <style include="iron-flex iron-flex-alignment">
              :root {
@@ -88,6 +89,15 @@
             #nameSpace {
                 height: 40px;
             }
+
+            nodecg-toggle {
+                margin: 0 auto;
+                margin-top: 10px;
+                --paper-toggle-button-label-color: white;
+                --paper-toggle-button-checked-bar-color: var(--blue);
+                --paper-toggle-button-checked-button-color: var(--blue);
+                --paper-toggle-button-checked-ink-color: var(--blue);
+            }
         </style>
     </custom-style>
 </head>
@@ -96,6 +106,9 @@
     <div id="nameSpace" class="space">
         <div id="maplistName">List Name</div>
         <paper-button id="reset" raised>RESET</paper-button>
+    </div>
+    <div class="space">
+        <nodecg-toggle replicant-name="autoWinSet" noink>Try to determine winners automatically</nodecg-toggle>
     </div>
     <div id="toggles" class="space">
 
