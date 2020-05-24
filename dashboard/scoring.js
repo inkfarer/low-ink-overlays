@@ -118,7 +118,7 @@ updateNames.onclick = () => {
 };
 
 beginNext.onclick = () => {
-    teamAScore.value = 0; teamBScore.value = 0;
+    teamScores.value.teamA = 0; teamScores.value.teamB = 0;
     teamAInfo.value = battlefyData.value[findTeamObjectByName(teamANextSelect.value)];
     teamBInfo.value = battlefyData.value[findTeamObjectByName(teamBNextSelect.value)];
 };
