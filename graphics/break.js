@@ -424,14 +424,15 @@ function setMapCount(count) {
 }
 
 function addUpcomingStage(stageInfo, count, id) {
+	console.log(count);
 	/*<div class="stageBox">
-			<img src="stages/S2_Stage_MakoMart.png" class="mapsStagePic">
-			<div class="mapsModeName">Clam Blitz</div>
-			<div class="mapsStageName">MakoMart</div>
-			<div class="mapsNameGradient"></div>
-			<div class="mapsWinnerName">Crustacean Crusaders</div>
-			<div class="winnerGradient"></div>
-		</div>*/
+		<img src="stages/S2_Stage_MakoMart.png" class="mapsStagePic">
+		<div class="mapsModeName">Clam Blitz</div>
+		<div class="mapsStageName">MakoMart</div>
+		<div class="mapsNameGradient"></div>
+		<div class="mapsWinnerName">Crustacean Crusaders</div>
+		<div class="winnerGradient"></div>
+	</div>*/
 
 	const stageBox = document.createElement('div');
 	stageBox.classList.add('stageBox');
@@ -440,11 +441,17 @@ function addUpcomingStage(stageInfo, count, id) {
 	const stageName = document.createElement('div');
 	stageName.innerText = stageInfo.map;
 	stageName.classList.add('mapsStageName');
+	if (count === 9) {
+		stageName.classList.add('smallStageName');
+	}
 	stageBox.appendChild(stageName);
 
 	const modeName = document.createElement('div');
 	modeName.innerText = stageInfo.mode;
 	modeName.classList.add('mapsModeName');
+	if (count === 9) {
+		modeName.classList.add('smallModeName');
+	}
 	stageBox.appendChild(modeName);
 
 	const mapGradient = document.createElement('div');

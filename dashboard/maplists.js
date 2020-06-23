@@ -75,6 +75,10 @@ create7Map.onclick = () => {
     createMapList(7, generateId());
 }
 
+create9Map.onclick = () => {
+    createMapList(9, generateId());
+}
+
 removeAll.onclick = () => {
     var mapListElems = document.getElementsByClassName("mapListDiv");
     while (mapListElems[0]) {
@@ -93,7 +97,7 @@ removeAll.onclick = () => {
 function createMapList(numberOfMaps, id) {
     //support up to 7 maps for the time being
     //if you want me dead, host a tournament with 9 maps in the finals
-    if (typeof numberOfMaps !== "number" || numberOfMaps >= 8 || numberOfMaps <= 0) {
+    if (typeof numberOfMaps !== "number" || numberOfMaps >= 10 || numberOfMaps <= 0) {
         throw "this should not happen, ever";
     }
     var mapListDiv = document.createElement("div");
