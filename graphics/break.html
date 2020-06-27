@@ -216,7 +216,8 @@
         }
         
         .teamImage {
-            width: 80%;
+            width: 400px;
+            height: 400px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -224,6 +225,8 @@
             opacity: 0.25;
             border-radius: 50%;
             z-index: -1;
+            background-position: 50% 50%;
+            background-size: cover;
         }
         
         .rightAlign {
@@ -436,14 +439,14 @@
     <div id="nextUp" class="sceneWrapper">
         <div class="sceneTitle nextUpTitle">NEXT UP</div>
         <div id="teamAInfo" class="teamInfo">
-            <img class="teamImage" id="teamAImage" src="">
+            <div class="teamImage" id="teamAImage"></div>
             <sc-fitted-text class="teamName" id="teamAName" text="WHOa GAMERS!!!" max-width="450" align="right"></sc-fitted-text>
         </div>
 
         <div class="versus">VS</div>
 
         <div id="teamBInfo" class="teamInfo">
-            <img class="teamImage" id="teamBImage" src="">
+            <div class="teamImage" id="teamBImage"></div>
             <sc-fitted-text class="teamName" id="teamBName" text="WHOa GAMERS!!!" max-width="450" align="left"></sc-fitted-text>
         </div>
     </div>

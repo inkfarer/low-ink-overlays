@@ -162,12 +162,12 @@ currentBreakScene.on('change', newValue => {
 });
 
 nextTeamAInfo.on('change', newValue => {
-	teamAImage.src = newValue.logoUrl;
+	document.querySelector('#teamAImage').style.backgroundImage = 'url(' + newValue.logoUrl + ')';
 	teamAName.text = newValue.name;
 	addTeamPlayers('A', newValue.players);
 });
 nextTeamBInfo.on('change', newValue => {
-	teamBImage.src = newValue.logoUrl;
+	document.querySelector('#teamBImage').style.backgroundImage = 'url(' + newValue.logoUrl + ')';
 	teamBName.text = newValue.name;
 	addTeamPlayers('B', newValue.players);
 });
