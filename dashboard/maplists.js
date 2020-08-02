@@ -75,7 +75,9 @@ create7Map.onclick = () => {
     createMapList(7, generateId());
 }
 
-removeAll.onclick = () => {
+removeAll.onclick = () => removeAllMaps();
+
+function removeAllMaps() {
     var mapListElems = document.getElementsByClassName("mapListDiv");
     while (mapListElems[0]) {
         mapListElems[0].parentNode.removeChild(mapListElems[0]);
@@ -239,6 +241,20 @@ function mapListElemExists(id) {
     } else { return true; }
 }
 
+function checkIDExists(maplistsElem, id) {
+    for (let i = 0; i < maplistsElem.length; i++) {
+        if (maplistsElem[i][0].id === id) return true;
+    }
+    return false;
+}
+
+function removeMapListDiv(id) {
+    let mapListSpace = document.getElementById('mapListSpace_' + id);
+    if (mapListSpace) {
+        mapListSpace.parentNode.removeChild(mapListSpace);
+    }
+}
+
 maplists.on('change', (newValue, oldValue) => {
     for (let i = 0; i < newValue.length; i++) {
         const element = newValue[i];
@@ -248,10 +264,21 @@ maplists.on('change', (newValue, oldValue) => {
         setMapListValues(element[0].id, element);
     }
     firstLoad = false;
+    const current = JSON.parse(JSON.stringify(currentMaplist.value));
     if (oldValue) {
+        // find map lists that are in the old value but not in the new value
+        // then get rid of their corresponding elements
+
+        let deletedLists = oldValue.filter(x => !checkIDExists(newValue, x[0].id));
+        // there should only ever be one
+        if (deletedLists[0]) {
+            for (let i = 0; i < deletedLists.length; i++) {
+                removeMapListDiv(deletedLists[i][0].id);
+            }
+        }
+
         for (let i = 0; i < oldValue.length; i++) {
             const element = oldValue[i];
-            const current = JSON.parse(JSON.stringify(currentMaplist.value));
             if (checkMapObjectEqual(current, element) && newValue[i]) {
                 currentMaplist.value = newValue[i];
             }
@@ -272,3 +299,50 @@ function checkMapObjectEqual(obj1, obj2) {
     }
     return true;
 };
+
+// importing map lists yehaw
+
+const IMPORT_STATUS_SUCCESS = 0;
+const IMPORT_STATUS_LOADING = 1;
+const IMPORT_STATUS_FAILURE = 2;
+
+submitFile.onclick = () => {
+    setImportStatus(IMPORT_STATUS_LOADING);
+    let listsURL = mapFileInput.value;
+    fetch('https://cors-anywhere.herokuapp.com/' + listsURL)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            removeAllMaps();
+            
+            let mapListNo = 1;
+            for (let i = 0; i < data[0].length; i++) {
+                // prepend meta info (name, id)
+                data[0][i].unshift({id: generateId(), name: 'Map List ' + mapListNo});
+                mapListNo++;
+            }
+
+            maplists.value = data[0];
+
+            setImportStatus(IMPORT_STATUS_SUCCESS);
+        })
+        .catch(err => {
+            setImportStatus(IMPORT_STATUS_FAILURE);
+            console.error(err);
+        });
+};
+
+function setImportStatus(status) {
+    let statusElem = document.querySelector('.importStatus');
+    switch(status) {
+        case IMPORT_STATUS_SUCCESS:
+            statusElem.style.backgroundColor = 'var(--green)';
+            return;
+        case IMPORT_STATUS_LOADING:
+            statusElem.style.backgroundColor = 'var(--yellow)';
+            return;
+        case IMPORT_STATUS_FAILURE:
+            statusElem.style.backgroundColor = 'var(--red)';
+    }
+}
