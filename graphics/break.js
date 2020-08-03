@@ -21,7 +21,8 @@ const mapNameToImagePath = {"Ancho-V Games": "stages/S2_Stage_Ancho-V_Games.png"
 "The Reef":"stages/S2_Stage_The_Reef.png",
 "Wahoo World":"stages/S2_Stage_Wahoo_World.png",
 "Walleye Warehouse":"stages/S2_Stage_Walleye_Warehouse.png",
-"Skipper Pavilion":"stages/S2_Stage_Skipper_Pavilion.png"};
+"Skipper Pavilion":"stages/S2_Stage_Skipper_Pavilion.png",
+"Unknown Map":"stages/low-ink-unknown-map.png"};
 
 const emptyTeamInfo = {
     name: "",
@@ -281,9 +282,9 @@ const socialTexts = ["Twitter: @LowInkSplatoon",
 "Discord: discord.gg/F7RaNUR",
 "Patreon: patreon.com/lowink"];
 
-const socialIcons = ["logoTwitter.png",
-"logoDiscord.png",
-"logoPatreon.png"];
+const socialIcons = ["icons/logoTwitter.png",
+"icons/logoDiscord.png",
+"icons/logoPatreon.png"];
 
 function startSocialSlides() {
     for(i = 0; i < socialIcons.length; i++) {
@@ -323,7 +324,7 @@ function addTopBarAnim(i) {
 	topBarInfoTL.add(gsap.to('#topBarInfoText, #topBarInfoIcon', 0.5, {opacity: 0, onComplete: function() {
 		if (i === 0) {
 			topBarInfoText.text = casterNames.value;
-			topBarInfoIcon.src = 'microphone.svg';
+			topBarInfoIcon.src = 'icons/microphone.svg';
 		} else if (i === 1) {
 			if (mSongEnabled.value) {
 				topBarInfoText.text = nowPlayingManual.value.artist + ' - ' + nowPlayingManual.value.song;
@@ -334,7 +335,7 @@ function addTopBarAnim(i) {
 					topBarInfoText.text = nowPlaying.value.artist + ' - ' + nowPlaying.value.song;
 				}
 			}
-			topBarInfoIcon.src = 'music.svg';
+			topBarInfoIcon.src = 'icons/music.svg';
 		}
 	}}))
 	.add(gsap.to('#topBarInfoText, #topBarInfoIcon', 0.5, {opacity: 1, delay: 0.5}))
@@ -454,6 +455,8 @@ function addUpcomingStage(stageInfo, count, id) {
 	const stageImage = document.createElement('img');
 	if (count == 3) {
 		stageImage.classList.add('mapsStagePic3Maps');
+	} else if (count == 5) {
+		stageImage.classList.add('mapsStagePic5Maps');
 	}
 	stageImage.classList.add('mapsStagePic');
 	stageImage.src = mapNameToImagePath[stageInfo.map];
