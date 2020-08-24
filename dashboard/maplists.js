@@ -263,6 +263,7 @@ maplists.on('change', (newValue, oldValue) => {
         }
         setMapListValues(element[0].id, element);
     }
+    console.log(currentMaplist.value);
     const current = JSON.parse(JSON.stringify(currentMaplist.value));
     if (oldValue) {
         // find map lists that are in the old value but not in the new value
@@ -313,25 +314,27 @@ submitFile.onclick = () => {
             return response.json();
         })
         .then(data => {
-            let mapListNo = 1;
-            for (let i = 0; i < data[0].length; i++) {
-                for (let j = 0; j < data[0][i].length; j++) {
-                    // do these maps or modes actually exist?
-                    if (!splatMaps.includes(data[0][i][j].map)) {
-                        data[0][i][j].map = 'Unknown Map';
+            let maps = [];
+            for (let a = 0; a < data.length; a++) {
+                for (let i = 0; i < data[a].length; i++) {
+                    for (let j = 0; j < data[a][i].length; j++) {
+                        // do these maps or modes actually exist?
+                        if (!splatMaps.includes(data[a][i][j].map)) {
+                            data[a][i][j].map = 'Unknown Map';
+                        }
+
+                        if (!splatModes.includes(data[a][i][j].mode)) {
+                            data[a][i][j].mode = 'Unknown Mode';
+                        }
                     }
 
-                    if (!splatModes.includes(data[0][i][j].mode)) {
-                        data[i][0][j].mode = 'Unknown Mode';
-                    }
+                    // prepend meta info (name, id)
+                    data[a][i].unshift({id: generateId(), name: `Bracket ${a+1} Round ${i+1}`});
                 }
-
-                // prepend meta info (name, id)
-                data[0][i].unshift({id: generateId(), name: 'Map List ' + mapListNo});
-                mapListNo++;
+                maps = maps.concat(data[a]);
             }
 
-            maplists.value = maplists.value.concat(data[0]);
+            maplists.value = maplists.value.concat(maps);
 
             setImportStatus(IMPORT_STATUS_SUCCESS);
         })

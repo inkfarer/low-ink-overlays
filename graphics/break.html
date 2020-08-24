@@ -28,13 +28,13 @@
         }
         
         .logo {
-            width: 650px;
-            height: 650px;
+            width: 750px;
+            height: 750px;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             left: 150px;
-            filter: drop-shadow(0px 0px 5px var(--lowInkOrange));
+            filter: drop-shadow(0px 0px 10px var(--lowInkOrange));
         }
         
         #squidarrows {
@@ -57,11 +57,12 @@
         .mainSceneGrid {
             display: grid;
             grid-template-columns: 1fr;
-            grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
             position: absolute;
             right: 150px;
             width: 800px;
-            top: 150px;
+            top: 50%;
+            transform: translateY(-50%);
             height: 750px;
             justify-items: center;
             align-items: center;
@@ -388,7 +389,7 @@
 
 <body>
     <div id="mainScene" class="sceneWrapper">
-        <img class="logo" src="lowink-upscale2.png">
+        <img class="logo" src="Inkgaugelogo-li-coolbg.png">
         <div class="mainSceneGrid">
             <div class="mainSceneBigBG">
                 <div class="mainSceneBigText">LOW INK</div>
@@ -434,7 +435,7 @@
     </div>
 
     <div id="topBar">
-        <img class="smallIcon" src="lowink-upscale2.png">
+        <img class="smallIcon" src="Inkgaugelogo-li-coolbg-notext.png">
         <sc-fitted-text id="topBarText" align="left" max-width="840"></sc-fitted-text>
         <sc-fitted-text id="topBarInfoText" text="OwO" align="right" max-width="840"></sc-fitted-text>
         <img id="topBarInfoIcon" src="icons/microphone.svg">
