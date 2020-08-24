@@ -1,4 +1,4 @@
-const battlefyData = nodecg.Replicant('battlefyData', {
+const battlefyData = nodecg.Replicant('tourneyData', {
 	defaultValue: [
 		{tourneyId: "none"},
 		{

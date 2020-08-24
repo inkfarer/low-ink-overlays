@@ -1,60 +1,26 @@
-const emptyTeamInfo = {
-    name: "",
-    logoUrl: "",
-    players: [
-        {
-            name: "",
-            username: ""
-        }
-    ]
+// Main Scene
+
+const mainFlavorText = nodecg.Replicant('mainFlavorText', { defaultValue: 'Be right back!' });
+const casterNames = nodecg.Replicant('casterNames', { defaultValue: "We don't know." });
+
+mainFlavorText.on('change', newValue => { breakFlavorInput.value = newValue; });
+casterNames.on('change', newValue => { casterInput.value = newValue; });
+
+updateMainScene.onclick = () => {
+    mainFlavorText.value = breakFlavorInput.value;
+    casterNames.value = casterInput.value;
+    updateStageTime();
 };
 
-const clrRed = '#C9513E';
-const clrBlue = '#3F51B5';
-const nextTeamAInfo = nodecg.Replicant('nextTeamAInfo', {defaultValue: emptyTeamInfo});
-const nextTeamBInfo = nodecg.Replicant('nextTeamBINfo', {defaultValue: emptyTeamInfo});
-const bigTextValue = nodecg.Replicant('bigTextValue', { defaultValue: 'Be right back!' });
-const battlefyData = nodecg.Replicant('battlefyData', {
-	defaultValue: [
-		{tourneyId: "none"},
-		{
-			name: "Placeholder Team 1",
-			logoUrl: "",
-			players: [
-				{name:"You should fix this before going live.", username: "You should fix this before going live."}
-			]
-		},
-		{
-			name: "Placeholder Team 2",
-			logoUrl: "",
-			players: [
-				{name:"You should fix this before going live.", username: "You should fix this before going live."}
-			]
-		}
-	]
+// Show Timer
+
+const NSTimerShown = nodecg.Replicant('NSTimerShown', {defaultValue: false});
+
+NSTimerShown.on('change', newValue => {
+    document.querySelector('#checkShowTimer').checked = newValue;
 });
-const maplists = nodecg.Replicant('maplists', {
-    defaultValue: [
-        [
-            { id: 0, name: 'Default map list' },
-            { map: 'Ancho-V Games', mode: 'Clam Blitz' },
-            { map: 'Ancho-V Games', mode: 'Tower Control' },
-            { map: 'Wahoo World', mode: 'Rainmaker' }
-        ]
-    ]
-});
-const currentMaplist = nodecg.Replicant('currentMaplist', {
-    defaultValue: [
-        [
-            { id: 0, name: 'Default map list' },
-            { map: 'Ancho-V Games', mode: 'Clam Blitz' },
-            { map: 'Ancho-V Games', mode: 'Tower Control' },
-            { map: 'Wahoo World', mode: 'Rainmaker' }
-        ]
-    ]
-});
-const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: 'mainScene' });
-const casterNames = nodecg.Replicant('casterNames', { defaultValue: "" });
+
+// Next Stage Timer
 
 const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
     hour: 0,
@@ -63,137 +29,11 @@ const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
     month: 0
 }});
 
-// Replicant changes
-bigTextValue.on('change', newValue => { breakFlavorInput.value = newValue; });
-battlefyData.on('change', newValue => {
-    clearTeamSelectors();
-    for (let i = 1; i < newValue.length; i++) {
-        const element = newValue[i];
-        addTeamSelector(element.name);
-    }
-});
-nextTeamAInfo.on('change', newValue => { teamANextSelect.value = newValue.name; });
-nextTeamBInfo.on('change', newValue => { teamBNextSelect.value = newValue.name; });
-maplists.on('change', newValue => {
-    clearMapListSelector();
-    for (let i = 0; i < newValue.length; i++) {
-        const element = newValue[i];
-        addMapList(element[0].name);
-    }
-});
-currentMaplist.on('change', newValue => {
-    if (newValue) {
-        mapListSelect.value = newValue[0].name;
-    }
-});
-currentBreakScene.on('change', newValue => {
-    disableButtons(newValue);
-});
-casterNames.on('change', newValue => {
-    casterInput.value = newValue;
-})
 nextStageTime.on('change', newValue => {
     document.querySelector('.minInput').value = newValue.minute;
-    document.querySelector('.hourInput').value = newValue.hour;
+	document.querySelector('.hourInput').value = newValue.hour;
+	document.querySelector('.daySelect').value = `${newValue.day}/${parseInt(newValue.month) + 1}`;
 });
-
-//button onclicks
-updateMainScene.onclick = () => {
-    bigTextValue.value = breakFlavorInput.value;
-    casterNames.value = casterInput.value;
-    updateStageTime();
-    changeButtonColor(clrBlue, "updateMainScene");
-};
-updateNextNames.onclick = () => {
-    nextTeamAInfo.value = battlefyData.value[findTeamObjectByName(teamANextSelect.value)];
-    nextTeamBInfo.value = battlefyData.value[findTeamObjectByName(teamBNextSelect.value)];
-    changeButtonColor(clrBlue, "updateNextNames");
-};
-updateMaps.onclick = () => {
-    const index = findMapListByName(mapListSelect.value);
-    if (index !== null) {
-        currentMaplist.value = maplists.value[index];
-        changeButtonColor(clrBlue, "updateMaps");
-    }
-}
-showMain.onclick = () => { currentBreakScene.value = "mainScene"; }
-showNextUp.onclick = () => { currentBreakScene.value = "nextUp"; }
-showMaps.onclick = () => { currentBreakScene.value = "maps"; }
-
-//remind to update
-const mainSceneItems = ["casterInput", "breakFlavorInput", "hourInput", "minInput"];
-mainSceneItems.forEach(element => { document.getElementById(element).addEventListener('input', () => { changeButtonColor(clrRed, "updateMainScene"); }); });
-document.querySelector('.daySelect').addEventListener('change', () => { changeButtonColor(clrRed, "updateMainScene"); })
-const nextTeamsItems = ["teamANextSelect", "teamBNextSelect"];
-nextTeamsItems.forEach(element => { document.getElementById(element).addEventListener('change', () => { changeButtonColor(clrRed, "updateNextNames"); }); });
-mapListSelect.addEventListener('change', () => { changeButtonColor(clrRed, "updateMaps"); })
-
-//misc functions
-
-function changeButtonColor(color, id) {
-    document.getElementById(id).style.backgroundColor = color;
-}
-
-function clearTeamSelectors() {
-    let selectors = document.getElementsByClassName("teamSelector");
-    for (let i = 0; i < selectors.length; i++) {
-        const element = selectors[i];
-        element.innerHTML = '';
-    }
-}
-
-function addTeamSelector(name) {
-    var elements = document.querySelectorAll(".teamSelector");
-    Array.from(elements).forEach(function(item) {
-        var opt = document.createElement("option");
-        opt.value = name;
-        opt.text = name;
-        item.appendChild(opt);
-    });
-}
-
-function clearMapListSelector() {
-    document.getElementById("mapListSelect").innerHTML = "";
-}
-
-function addMapList(name) {
-    const opt = document.createElement("option");
-    opt.value = name;
-    opt.text = name;
-    document.getElementById("mapListSelect").appendChild(opt);
-}
-
-function findMapListByName(name) {
-    for (let i = 0; i < maplists.value.length; i++) {
-        const element = maplists.value[i];
-        if (element[0].name == name) {
-            return i;
-        }
-    }
-    return null;
-}
-
-function disableButtons(currentScene) {
-    const elements = ["showMain", "showNextUp", "showMaps"];
-    elements.forEach(element => { document.getElementById(element).disabled = false; });
-    if (currentScene === "mainScene") {
-        showMain.disabled = true;
-    } else if (currentScene === "nextUp") {
-        showNextUp.disabled = true;
-    } else if (currentScene === "maps") {
-        showMaps.disabled = true;
-    }
-}
-
-function findTeamObjectByName(name) {
-    for (let i = 1; i < battlefyData.value.length; i++) {
-        const element = battlefyData.value[i];
-        if (element.name == name) {
-            return i;
-        }
-    }
-    return null;
-}
 
 function updateDaySelector() {
     const today = new Date();
@@ -238,3 +78,124 @@ function updateStageTime() {
 }
 
 updateDaySelector();
+
+addSelectChangeReminder(['daySelect'], updateMainScene);
+addInputChangeReminder(['breakFlavorInput', 'casterInput', 'hourInput', 'minInput'], updateMainScene);
+
+// Next Teams
+
+const tourneyData = nodecg.Replicant('tourneyData', {
+	defaultValue: [
+		{tourneySlug: "none", tourneyName: 'none'},
+		{
+			name: "Placeholder Team 1",
+			players: [
+				{name:"You should fix this before going live."}
+			]
+		},
+		{
+			name: "Placeholder Team 2",
+			players: [
+				{name:"You should fix this before going live."}
+			]
+		}
+	]
+});
+
+tourneyData.on('change', newValue => {
+	clearSelectors('teamSelector');
+    for (let i = 1; i < newValue.length; i++) {
+        const element = newValue[i];
+        addSelector(element.name, 'teamSelector');
+    }
+});
+
+const nextTeams = nodecg.Replicant('nextTeams', {defaultValue: {
+	teamAInfo: {
+		name: "Placeholder Team 1",
+		players: [
+			{name:"You should fix this before going live."}
+		]
+	},
+	teamBInfo: {
+		name: "Placeholder Team 2",
+		players: [
+			{name:"You should fix this before going live."}
+		]
+	}
+}});
+
+nextTeams.on('change', newValue => {
+	nextTeamASelect.value = newValue.teamAInfo.name;
+	nextTeamBSelect.value = newValue.teamBInfo.name;
+});
+
+nextTeamUpdateBtn.onclick = () => {
+	let teamAInfo = tourneyData.value.filter(team => team.name === nextTeamASelect.value)[0];
+	let teamBInfo = tourneyData.value.filter(team => team.name === nextTeamBSelect.value)[0];
+
+	nextTeams.value.teamAInfo = teamAInfo;
+	nextTeams.value.teamBInfo = teamBInfo;
+};
+
+addSelectChangeReminder(['nextTeamASelect', 'nextTeamBSelect'], nextTeamUpdateBtn);
+
+// Maps
+
+const maplists = nodecg.Replicant('maplists', {
+    defaultValue: [
+        [
+            { id: 0, name: "Default map list" },
+            { map: "Ancho-V Games", mode: "Clam Blitz" },
+            { map: "Ancho-V Games", mode: "Tower Control" },
+            { map: "Wahoo World", mode: "Rainmaker" }
+        ]
+    ]
+});
+
+const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: '0' });
+
+maplists.on('change', newValue => {
+	clearSelectors('mapSelector');
+	for (let i = 0; i < newValue.length; i++) {
+		let opt = document.createElement("option");
+        opt.value = newValue[i][0].id;
+        opt.text = newValue[i][0].name;
+        mapListSelect.appendChild(opt);
+	}
+});
+
+currentMaplistID.on('change', newValue => {
+	let maplistID = maplists.value.filter(list => list[0].id == newValue)[0][0].id;
+	mapListSelect.value = maplistID;
+});
+
+updateMaps.onclick = () => {
+	currentMaplistID.value = mapListSelect.value;
+};
+
+addSelectChangeReminder(['mapListSelect'], updateMaps);
+
+// Current scene
+
+const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: 'mainScene' });
+
+showMain.onclick = () => { currentBreakScene.value = "mainScene"; }
+showNextUp.onclick = () => { currentBreakScene.value = "nextUp"; }
+showMaps.onclick = () => { currentBreakScene.value = "maps"; }
+
+currentBreakScene.on('change', newValue => {
+    disableSceneButtons(newValue);
+});
+
+function disableSceneButtons(currentScene) {
+    const elements = ["showMain", "showNextUp", "showMaps"];
+    elements.forEach(element => { document.getElementById(element).disabled = false; });
+    if (currentScene === "mainScene") {
+        showMain.disabled = true;
+    } else if (currentScene === "nextUp") {
+        showNextUp.disabled = true;
+    } else if (currentScene === "maps") {
+        showMaps.disabled = true;
+    }
+}

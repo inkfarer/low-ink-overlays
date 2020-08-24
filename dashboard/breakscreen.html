@@ -1,199 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="import" href="../bower_components/paper-input/paper-input.html">
-    <link rel="import" href="../bower_components/paper-button/paper-button.html">
-    <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-    <link rel="import" href="../bower_components/nodecg-toggle/nodecg-toggle.html">
-    <custom-style>
-        <style include="iron-flex iron-flex-alignment">
-             :root {
-                --blue: #3F51B5;
-                --red: #C9513E;
-                --green: #5BA664;
-            }
-            
-            .title {
-                font-weight: bold;
-                margin-bottom: 5px;
-                text-align: center;
-            }
-            
-            .space {
-                background-color: #262F40;
-                border-radius: 8px;
-                padding: 10px;
-                margin-bottom: 5px;
-            }
-            
-            paper-button[disabled] {
-                color: #A9AAA9;
-                background-color: #181E29 !important;
-            }
-            
-            paper-button {
-                margin: 2px;
-                color: #FFFFFF;
-                font-family: 'Roboto', 'Noto', sans-serif;
-                font-weight: normal;
-                font-size: 14px;
-                -webkit-font-smoothing: antialiased;
-                background-color: var(--blue);
-                display: block;
-                text-align: center;
-            }
-            
-            paper-input {
-                --primary-text-color: #FFFFFF;
-                margin-top: -5px;
-                padding: 0px 2px;
-            }
-            
-            .showButton {
-                background-color: var(--green);
-            }
-            
-            .hideButton {
-                background-color: var(--red);
-            }
-            
-            .showHideSpace {
-                display: flex;
-                justify-content: center;
-            }
-            
-            .label {
-                color: #737373;
-                font-size: 12px;
-                margin-left: 5px;
-                font-family: 'Roboto', 'Noto', sans-serif;
-                margin-top: 7px;
-                -moz-user-select: none;
-                -webkit-user-select: none;
-            }
-            
-            select {
-                width: 100%;
-                font-size: 16px;
-                margin-bottom: 5px;
-                margin-left: 2px;
-                border: 0px;
-                border-bottom: 1px solid #737373;
-                outline: 0px;
-                color: white;
-                background-color: rgba(0, 0, 0, 0);
-                padding: 4px;
-                padding-left: 0px;
-                font-family: 'Roboto', 'Noto', sans-serif;
-            }
-            
-            option {
-                color: black;
-            }
-            
-            .teamSelectBox {
-                width: 100%;
-            }
-            
-            .teamSelectorsBox {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                justify-content: center;
-                gap: 2px;
-            }
-            
-            nodecg-toggle {
-                margin: 0 auto;
-                margin-top: 10px;
-                --paper-toggle-button-label-color: white;
-                --paper-toggle-button-checked-bar-color: var(--blue);
-                --paper-toggle-button-checked-button-color: var(--blue);
-                --paper-toggle-button-checked-ink-color: var(--blue);
-            }
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		.timerContainer {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+		}
 
-            .timerContainer {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-            }
-            .timerContainer > paper-input {
-                width: 50px;
-                margin-top: -3px;
-                text-align: center;
-                --paper-input-container-input-webkit-spinner: {
-                    display: none
-                }
-            }
+		.timerContainer > div {
+			margin-top: -3px;
+			margin-left: 5px;
+			text-align: center;
+		}
 
-            .toggleContainer {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 10px;
-                margin-top: -5px;
-            }
-        </style>
-    </custom-style>
+		.timerContainerNum {
+			width: 40px;
+		}
+
+		.timerContainerDay {
+			width: 70px;
+		}
+
+		.timerContainer > div > input {
+			height: 30px;
+		}
+
+		.timerContainer > div > select {
+			height: 30px;
+			margin-top: 3px;
+		}
+
+		.toggleContainer {
+			display: flex;
+			justify-content: center;
+			margin-bottom: 10px;
+			margin-top: 10px;
+		}
+
+		.NSTimerTitle {
+			margin-top: 10px;
+		}
+
+		.selectContainer {
+			margin: 0 2.5px;
+		}
+
+		.breakGrid {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+
+		.breakGrid > * {
+			flex: 0 0 calc(50% - 30px);
+			margin: 5px;
+		}
+	</style>
 </head>
-
 <body>
-    <div class="space">
-        <div class="title">Main Scene</div>
-        <div class="showHideSpace layout horizontal">
-            <paper-button raised id="showMain" class="showButton">Show</paper-button>
-        </div>
-        <paper-input label="Flavor Text" id="breakFlavorInput"></paper-input>
-        <paper-input label="Casters" id="casterInput"></paper-input>
-        <div class="title">Next Stage Timer</div>
-        <div class="timerContainer">
-            <paper-input class="hourInput" id="hourInput" label="Hour" type="number" value="0"></paper-input>
-            <paper-input class="minInput" id="minInput" label="Minute" type="number" value="0"></paper-input>
-            <div>
-                <div class="label">Day</div>
-                <select class="daySelect"></select>
-            </div>
-        </div>
-        <div class="toggleContainer">
-            <nodecg-toggle replicant-name="NSTimerShown" noink>Show Timer</nodecg-toggle>
-        </div>
-        <paper-button id="updateMainScene">Update</paper-button>
-    </div>
-    <div class="space">
-        <div class="title">Next Teams</div>
-        <div class="showHideSpace layout horizontal">
-            <paper-button raised id="showNextUp" class="showButton">Show</paper-button>
-        </div>
-        <div class="teamSelectorsBox">
-            <div class="layout vertical teamSelectBox">
-                <div class="label">Next Team A</div>
-                <select id="teamANextSelect" class="teamSelector"></select>
-            </div>
-            <div class="layout vertical teamSelectBox">
-                <div class="label">Next Team B</div>
-                <select id="teamBNextSelect" class="teamSelector"></select>
-            </div>
-        </div>
-        <paper-button id="updateNextNames">Update</paper-button>
-    </div>
-    <div class="space">
-        <div class="title">Upcoming Stages</div>
-        <div class="showHideSpace layout horizontal">
-            <paper-button raised id="showMaps" class="showButton">Show</paper-button>
-        </div>
-        <div class="layout vertical teamSelectBox">
-            <div class="label">Map list</div>
-            <select id="mapListSelect" class="mapSelector"></select>
-        </div>
-        <paper-button id="updateMaps">Update</paper-button>
-    </div>
-    <div class="space">
-        <nodecg-toggle replicant-name="RGBMode" noink>RGB Mode</nodecg-toggle>
-    </div>
+	<div class="breakGrid">
+		<div class="col">
+			<div class="space">
+				<div class="title">Main Scene</div>
+				<div class="showHideSpace">
+					<button id="showMain" class="btnGreen">Show</button>
+				</div>
+				<div>
+					<div class="inputLabel">Flavor Text</div>
+					<input id="breakFlavorInput" type="text">
+				</div>
+				<div>
+					<div class="inputLabel">Casters</div>
+					<input id="casterInput" type="text">
+				</div>
+				<div class="title NSTimerTitle">Next Stage Timer</div>
+				<div class="timerContainer">
+					<div class="timerContainerNum">
+						<div class="inputLabel">Hour</div>
+						<input class="hourInput" id="hourInput" type="number" value="0">
+					</div>
+					<div class="timerContainerNum">
+						<div class="inputLabel">Minute</div>
+						<input class="minInput" id="minInput" type="number" value="0">
+					</div>
+					<div class="timerContainerDay">
+						<div class="inputLabel">Day</div>
+						<select class="daySelect" id="daySelect"></select>
+					</div>
+				</div>
+				<div class="toggleContainer">
+					<input type="checkbox" id="checkShowTimer" onchange="setReplicant('NSTimerShown', event)">Show Timer</input>
+				</div>
+				<button id="updateMainScene" class="btnBlue maxWidthButton">Update</button>
+			</div>
 
-    <script src="breakscreen.js"></script>
-    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+			<div class="space">
+				<div class="title">Upcoming Stages</div>
+				<div class="showHideSpace">
+					<button id="showMaps" class="btnGreen">Show</button>
+				</div>
+				<div class="verticalLayout teamSelectBox">
+					<div class="inputLabel">Map list</div>
+					<select id="mapListSelect" class="mapSelector"></select>
+				</div>
+				<button id="updateMaps" class="maxWidthButton">Update</button>
+			</div>
+		</div>
+		
+		<div class="col">
+			<div class="space">
+				<div class="title">Next Teams</div>
+				<div class="showHideSpace">
+					<button id="showNextUp" class="btnGreen">Show</button>
+				</div>
+				<div class="horizontalLayout maxWidth">
+					<div class="selectContainer">
+						<div class="inputLabel">Next Team A</div>
+						<select id="nextTeamASelect" class="teamSelector"></select>
+					</div>
+					<div class="selectContainer">
+						<div class="inputLabel">Next Team B</div>
+						<select id="nextTeamBSelect" class="teamSelector"></select>
+					</div>
+				</div>
+				<button id="nextTeamUpdateBtn" class="btnBlue maxWidthButton">update</button>
+			</div>
+
+			<div class="space">
+				test haah
+			</div>
+		</div>
+	</div>
+
+	<script src="globalScripts.js"></script>
+	<script src="breakScreen.js"></script>
 </body>
-
 </html>

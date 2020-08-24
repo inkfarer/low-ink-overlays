@@ -9,14 +9,7 @@ const maplists = nodecg.Replicant('maplists', {
     ]
 });
 
-const currentMaplist = nodecg.Replicant('currentMaplist', {
-    defaultValue: [
-        { id: 0, name: 'Default map list' },
-        { map: 'Ancho-V Games', mode: 'Clam Blitz' },
-        { map: 'Ancho-V Games', mode: 'Tower Control' },
-        { map: 'Wahoo World', mode: 'Rainmaker' }
-    ]
-});
+const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: 0 });
 
 const splatMaps = ["Ancho-V Games",
     "Arowana Mall",
@@ -89,7 +82,8 @@ function removeAllMaps() {
             { map: "Ancho-V Games", mode: "Tower Control" },
             { map: "Wahoo World", mode: "Rainmaker" }
         ]
-    ];
+	];
+	currentMaplistID.value = 0;
 }
 
 function createMapList(numberOfMaps, id, remindToUpdate) {
@@ -97,19 +91,31 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
     //if you want me dead, host a tournament with 9 maps in the finals
     if (typeof numberOfMaps !== "number" || numberOfMaps >= 8 || numberOfMaps <= 0) {
         throw "this should not happen, ever";
-    }
+	}
+	
+	// map list editor div
     var mapListDiv = document.createElement("div");
     mapListDiv.classList.add("space");
     mapListDiv.classList.add("mapListDiv");
-    mapListDiv.id = "mapListSpace_" + id;
-    let nameInput = document.createElement("paper-input");
-    let updateButton = document.createElement("paper-button");
+	mapListDiv.id = "mapListSpace_" + id;
+	
+	// map list name input
+    let nameInput = document.createElement("input");
+    let updateButton = document.createElement("button");
     nameInput.id = "nameInput_" + id;
-    nameInput.label = "Map list name";
-    nameInput.addEventListener('input', () => {
-        updateButton.style.backgroundColor = red;
-    })
-    mapListDiv.appendChild(nameInput);
+	nameInput.label = "Map list name";
+	nameInput.addEventListener('input', () => {
+        updateButton.style.backgroundColor = 'var(--red)';
+	});
+	nameInput.type = 'text';
+
+	let nameInputLabel = document.createElement('div');
+	nameInputLabel.innerText = 'Map list name';
+	nameInputLabel.classList.add('inputLabel');
+
+	mapListDiv.appendChild(nameInputLabel);
+	mapListDiv.appendChild(nameInput);
+	
     for (let i = 0; i < numberOfMaps; i++) {
         //separator
         let separator = document.createElement("div");
@@ -117,13 +123,15 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
         let separatorSpan = document.createElement("span");
         separatorSpan.innerText = i + 1;
         separator.appendChild(separatorSpan);
-        mapListDiv.appendChild(separator);
+		mapListDiv.appendChild(separator);
+		
         //map select
         let mapSelect = document.createElement("select");
         mapSelect.id = "mapSelect_" + id + "_" + i;
         mapSelect.classList.add("mapSelect");
         fillMapList(mapSelect);
-        mapListDiv.appendChild(mapSelect);
+		mapListDiv.appendChild(mapSelect);
+		
         //mode select
         let modeSelect = document.createElement("select");
         modeSelect.id = "modeSelect_" + id + "_" + i;
@@ -136,8 +144,9 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
         modeSelect.addEventListener('change', () => {
             updateButton.style.backgroundColor = red;
         })
-    }
-    updateButton.raised = true;
+	}
+	
+	// update button
     updateButton.innerText = "update"
         //do i even have to do this?
     updateButton.id = numberOfMaps + "&" + id;
@@ -148,7 +157,7 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
         let splitId = event.target.id.split("&");
         const buttonNumberOfMaps = splitId[0];
         const buttonId = splitId[1];
-        let nameInput = document.querySelector("paper-input#nameInput_" + buttonId);
+        let nameInput = document.querySelector("input#nameInput_" + buttonId);
         var selectedMaps = [{ id: buttonId, name: nameInput.value }];
         for (let i = 0; i < buttonNumberOfMaps; i++) {
             let currentMap = {
@@ -172,23 +181,33 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
             maplists.value[mapListIndex] = selectedMaps;
         }
         event.target.style.backgroundColor = blue;
-    }
-    mapListDiv.appendChild(updateButton);
-    let removeButton = document.createElement("paper-button");
+	}
+	updateButton.classList.add('maxWidthButton');
+	
+	// remove button
+    let removeButton = document.createElement("button");
     removeButton.style.backgroundColor = red;
-    removeButton.raised = true;
     removeButton.id = "removeButton_" + id;
-    removeButton.innerText = "REMOVE"
+	removeButton.innerText = "REMOVE"
+	removeButton.classList.add('maxWidthButton');
     removeButton.onclick = (event) => {
         const buttonId = event.target.id.split("_")[1];
         let mapListSpace = document.querySelector("div#mapListSpace_" + buttonId);
         let mapIndex = findMapList(buttonId);
         if (mapIndex !== null) {
+            if (currentMaplistID.value === maplists.value[mapIndex][0].id) {currentMaplistID.value = maplists.value[0][0].id}
             maplists.value.splice(mapIndex, 1);
         }
         mapListSpace.parentNode.removeChild(mapListSpace);
-    }
-    mapListDiv.appendChild(removeButton);
+	}
+
+	let buttonContainer = document.createElement('div');
+	buttonContainer.classList.add('horizontalLayout');
+
+	buttonContainer.appendChild(updateButton);
+	buttonContainer.appendChild(removeButton);
+	
+	mapListDiv.appendChild(buttonContainer);
 
     mapsGrid.prepend(mapListDiv);
 }
@@ -204,7 +223,7 @@ function findMapList(id) {
 }
 
 function setMapListValues(id, values) {
-    let listNameItem = document.querySelector("paper-input#nameInput_" + id);
+    let listNameItem = document.querySelector("input#nameInput_" + id);
     listNameItem.value = values[0].name;
     for (let i = 1; i < values.length; i++) {
         let selectorId = id + "_";
@@ -263,8 +282,6 @@ maplists.on('change', (newValue, oldValue) => {
         }
         setMapListValues(element[0].id, element);
     }
-    console.log(currentMaplist.value);
-    const current = JSON.parse(JSON.stringify(currentMaplist.value));
     if (oldValue) {
         // find map lists that are in the old value but not in the new value
         // then get rid of their corresponding elements
@@ -273,14 +290,6 @@ maplists.on('change', (newValue, oldValue) => {
         if (deletedLists[0]) {
             for (let i = 0; i < deletedLists.length; i++) {
                 removeMapListDiv(deletedLists[i][0].id);
-            }
-        }
-
-        // update current map list replicant
-        for (let i = 0; i < oldValue.length; i++) {
-            const element = oldValue[i];
-            if (checkMapObjectEqual(current, element) && newValue[i]) {
-                currentMaplist.value = newValue[i];
             }
         }
     }

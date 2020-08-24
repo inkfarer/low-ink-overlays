@@ -1,36 +1,40 @@
-// map winners: 0 = no win, 1 = team a win, 2 = team b win
 const mapWinners = nodecg.Replicant('mapWinners', { defaultValue: [0, 0, 0, 0, 0, 0, 0] });
-const currentMaplist = nodecg.Replicant('currentMaplist', {
-    defaultValue:
-        [
-            { id: 0, name: 'Default map list' },
-            { map: 'Ancho-V Games', mode: 'Clam Blitz' },
-            { map: 'Ancho-V Games', mode: 'Tower Control' },
-            { map: 'Wahoo World', mode: 'Rainmaker' }
-        ]
-});
+const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: '0' });
 const teamScores = nodecg.Replicant('teamScores', {defaultValue: {
     teamA: 0,
     teamB: 0
 }});
 
-NodeCG.waitForReplicants(mapWinners, teamScores).then(() => {
-    currentMaplist.on('change', (newValue, oldValue) => {
-        if (newValue) {
-            document.getElementById('maplistName').innerText = newValue[0].name;
+const maplists = nodecg.Replicant('maplists', {
+    defaultValue: [
+        [
+            { id: 0, name: "Default map list" },
+            { map: "Ancho-V Games", mode: "Clam Blitz" },
+            { map: "Ancho-V Games", mode: "Tower Control" },
+            { map: "Wahoo World", mode: "Rainmaker" }
+        ]
+    ]
+});
+
+NodeCG.waitForReplicants(mapWinners, teamScores, maplists).then(() => {
+    currentMaplistID.on('change', (newValue, oldValue) => {
+		var currentMaplist = maplists.value.filter(list => list[0].id == newValue)[0];
+
+		if (currentMaplist) {
+			maplistName.innerText = currentMaplist[0].name;
             removeToggles();
-            for (let i = 1; i < newValue.length; i++) {
+            for (let i = 1; i < currentMaplist.length; i++) {
                 if (oldValue) {
                     mapWinners.value[i - 1] = 0;
                 }
 
-                const element = newValue[i];
+                const element = currentMaplist[i];
                 addToggle(element, i - 1);
             }
-        } else {
-            removeToggles();
-            document.getElementById('maplistName').innerText = 'Undefined (Map list might have been deleted...)'
-        }
+		} else {
+			removeToggles();
+            maplistName.innerText = 'Undefined (Map list might have been deleted...)'
+		}
     });
     teamScores.on('change', (newValue, oldValue) => {
         //const index = (newValue.teamA + newValue.teamB) - 1;
@@ -57,22 +61,25 @@ function addToggle(maplistElement, mapIndex) {
     mapModeDisplay.innerHTML = '<span class="center">' + mapIndexPlusOne + '</span>' + maplistElement.map + '<br>' + maplistElement.mode;
     toggleDiv.appendChild(mapModeDisplay);
 
-    const noWinButton = document.createElement('paper-button');
-    noWinButton.classList.add('noWinButton');
-    noWinButton.raised = true;
+    const noWinButton = document.createElement('button');
+	noWinButton.classList.add('noWinButton');
+	noWinButton.classList.add('btnBlue');
+	noWinButton.classList.add('maxWidthButton');
     noWinButton.id = "noWin_" + mapIndex;
     noWinButton.innerText = "NO WIN";
     toggleDiv.appendChild(noWinButton);
 
-    const AWinButton = document.createElement('paper-button');
+    const AWinButton = document.createElement('button');
     AWinButton.classList.add('AWinButton');
-    AWinButton.raised = true;
+	AWinButton.classList.add('btnGreen');
+	AWinButton.classList.add('maxWidthButton');
     AWinButton.id = "AWin_" + mapIndex;
     AWinButton.innerText = "A WIN";
 
-    const BWinButton = document.createElement('paper-button');
+    const BWinButton = document.createElement('button');
     BWinButton.classList.add('BWinButton');
-    BWinButton.raised = true;
+	BWinButton.classList.add('btnRed');
+	BWinButton.classList.add('maxWidthButton');
     BWinButton.id = "BWin_" + mapIndex;
     BWinButton.innerText = "B WIN";
 
@@ -111,9 +118,9 @@ document.getElementById('reset').onclick = () => {
 }
 
 function getButtons(id) {
-    const noWinButton = document.querySelector('paper-button#noWin_' + id);
-    const AWinButton = document.querySelector('paper-button#AWin_' + id);
-    const BWinButton = document.querySelector('paper-button#BWin_' + id);
+    const noWinButton = document.querySelector('button#noWin_' + id);
+    const AWinButton = document.querySelector('button#AWin_' + id);
+    const BWinButton = document.querySelector('button#BWin_' + id);
     return [noWinButton, AWinButton, BWinButton];
 }
 
@@ -131,8 +138,10 @@ function getButtons(id) {
 }*/
 
 function disableWinButtons2(mapWinnerValue) {
-    const scoreSum = teamScores.value.teamA + teamScores.value.teamB;
-    for (let i = 1; i < currentMaplist.value.length; i++) {
+	const scoreSum = teamScores.value.teamA + teamScores.value.teamB;
+	var currentMaplist = maplists.value.filter(list => list[0].id == currentMaplistID.value)[0];
+
+    for (let i = 1; i < currentMaplist.length; i++) {
         const mapWinner = mapWinnerValue[i-1];
         const buttons = getButtons(i-1);
         if (i > scoreSum) {
@@ -155,3 +164,11 @@ function resetToggles() {
 function removeToggles() {
     document.getElementById('toggles').innerHTML = "";
 }
+
+// set wins automatically check box
+
+const autoWinSet = nodecg.Replicant('autoWinSet', {defaultValue: true});
+
+autoWinSet.on('change', newValue => {
+	checkAutoWinners.checked = newValue;
+});

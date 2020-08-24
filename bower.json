@@ -13,10 +13,6 @@
         "bower_components"
     ],
     "dependencies": {
-        "iron-flex-layout": "^2.0.3",
-        "paper-button": "^2.1.0",
-        "paper-input": "^2.2.2",
         "sc-fitted-text": "SupportClass/sc-fitted-text#^1.1.3",
-        "nodecg-toggle": "NodeCGElements/nodecg-toggle#^1.0.0"
     }
 }

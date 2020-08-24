@@ -3,75 +3,51 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../bower_components/font-roboto/roboto.html">
-    <link rel="import" href="../bower_components/paper-button/paper-button.html">
-    <link rel="import" href="../bower_components/paper-input/paper-input.html">
-    <custom-style>
-        <style include="iron-flex iron-flex-alignment" is="custom-style">
-             :root {
-                --blue: #3F51B5;
-                --red: #C9513E;
-                --green: #5BA664;
-                --yellow: #FDD835;
-            }
-            
-            paper-input {
-                --primary-text-color: #FFFFFF;
-                --paper-input-container-focus-color: var(--blue);
-            }
-            
-            paper-button {
-                margin: 2px;
-                color: #FFFFFF;
-                font-family: 'Roboto', 'Noto', sans-serif;
-                font-weight: normal;
-                font-size: 14px;
-                -webkit-font-smoothing: antialiased;
-                background-color: var(--blue);
-                display: block;
-                text-align: center;
-            }
-            
-            paper-button[disabled] {
-                color: #A9AAA9;
-                background-color: #181E29 !important;
-            }
-            
-            div.statusDisplay {
-                background-color: #181E29;
-                display: block;
-                text-align: center;
-                margin: 2px;
-                margin-top: 5px;
-                border-radius: 2px;
-                padding: 5px 0px;
-            }
-            
-            .space {
-                background-color: #262F40;
-                border-radius: 8px;
-                padding: 10px;
-                margin-bottom: 5px;
-            }
+    <link rel="stylesheet" href="globalStyles.css">
+    <style>
+            :root {
+            --blue: #3F51B5;
+            --red: #C9513E;
+            --green: #5BA664;
+            --yellow: #FDD835;
+        }
+        
+        div.statusDisplay {
+            background-color: #181E29;
+            display: block;
+            text-align: center;
+            margin: 2px;
+            margin-top: 5px;
+            border-radius: 2px;
+            padding: 5px 0px;
+        }
+        
+        .space {
+            background-color: #262F40;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
 
-            .title {
-                font-weight: bold;
-                margin-bottom: 5px;
-                text-align: center;
-            }
+        .title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+        }
 
-            li {
-                word-break: break-all;
-            }
-        </style>
-    </custom-style>
+        li {
+            word-break: break-all;
+        }
+    </style>
 </head>
 
 <body>
     <div class="space">
-        <paper-input label="Tournament ID" id="tourneyIdInput"></paper-input>
-        <paper-button raised id="submitId">submit</paper-button>
+        <div>
+			<div class="inputLabel">Tournament ID</div>
+			<input id="tourneyIdInput" type="text"></input>
+		</div>
+        <button class="btnBlue maxWidthButton" id="submitId">submit</button>
         <div id="submitStatus" class="statusDisplay">STATUS</div>
         <div id="loadedDisplay" class="statusDisplay">SAVED DATA ID<br><span id="nowLoaded">none</span></div>
     </div>
@@ -83,7 +59,7 @@
         </ul>
     </div>
 
-    <script src="battlefyImport.js"></script>
+    <script src="tourneyImport.js"></script>
 </body>
 
 </html>

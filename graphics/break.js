@@ -24,17 +24,6 @@ const mapNameToImagePath = {"Ancho-V Games": "stages/S2_Stage_Ancho-V_Games.png"
 "Skipper Pavilion":"stages/S2_Stage_Skipper_Pavilion.png",
 "Unknown Map":"stages/low-ink-unknown-map.png"};
 
-const emptyTeamInfo = {
-    name: "",
-    logoUrl: "",
-    players: [
-        {
-            name: "",
-            username: ""
-        }
-    ]
-};
-
 const bigTextValue = nodecg.Replicant('bigTextValue', { defaultValue: 'Be right back!' });
 const casterNames = nodecg.Replicant('casterNames', { defaultValue: "" });
 const nowPlaying = nodecg.Replicant('nowPlaying');
@@ -45,19 +34,43 @@ const nowPlayingManual = nodecg.Replicant('nowPlayingManual', {defaultValue: {
 const mSongEnabled = nodecg.Replicant('mSongEnabled', {defaultValue: false});
 const musicShown = nodecg.Replicant('musicShown', {defaultValue: true});
 const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: 'mainScene' });
-const nextTeamAInfo = nodecg.Replicant('nextTeamAInfo', {defaultValue: emptyTeamInfo});
-const nextTeamBInfo = nodecg.Replicant('nextTeamBINfo', {defaultValue: emptyTeamInfo});
-const currentMaplist = nodecg.Replicant('currentMaplist', {
-    defaultValue: [
-        { id: 0, name: 'Default map list' },
-        { map: 'Ancho-V Games', mode: 'Clam Blitz' },
-        { map: 'Ancho-V Games', mode: 'Tower Control' },
-        { map: 'Wahoo World', mode: 'Rainmaker' }
-    ]
-});
+const nextTeams = nodecg.Replicant('nextTeams', {defaultValue: {
+	teamAInfo: {
+		name: "Placeholder Team 1",
+		logoUrl: "",
+		players: [
+			{name:"You should fix this before going live."}
+		]
+	},
+	teamBInfo: {
+		name: "Placeholder Team 2",
+		logoUrl: "",
+		players: [
+			{name:"You should fix this before going live."}
+		]
+	}
+}});
+const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: '0' });
 const mapWinners = nodecg.Replicant('mapWinners', { defaultValue: [0, 0, 0, 0, 0, 0, 0] });
-const teamAInfo = nodecg.Replicant('teamAInfo', { defaultValue: emptyTeamInfo });
-const teamBInfo = nodecg.Replicant('teamBInfo', { defaultValue: emptyTeamInfo });
+const SBData = nodecg.Replicant('SBData', {defaultValue: {
+	flavorText: 'Flavor Text',
+	teamAInfo: {
+		name: "Placeholder Team 1",
+		logoUrl: "",
+		players: [
+			{name:"You should fix this before going live."}
+		]
+	},
+	teamAColor: 'Green',
+	teamBInfo: {
+		name: "Placeholder Team 2",
+		logoUrl: "",
+		players: [
+			{name:"You should fix this before going live."}
+		]
+	},
+	teamBcolor: 'Purple'
+}});
 const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
 const NSTimerShown = nodecg.Replicant('NSTimerShown', {defaultValue: false});
 const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
@@ -66,6 +79,16 @@ const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
     day: 1,
     month: 0
 }});
+const maplists = nodecg.Replicant('maplists', {
+    defaultValue: [
+        [
+            { id: 0, name: "Default map list" },
+            { map: "Ancho-V Games", mode: "Clam Blitz" },
+            { map: "Ancho-V Games", mode: "Tower Control" },
+            { map: "Wahoo World", mode: "Rainmaker" }
+        ]
+    ]
+});
 
 //replicant changes
 var nextStageInterval = setInterval(() => {
@@ -96,15 +119,30 @@ nextStageTime.on('change', newValue => {
 	nextStageTimeObj = time;
 });
 
-currentMaplist.on('change', newValue => {
-	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 0, onComplete: function() {
-		clearUpcomingStages();
-		setMapCount(newValue.length - 1);
-		for (let i = 1; i < newValue.length; i++) {
-			addUpcomingStage(newValue[i], newValue.length - 1, i - 1);
+NodeCG.waitForReplicants(maplists, currentMaplistID).then(() => {
+	currentMaplistID.on('change', newValue => {
+		let maplist = maplists.value.filter(list => list[0].id == newValue)[0];
+		updateMapLists(maplist);
+	});
+
+	maplists.on('change', (newValue, oldValue) => {
+		if (!oldValue) return;
+		let newCurrentList = newValue.filter(list => list[0].id == currentMaplistID.value)[0];
+		let oldCurrentList = oldValue.filter(list => list[0].id == currentMaplistID.value)[0];
+
+		if (compareMapLists(newCurrentList, oldCurrentList)) {
+			updateMapLists(newCurrentList);
 		}
-	}});
-	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 1, delay: 0.5});
+	});
+
+	SBData.on('change', newValue => {
+		let maplist = maplists.value.filter(list => list[0].id == currentMaplistID.value)[0];
+		for (let i = 0; i < maplist.length - 1; i++) {
+			if (mapWinners.value[i] != 0) {
+				updateWinner(i, mapWinners.value[i]);
+			}
+		}
+	});
 });
 
 musicShown.on('change', newValue => {
@@ -162,15 +200,14 @@ currentBreakScene.on('change', newValue => {
 	}
 });
 
-nextTeamAInfo.on('change', newValue => {
-	document.querySelector('#teamAImage').style.backgroundImage = 'url(' + newValue.logoUrl + ')';
-	teamAName.text = newValue.name;
-	addTeamPlayers('A', newValue.players);
-});
-nextTeamBInfo.on('change', newValue => {
-	document.querySelector('#teamBImage').style.backgroundImage = 'url(' + newValue.logoUrl + ')';
-	teamBName.text = newValue.name;
-	addTeamPlayers('B', newValue.players);
+nextTeams.on('change', newValue => {
+	document.querySelector('#teamAImage').style.backgroundImage = 'url(' + newValue.teamAInfo.logoUrl + ')';
+	teamAName.text = newValue.teamAInfo.name;
+	addTeamPlayers('A', newValue.teamAInfo.players);
+
+	document.querySelector('#teamBImage').style.backgroundImage = 'url(' + newValue.teamBInfo.logoUrl + ')';
+	teamBName.text = newValue.teamBInfo.name;
+	addTeamPlayers('B', newValue.teamBInfo.players);
 });
 
 mapWinners.on('change', (newValue, oldValue) => {
@@ -195,22 +232,6 @@ mapWinners.on('change', (newValue, oldValue) => {
 					updateWinner(i, element);
 				}
 			}
-		}
-	}
-});
-
-teamAInfo.on('change', newValue => {
-	for (let i = 0; i < currentMaplist.value.length - 1; i++) {
-		if (mapWinners.value[i] != 0) {
-			updateWinner(i, mapWinners.value[i]);
-		}
-	}
-});
-
-teamBInfo.on('change', newValue => {
-	for (let i = 0; i < currentMaplist.value.length - 1; i++) {
-		if (mapWinners.value[i] != 0) {
-			updateWinner(i, mapWinners.value[i]);
 		}
 	}
 });
@@ -482,9 +503,9 @@ function addWinner(index, value) {
 		const winnerName = document.createElement('div');
 		winnerName.classList.add('mapsWinnerName');
 		if (value == 1)  {
-			winnerName.innerText = teamAInfo.value.name;
+			winnerName.innerText = SBData.value.teamAInfo.name;
 		} else if (value == 2) {
-			winnerName.innerText = teamBInfo.value.name;
+			winnerName.innerText = SBData.value.teamBInfo.name;
 		}
 		mapElem.appendChild(winnerName);
 
@@ -506,9 +527,9 @@ function updateWinner(index, newValue) {
 	const name = mapElem.querySelector('.mapsWinnerName');
 	
 	if (newValue == 1) {
-		name.innerText = teamAInfo.value.name;
+		name.innerText = SBData.value.teamAInfo.name;
 	} else if (newValue == 2) {
-		name.innerText = teamBInfo.value.name;
+		name.innerText = SBData.value.teamBInfo.name;
 	}
 }
 
@@ -605,4 +626,25 @@ function animSquidArrows() {
 	gsap.to('#squidarrows', {duration: 1.5, bottom: -1085, ease: 'power3.inOut', onComplete: function() {
 		document.querySelector('#squidarrows').style.bottom = '0px';
 	}});
+}
+
+// returns true if there is a difference
+function compareMapLists(val1, val2) {
+	if (val1[0].id !== val2[0].id || val1[0].name !== val2[0].name) return true;
+	if (val1.length !== val2.length) return true;
+	for (let i = 1; i < val1.length; i++) {
+		if (val1[i].map !== val2[i].map || val1[i].mode !== val2[i].mode) return true;
+	}
+	return false;
+}
+
+function updateMapLists(maplist) {
+	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 0, onComplete: function() {
+		clearUpcomingStages();
+		setMapCount(maplist.length - 1);
+		for (let i = 1; i < maplist.length; i++) {
+			addUpcomingStage(maplist[i], maplist.length - 1, i - 1);
+		}
+	}});
+	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 1, delay: 0.5});
 }

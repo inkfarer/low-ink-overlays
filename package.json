@@ -39,8 +39,8 @@
             {
                 "name": "breakscreen",
                 "title": "Break Screen",
-                "width": 2,
-                "file": "breakscreen.html",
+                "width": 4,
+                "file": "breakScreen.html",
                 "workspace": "low ink stream",
                 "headerColor": "#262F40"
             },
@@ -56,7 +56,7 @@
                 "name": "battlefyimport",
                 "title": "Import tournament data",
                 "width": 2,
-                "file": "battlefyImport.html",
+                "file": "tourneyImport.html",
                 "workspace": "low ink setup",
                 "headerColor": "#262F40"
             },
@@ -64,7 +64,7 @@
                 "name": "maplist",
                 "title": "Map Lists",
                 "width": 6,
-                "file": "maplists.html",
+                "file": "mapLists.html",
                 "workspace": "low ink setup",
                 "headerColor": "#262F40"
             }

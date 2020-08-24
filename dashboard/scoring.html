@@ -1,239 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../bower_components/font-roboto/roboto.html">
-    <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-    <link rel="import" href="../bower_components/paper-button/paper-button.html">
-    <link rel="import" href="../bower_components/paper-input/paper-input.html">
-    <link rel="import" href="../bower_components/nodecg-toggle/nodecg-toggle.html">
-    <custom-style>
-        <style include="iron-flex iron-flex-alignment" is="custom-style">
-             :root {
-                --blue: #3F51B5;
-                --red: #C9513E;
-                --green: #5BA664;
-            }
-            
-            body {
-                font-family: 'Roboto', 'Noto', sans-serif;
-            }
-            
-            .beginNext {
-                background-color: var(--red);
-            }
-            
-            paper-button {
-                margin: 2px;
-                color: #FFFFFF;
-                font-family: 'Roboto', 'Noto', sans-serif;
-                font-weight: normal;
-                font-size: 14px;
-                -webkit-font-smoothing: antialiased;
-                background-color: var(--blue);
-                display: block;
-                text-align: center;
-            }
-            
-            .counter {
-                font-size: 1em;
-                margin-left: 5px;
-                margin-right: 5px;
-                margin-top: -30px;
-                --paper-input-font-size: 75px;
-                --paper-input-container-input-webkit-spinner: {
-                    display: none
-                }
-                ;
-                --primary-text-color: #FFFFFF;
-                --paper-input-container-input: {
-                    font-size: 3em;
-                    text-align: center;
-                }
-            }
-            
-            .scoreMinus,
-            .scorePlus {
-                min-width: 40px;
-                max-width: 40px;
-                max-height: 30px;
-            }
-            
-            .scoreMinus {
-                background-color: var(--red);
-            }
-            
-            .scorePlus {
-                background-color: var(--green);
-            }
-            
-            paper-button[disabled] {
-                color: #A9AAA9;
-                background-color: #181E29 !important;
-            }
-            
-            .nameInput {
-                margin-top: -10px;
-                margin-left: 5px;
-                margin-right: 5px;
-                --primary-text-color: #FFFFFF;
-                --paper-input-container-focus-color: var(--blue);
-            }
-            
-            b {
-                text-align: center;
-                display: block;
-            }
-            
-            .space {
-                background-color: #262F40;
-                border-radius: 8px;
-                padding: 10px;
-                margin-bottom: 5px;
-            }
-            
-            #updateNextNames {
-                margin-bottom: 5px;
-            }
-            
-            .label {
-                color: #737373;
-                font-size: 12px;
-                margin-left: 5px;
-                font-family: 'Roboto', 'Noto', sans-serif;
-                margin-top: 7px;
-                -moz-user-select: none;
-                -webkit-user-select: none;
-            }
-            
-            select {
-                width: 100%;
-                font-size: 16px;
-                margin-bottom: 5px;
-                margin-left: 2px;
-                border: 0px;
-                border-bottom: 1px solid #737373;
-                outline: 0px;
-                color: white;
-                background-color: rgba(0, 0, 0, 0);
-                padding: 4px;
-                padding-left: 0px;
-                font-family: 'Roboto', 'Noto', sans-serif;
-            }
-            
-            option {
-                color: black;
-            }
-            
-            .teamSelectBox {
-                width: 95%;
-            }
-            
-            .teamSelectorsBox {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                justify-content: center;
-                gap: 2px;
-            }
-            
-            nodecg-toggle {
-                margin: 0 auto;
-                margin-top: 10px;
-                --paper-toggle-button-label-color: white;
-                --paper-toggle-button-checked-bar-color: var(--blue);
-                --paper-toggle-button-checked-button-color: var(--blue);
-                --paper-toggle-button-checked-ink-color: var(--blue);
-            }
-            
-            #showScoreboard {
-                background-color: var(--green);
-                width: 100%;
-            }
-            
-            #hideScoreboard {
-                background-color: var(--red);
-                width: 100%;
-            }
-        </style>
-    </custom-style>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		.scoreSpace {
+			align-items: center;
+		}
+
+		.scoreSpace .verticalLayout button {
+			width: 35px;
+		}
+
+		.scoreSpace input {
+			height: 55px;
+			font-size: 3em;
+			text-align: center;
+			margin: 0 5px;
+			width: 57px;
+
+			/*hide arrows*/
+			-moz-appearance: textfield;
+		}
+
+		.scoreSpace input::-webkit-outer-spin-button,
+		.scoreSpace input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+  			margin: 0;
+		}
+
+		.selectContainer {
+			margin: 0 2.5px;
+		}
+	</style>
 </head>
-
 <body>
-    <div class="layout horizontal space">
-        <div class="layout vertical">
-            <paper-button class="scorePlus" id="teamAPlusB" raised>+</paper-button>
-            <paper-button class="scoreMinus" id="teamAMinusB" raised>-</paper-button>
-        </div>
-        <paper-input class="counter" value="0" id="teamADisplay" readonly type="number"></paper-input>
-        <div style="color: #FFFFFF; font-size: 2.5em;"> : </div>
-        <paper-input class="counter" value="0" id="teamBDisplay" readonly type="number"></paper-input>
-        <div class="layout vertical">
-            <paper-button class="scorePlus" id="teamBPlusB" raised>+</paper-button>
-            <paper-button class="scoreMinus" id="teamBMinusB" raised>-</paper-button>
-        </div>
-    </div>
-    <div class="layout vertical">
-        <div class="space">
-            <div class="teamSelectorsBox">
-                <div class="layout vertical teamSelectBox">
-                    <div class="label">Team A</div>
-                    <select id="teamASelect" class="teamSelector"></select>
-                </div>
-                <div class="layout vertical teamSelectBox">
-                    <div class="label">Team B</div>
-                    <select id="teamBSelect" class="teamSelector"></select>
-                </div>
-            </div>
-            <div class="teamSelectorsBox">
-                <div class="layout vertical teamSelectBox">
-                    <div class="label">Team A color</div>
-                    <select id="teamAColorSelect" class="colorSelect"></select>
-                </div>
-                <div class="layout vertical teamSelectBox">
-                    <div class="label">Team B color</div>
-                    <select id="teamBColorSelect" class="colorSelect"></select>
-                </div>
-            </div>
-            <paper-input class="nameInput" label="Flavor Text" id="flavorInput"></paper-input>
-            <paper-button id="updateNames">Update</paper-button>
-            <div class="layout horizontal">
-                <paper-button id="showScoreboard">SHOW</paper-button>
-                <paper-button id="hideScoreboard">HIDE</paper-button>
-            </div>
-        </div>
-        <div class="space">
-            <b>Next Match</b>
-            <!--<div class="layout horizontal">
-                <paper-input label="Next Team A Name" class="nameInput" id="teamANextNameInput"></paper-input>
-                <paper-input label="Next Team B Name" class="nameInput" id="teamBNextNameInput"></paper-input>
-            </div>-->
-            <div class="teamSelectorsBox">
-                <div class="layout vertical teamSelectBox">
-                    <div class="label">Next Team A</div>
-                    <select id="teamANextSelect" class="teamSelector"></select>
-                </div>
-                <div class="layout vertical teamSelectBox">
-                    <div class="label">Next Team B</div>
-                    <select id="teamBNextSelect" class="teamSelector"></select>
-                </div>
-            </div>
-            <paper-button id="updateNextNames">Update</paper-button>
-            <paper-button id="beginNext" style="background-color: var(--red)">Begin next match</paper-button>
-        </div>
-        <div class="space">
-            <b>Manual team names</b>
-            <nodecg-toggle replicant-name="manualTeamNameInput" noink>Manual team name input</nodecg-toggle>
-            <div class="layout horizontal">
-                <paper-input label="Team A Name" class="nameInput" id="teamANameInput"></paper-input>
-                <paper-input label="Team B Name" class="nameInput" id="teamBNameInput"></paper-input>
-            </div>
-            <paper-button id="updateManual">Update</paper-button>
-        </div>
-    </div>
-
-    <script src="scoring.js"></script>
+	<div class="horizontalLayout space scoreSpace">
+		<div class="verticalLayout">
+			<button class="btnGreen" id="teamAPlus">+</button>
+			<button class="btnRed" id="teamAMinus">-</button>
+		</div>
+		<input type="number" id="teamAScoreInput" size="2">
+		<div style="font-size: 2.5em">:</div>
+		<input type="number" id="teamBScoreInput" size="2">
+		<div class="verticalLayout">
+			<button class="btnGreen" id="teamBPlus">+</button>
+			<button class="btnRed" id="teamBMinus">-</button>
+		</div>
+	</div>
+	<div class="space">
+		<div class="title">Scoreboard</div>
+		<div class="horizontalLayout maxWidth">
+			<div class="selectContainer">
+				<div class="inputLabel">Team A</div>
+				<select id="teamASelect" class="teamSelector"></select>
+			</div>
+			<div class="selectContainer">
+				<div class="inputLabel">Team B</div>
+				<select id="teamBSelect" class="teamSelector"></select>
+			</div>
+		</div>
+		<div class="horizontalLayout maxWidth">
+			<div class="selectContainer">
+				<div class="inputLabel">Team A Color</div>
+				<select id="teamAColorSelect" class="colorSelector"></select>
+			</div>
+			<div class="selectContainer">
+				<div class="inputLabel">Team B Color</div>
+				<select id="teamBColorSelect" class="colorSelector"></select>
+			</div>
+		</div>
+		<div class="selectContainer">
+			<div class="inputLabel">Flavor Text</div>
+			<input type="text" id="flavorTextInput"></select>
+		</div>
+		<button id="SBUpdateBtn" class="btnBlue maxWidthButton">update</button>
+		<div class="horizontalLayout">
+			<button id="SBShow" class="btnGreen maxWidthButton">show</button>
+			<button id="SBHide" class="btnRed maxWidthButton">hide</button>
+		</div>
+	</div>
+	<div class="space">
+		<div class="title">Next Teams</div>
+		<div class="horizontalLayout maxWidth">
+			<div class="selectContainer">
+				<div class="inputLabel">Next Team A</div>
+				<select id="nextTeamASelect" class="teamSelector"></select>
+			</div>
+			<div class="selectContainer">
+				<div class="inputLabel">Next Team B</div>
+				<select id="nextTeamBSelect" class="teamSelector"></select>
+			</div>
+		</div>
+		<button id="nextTeamUpdateBtn" class="btnBlue maxWidthButton">update</button>
+		<button id="beginNextMatchBtn" class="btnRed maxWidthButton">begin next match</button>
+	</div>
+	<script src="globalScripts.js"></script>
+	<script src="scoring.js"></script>
 </body>
-
 </html>

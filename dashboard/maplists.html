@@ -1,138 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../bower_components/font-roboto/roboto.html">
-    <link rel="import" href="../bower_components/paper-button/paper-button.html">
-    <link rel="import" href="../bower_components/paper-input/paper-input.html">
-    <custom-style>
-        <style include="iron-flex iron-flex-alignment" is="custom-style">
-             :root {
-                --blue: #3F51B5;
-                --red: #C9513E;
-                --green: #5BA664;
-                --yellow: #FDD835;
-            }
-            
-            body {
-                font-family: 'Roboto', 'Noto', sans-serif;
-            }
-            
-            paper-button {
-                margin: 2px;
-                color: #FFFFFF;
-                font-family: 'Roboto', 'Noto', sans-serif;
-                font-weight: normal;
-                font-size: 14px;
-                -webkit-font-smoothing: antialiased;
-                background-color: var(--blue);
-                display: block;
-                text-align: center;
-            }
-            
-            paper-button[disabled] {
-                color: #A9AAA9;
-                background-color: #181E29 !important;
-            }
-            
-            paper-input {
-                --primary-text-color: #FFFFFF;
-                --paper-input-container-focus-color: var(--blue);
-            }
-            
-            .space {
-                background-color: #262F40;
-                border-radius: 8px;
-                padding: 10px;
-                margin-bottom: 5px;
-            }
-            
-            .createNewSpace {
-                display: flex;
-                justify-content: center;
-            }
-            
-            .createNewSpace paper-input {
-                height: 30px;
-                margin-top: -15px;
-                margin-left: 10px;
-            }
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		.importStatus {
+			height: 30px;
+			width: 30px;
+			background-color: #181E29;
+			border-radius: 10px;
+			margin-left: 5px;
+			align-self: center;
+		}
 
-            .mapsGrid {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 5px;
-            }
-            
-            select {
-                width: 100%;
-                font-size: 16px;
-                margin-bottom: 5px;
-                margin-left: 2px;
-                border: 0px;
-                border-bottom: 1px solid #737373;
-                outline: 0px;
-                color: white;
-                background-color: rgba(0, 0, 0, 0);
-                padding: 4px;
-                padding-left: 0px;
-                font-family: 'Roboto', 'Noto', sans-serif;
-            }
-            
-            option {
-                color: black;
-            }
-            
-            .separator {
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #fff;
-                line-height: 0.1em;
-                margin: 10px 0 20px;
-            }
-            
-            .separator span {
-                background: #262F40;
-                padding: 0 10px;
-            }
-            
-            .removeAll {
-                background-color: var(--red);
-            }
+		.separator {
+			width: 100%;
+			text-align: center;
+			border-bottom: 1px solid #fff;
+			line-height: 0.1em;
+			margin: 10px 0 20px;
+		}
+		
+		.separator span {
+			background: #262F40;
+			padding: 0 10px;
+		}
 
-            #submitFile {
-                margin-left: 5px;
-            }
+		.createNewSpace {
+			display: flex;
+			justify-content: center;
+		}
 
-            .importStatus {
-                height: 30px;
-                width: 30px;
-                background-color: #181E29;
-                border-radius: 10px;
-                margin-left: 5px;
-                align-self: center;
-            }
-        </style>
-    </custom-style>
+		.importInput {
+			height: 30px;
+			margin-left: 5px;
+		}
+
+		.mapsGrid {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 5px;
+		}
+
+		#submitFile {
+			margin-left: 5px;
+		}
+	</style>
 </head>
-
 <body>
-    <div class="space createNewSpace">
-        <paper-button class="create-button" id="create3Map" raised>NEW 3-MAP</paper-button>
-        <paper-button class="create-button" id="create5Map" raised>NEW 5-MAP</paper-button>
-        <paper-button class="create-button" id="create7Map" raised>NEW 7-MAP</paper-button>
-        <paper-button id="removeAll" class="removeAll" raised>REMOVE ALL</paper-button>
-        <paper-input label="Import maps from file" id="mapFileInput"></paper-input>
-        <paper-button class="removeAll" id="submitFile">submit</paper-button>
+	<div class="space createNewSpace">
+        <button class="btnBlue" id="create3Map">NEW 3-MAP</button>
+        <button class="btnBlue" id="create5Map">NEW 5-MAP</button>
+        <button class="btnBlue" id="create7Map">NEW 7-MAP</button>
+		<button id="removeAll" class="btnRed">REMOVE ALL</button>
+		<div class="importInput">
+			<div class="inputLabel">Import maps from file</div>
+			<input id="mapFileInput" type="text"></input>
+		</div>
+        <button class="btnBlue" id="submitFile">submit</button>
         <div class="importStatus"></div>
     </div>
     <div class="mapsGrid" id="mapsGrid">
 
     </div>
 
-    <script src="maplists.js"></script>
+	<script src="globalScripts.js"></script>
+	<script src="mapLists.js"></script>
 </body>
-
 </html>
