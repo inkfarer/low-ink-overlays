@@ -24,8 +24,8 @@ const mapNameToImagePath = {"Ancho-V Games": "stages/S2_Stage_Ancho-V_Games.png"
 "Skipper Pavilion":"stages/S2_Stage_Skipper_Pavilion.png",
 "Unknown Map":"stages/low-ink-unknown-map.png"};
 
-const bigTextValue = nodecg.Replicant('bigTextValue', { defaultValue: 'Be right back!' });
-const casterNames = nodecg.Replicant('casterNames', { defaultValue: "" });
+const bigTextValue = nodecg.Replicant('mainFlavorText', { defaultValue: 'Be right back!' });
+const casterNames = nodecg.Replicant('casterNames', { defaultValue: 'We don\'t know.' });
 const nowPlaying = nodecg.Replicant('nowPlaying');
 const nowPlayingManual = nodecg.Replicant('nowPlayingManual', {defaultValue: {
 	artist: undefined,
@@ -185,18 +185,28 @@ currentBreakScene.on('change', newValue => {
 		hideMaps();
 		showMainScene(0);
 		animSquidArrows();
+		hideSchedule();
 	} else if (newValue === "nextUp") {
 		showTopBar(1.25);
 		hideMainScene();
 		hideMaps();
 		showNextUp();
 		animSquidArrows();
+		hideSchedule();
 	} else if (newValue === "maps") {
 		showTopBar(1.25);
 		hideMainScene();
 		hideNextUp();
 		showMaps();
 		animSquidArrows();
+		hideSchedule();
+	} else if (newValue === 'schedule') {
+		showTopBar(1.25);
+		hideMainScene();
+		hideNextUp();
+		hideMaps();
+		animSquidArrows();
+		showSchedule();
 	}
 });
 
@@ -622,6 +632,14 @@ function hideMaps() {
 	gsap.to("#nextMaps", 1.5, {ease: 'power3.inOut',  top: 1080});
 }
 
+function showSchedule() {
+	gsap.fromTo("#sceneSchedule", {top: -1080}, {top: 0, duration: 1.5, ease: 'power3.inOut'});
+}
+
+function hideSchedule() {
+	gsap.to("#sceneSchedule", 1.5, {ease: 'power3.inOut',  top: 1080});
+}
+
 function animSquidArrows() {
 	gsap.to('#squidarrows', {duration: 1.5, bottom: -1085, ease: 'power3.inOut', onComplete: function() {
 		document.querySelector('#squidarrows').style.bottom = '0px';
@@ -647,4 +665,227 @@ function updateMapLists(maplist) {
 		}
 	}});
 	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 1, delay: 0.5});
+}
+
+// Stream Schedule
+
+const roundList = [
+    [
+        {
+            name: 'Swiss Round 1',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 2',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 3',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 4',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 5',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 6',
+            length: 35
+        }
+    ],
+    [
+        {
+            name: 'Winners Round 1',
+            length: 45
+        },
+        {
+            name: 'Winners Round 2',
+            length: 45
+        },
+        {
+            name: 'Winners Round 3',
+            length: 45
+        },
+        {
+            name: 'Winners Round 4',
+            length: 45
+        },
+        {
+            name: 'Losers Round 6',
+            length: 45
+        },
+        {
+            name: 'Grand Finals',
+            length: 55
+        },
+    ]
+];
+
+const scheduleInfo = nodecg.Replicant('scheduleInfo', {defaultValue: {
+    day: 0,
+    endTimes: [
+        [
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            }
+        ],
+        [
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            }
+        ]
+    ]
+}});
+
+const GMTOffset = -3;
+const ETOffset = -7;
+
+scheduleInfo.on('change', (newValue, oldValue) => {
+	let roundInfo = roundList[newValue.day];
+	let endTimes = newValue.endTimes[newValue.day];
+	let scheduleGrid = document.querySelector('.scheduleGrid');
+
+	scheduleGrid.innerHTML = '';
+	var scheduleHTML = '';
+	for (let i = 0; i < roundInfo.length; i++) {
+		let roundEnded = isRoundEnded(endTimes[i]);
+		let roundStatus = (!roundEnded) ? 'Estimated' : 'Finished at';
+		let euHour, euMin, naHour, naAMPM;
+
+		if (roundEnded) {
+			euHour = offset24Hour(endTimes[i].hour, GMTOffset);
+			euMin = pad(endTimes[i].minute, 2);
+			naHour = offset12Hour(endTimes[i].hour, ETOffset).hour;
+			naAMPM = offset12Hour(endTimes[i].hour, ETOffset).ampm;
+		} else {
+			let endedRounds = endTimes.filter(elem => isRoundEnded(elem));
+			let lastEndedRound = endedRounds[endedRounds.length - 1];
+			let stepsFromLastEndedRound = i - endedRounds.length;
+			let lastEndedRoundDate = new Date();
+
+			for (let j = 0; j < stepsFromLastEndedRound + 1; j++) {
+				lastEndedRoundDate.setMinutes(lastEndedRound.minute);
+				lastEndedRoundDate.setHours(lastEndedRound.hour);
+
+				lastEndedRoundDate = addMinutes(lastEndedRoundDate, 5);
+
+				for (let g = 1; g < stepsFromLastEndedRound + 1; g++) {
+					let roundInfoIndex = endedRounds.length + g;
+					let info = roundInfo[roundInfoIndex];
+					lastEndedRoundDate = addMinutes(lastEndedRoundDate, info.length);
+				}
+			}
+			
+			euHour = offset24Hour(lastEndedRoundDate.getHours(), GMTOffset);
+			euMin = pad(lastEndedRoundDate.getMinutes(), 2);
+			naHour = offset12Hour(lastEndedRoundDate.getHours(), ETOffset).hour;
+			naAMPM = offset12Hour(lastEndedRoundDate.getHours(), ETOffset).ampm;
+		}
+
+		scheduleHTML += `
+			<div class="scheduleItem">
+				<div class="scheduleRoundName">${roundInfo[i].name}</div>
+				<div class="scheduleTime">
+					<div class="scheduleRoundStatus">${roundStatus}</div>
+					<div class="scheduleRoundTimes">
+						<div class="scheduleRoundTime">${naHour}:${euMin} <span class="ampm">${naAMPM}</span></div>
+						<div class="scheduleRoundTime">${euHour}:${euMin}</div>
+					</div>
+				</div>
+			</div>
+		`
+	}
+
+	scheduleGrid.innerHTML = scheduleHTML;
+});
+
+function pad(string, length) {
+	string = String(string);
+
+	if (string.length < length) {
+		let zeroCount = length - string.length;
+		return '0'.repeat(zeroCount) + string;
+	} else return string;
+}
+
+function offset24Hour(hour, offset) {
+	hour = Number(hour);
+	if (Math.sign(hour + offset) === -1) {
+		return 24 + (hour + offset);
+	} else {
+		if (hour + offset === 24) {return 0;}
+		else if (hour + offset > 24) {
+			return hour + offset - 24;
+		}
+		else return hour + offset;
+	}
+}
+
+function offset12Hour(hour, offset) {
+	let offset24 = offset24Hour(hour, offset);
+	
+	if (offset24 >= 13) {
+		return {
+			hour: offset24 - 12,
+			ampm: 'PM'
+		};
+	} else {
+		return {
+			hour: offset24,
+			ampm: 'AM'
+		};
+	}
+}
+
+function isRoundEnded(endTime) {
+	return (endTime.hour !== -1 && endTime.minute !== -1);
+};
+
+function addMinutes(date, minutes) {
+    return new Date(date.getTime() + minutes*60000);
 }

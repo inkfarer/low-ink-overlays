@@ -30,17 +30,17 @@ const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
 }});
 
 nextStageTime.on('change', newValue => {
-    document.querySelector('.minInput').value = newValue.minute;
-	document.querySelector('.hourInput').value = newValue.hour;
-	document.querySelector('.daySelect').value = `${newValue.day}/${parseInt(newValue.month) + 1}`;
+    document.querySelector('#nsMinInput').value = newValue.minute;
+	document.querySelector('#nsHourInput').value = newValue.hour;
+	document.querySelector('#nsDaySelect').value = `${newValue.day}/${parseInt(newValue.month) + 1}`;
 });
 
-function updateDaySelector() {
+function updateDaySelector(id) {
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const daySelect = document.querySelector('.daySelect');
+    const daySelect = document.querySelector(`#${id}`);
 
     const todayElem = getDayElem(today);
     daySelect.appendChild(todayElem);
@@ -77,10 +77,10 @@ function updateStageTime() {
     }
 }
 
-updateDaySelector();
+updateDaySelector('nsDaySelect');
 
-addSelectChangeReminder(['daySelect'], updateMainScene);
-addInputChangeReminder(['breakFlavorInput', 'casterInput', 'hourInput', 'minInput'], updateMainScene);
+addSelectChangeReminder(['nsDaySelect'], updateMainScene);
+addInputChangeReminder(['breakFlavorInput', 'casterInput', 'nsHourInput', 'nsMinInput'], updateMainScene);
 
 // Next Teams
 
@@ -183,13 +183,14 @@ const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: '
 showMain.onclick = () => { currentBreakScene.value = "mainScene"; }
 showNextUp.onclick = () => { currentBreakScene.value = "nextUp"; }
 showMaps.onclick = () => { currentBreakScene.value = "maps"; }
+showSchedule.onclick = () => { currentBreakScene.value = 'schedule'; }
 
 currentBreakScene.on('change', newValue => {
     disableSceneButtons(newValue);
 });
 
 function disableSceneButtons(currentScene) {
-    const elements = ["showMain", "showNextUp", "showMaps"];
+    const elements = ["showMain", "showNextUp", "showMaps", 'showSchedule'];
     elements.forEach(element => { document.getElementById(element).disabled = false; });
     if (currentScene === "mainScene") {
         showMain.disabled = true;
@@ -197,5 +198,238 @@ function disableSceneButtons(currentScene) {
         showNextUp.disabled = true;
     } else if (currentScene === "maps") {
         showMaps.disabled = true;
+    } else if (currentScene === 'schedule') {
+        showSchedule.disabled = true;
     }
 }
+
+// Schedule
+
+const dayList = ['Day 1', 'Day 2'];
+const roundList = [
+    [
+        {
+            name: 'Swiss Round 1',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 2',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 3',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 4',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 5',
+            length: 35
+        },
+        {
+            name: 'Swiss Round 6',
+            length: 35
+        }
+    ],
+    [
+        {
+            name: 'Winners Round 1',
+            length: 45
+        },
+        {
+            name: 'Winners Round 2',
+            length: 45
+        },
+        {
+            name: 'Winners Round 3',
+            length: 45
+        },
+        {
+            name: 'Winners Round 4',
+            length: 45
+        },
+        {
+            name: 'Losers Round 6',
+            length: 45
+        },
+        {
+            name: 'Grand Finals',
+            length: 55
+        },
+    ]
+];
+// Round names minus round length
+const roundNames = roundList.map(a => a.map(b => b.name));
+
+const scheduleInfo = nodecg.Replicant('scheduleInfo', {defaultValue: {
+    day: 0,
+    endTimes: [
+        [
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            }
+        ],
+        [
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            },
+            {
+                hour: -1,
+                minute: -1
+            }
+        ]
+    ]
+}});
+
+// I couldn't figure out what these are called - this is the closest I could find:
+// https://ux.stackexchange.com/questions/121768/what-is-this-ui-element-called-a-horizontal-scrolling-menu
+function registerScrollTabs(data, plusBtn, minusBtn, dataDisplay, index) {
+    dataDisplay.innerText = data[index.index];
+
+    plusBtn.addEventListener('click', plusBtn.fn = function onScrollTabPlus() {
+        if (index.index !== data.length - 1) {
+            index.index++;
+        } else {
+            index.index = 0;
+        }
+    }, false);
+
+    minusBtn.addEventListener('click', minusBtn.fn = function onScrollTabMinus() {
+        if (index.index !== 0) {
+            index.index--;
+        } else {
+            index.index = data.length - 1;
+        }
+    }, false);
+}
+
+function updateScrollTabs(data, plusBtn, minusBtn, dataDisplay, index) {
+    dataDisplay.innerText = data[index.index];
+
+    plusBtn.fn = function onScrollTabPlus() {
+        if (index.index !== data.length - 1) {
+            index.index++;
+        } else {
+            index.index = 0;
+        }
+    };
+
+    minusBtn.fn = function onScrollTabMinus() {
+        if (index.index !== 0) {
+            index.index--;
+        } else {
+            index.index = data.length - 1;
+        }
+    };
+}
+
+// silly workaround to force js to pass by reference
+var dayIndex = {index: 0};
+var roundIndex = {index: 0};
+
+registerScrollTabs(roundNames[0], scRoundPlus, scRoundMinus, scRoundDisplay, roundIndex);
+
+NodeCG.waitForReplicants(scheduleInfo).then(() => {
+    dayIndex.index = scheduleInfo.value.day;
+
+    scheduleInfo.on('change', newValue => {
+        scDayDisplay.innerText = dayList[newValue.day];
+        updateScrollTabs(roundNames[newValue.day], scRoundPlus, scRoundMinus, scRoundDisplay, roundIndex);
+        updateRoundEndTimeInput();
+    });
+
+    let roundSwitchElems = [scRoundMinus, scRoundPlus];
+    roundSwitchElems.forEach(elem => {elem.addEventListener('click', () => {
+        scRoundDisplay.innerText = roundNames[dayIndex.index][roundIndex.index];
+
+        updateRoundEndTimeInput();
+    })});
+});
+
+registerScrollTabs(dayList, scDayPlus, scDayMinus, scDayDisplay, dayIndex);
+
+// Switch round select to the selected day's rounds
+let daySwitchElems = [scDayPlus, scDayMinus];
+daySwitchElems.forEach(elem => {elem.addEventListener('click', () => {
+    roundIndex.index = 0;
+    scheduleInfo.value.day = dayIndex.index;
+    updateRoundEndTimeInput();
+})});
+
+function updateRoundEndTimeInput() {
+    let roundEndTime = scheduleInfo.value.endTimes[dayIndex.index][roundIndex.index];
+    document.querySelector('#scMinInput').value = roundEndTime.minute == -1 ? '0' : roundEndTime.minute;
+    document.querySelector('#scHourInput').value = roundEndTime.hour == -1 ? '0' : roundEndTime.hour;
+}
+
+scUpdate.onclick = () => {
+    const min = parseInt(document.querySelector('#scMinInput').value);
+    const hour = parseInt(document.querySelector('#scHourInput').value);
+    if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
+        scheduleInfo.value.endTimes[dayIndex.index][roundIndex.index] = {
+            hour: hour,
+            minute: min
+        };
+    }
+};
+
+scResetCurrent.onclick = () => {
+    scheduleInfo.value.endTimes[dayIndex.index][roundIndex.index] = {
+        hour: -1,
+        minute: -1
+    };
+};
+
+scResetAll.onclick = () => {
+    let schedule = scheduleInfo.value.endTimes;
+
+    for (let i = 0; i < schedule.length; i++) {
+        for (let j = 0; j < schedule[i].length; j++) {
+            schedule[i][j] = {
+                hour: -1,
+                minute: -1
+            };
+        }
+        
+    }
+};

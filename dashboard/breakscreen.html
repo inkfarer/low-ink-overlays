@@ -55,8 +55,18 @@
 		}
 
 		.breakGrid > * {
-			flex: 0 0 calc(50% - 30px);
+			flex: 0 0 calc(50% - 10px);
 			margin: 5px;
+		}
+
+		.selector {
+			display: grid;
+			grid-template-columns: 1fr 4fr 1fr;
+		}
+
+		.roundName {
+			text-align: center;
+			align-self: center;
 		}
 	</style>
 </head>
@@ -80,15 +90,15 @@
 				<div class="timerContainer">
 					<div class="timerContainerNum">
 						<div class="inputLabel">Hour</div>
-						<input class="hourInput" id="hourInput" type="number" value="0">
+						<input class="hourInput" id="nsHourInput" type="number" value="0">
 					</div>
 					<div class="timerContainerNum">
 						<div class="inputLabel">Minute</div>
-						<input class="minInput" id="minInput" type="number" value="0">
+						<input class="minInput" id="nsMinInput" type="number" value="0">
 					</div>
 					<div class="timerContainerDay">
 						<div class="inputLabel">Day</div>
-						<select class="daySelect" id="daySelect"></select>
+						<select class="daySelect" id="nsDaySelect"></select>
 					</div>
 				</div>
 				<div class="toggleContainer">
@@ -129,7 +139,39 @@
 				<button id="nextTeamUpdateBtn" class="btnBlue maxWidthButton">update</button>
 			</div>
 
-			
+			<div class="space">
+				<div class="title">Schedule</div>
+				<div class="showHideSpace">
+					<button id="showSchedule" class="btnGreen">Show</button>
+				</div>
+
+				<div class="selector">
+					<button class="btnRed" id="scDayMinus">-</button>
+					<div class="roundName" id="scDayDisplay">Day 1</div>
+					<button class="btnGreen" id="scDayPlus">+</button>
+				</div>
+
+				<div class="selector">
+					<button class="btnRed" id="scRoundMinus">-</button>
+					<div class="roundName" id="scRoundDisplay">Round 1</div>
+					<button class="btnGreen" id="scRoundPlus">+</button>
+				</div>
+
+				<div class="title">Round end time</div>
+				<div class="timerContainer">
+					<div class="timerContainerNum">
+						<div class="inputLabel">Hour</div>
+						<input class="hourInput" id="scHourInput" type="number" value="0">
+					</div>
+					<div class="timerContainerNum">
+						<div class="inputLabel">Minute</div>
+						<input class="minInput" id="scMinInput" type="number" value="0">
+					</div>
+				</div>
+				<button id="scResetCurrent" class="btnRed maxWidthButton">reset</button>
+				<button id="scUpdate" class="btnBlue maxWidthButton">update</button>
+				<button id="scResetAll" class="btnRed maxWidthButton">reset all</button>
+			</div>
 		</div>
 	</div>
 

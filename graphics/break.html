@@ -384,6 +384,72 @@
             height: 0;
             margin-top: -57px;
         }
+
+        .scheduleGrid {
+            width: 1200px;
+            height: 700px;
+            position: absolute;
+            top: 275px;
+            display: grid;
+            grid-template-rows: repeat(6, 1fr);
+            gap: 25px;
+        }
+
+        .scheduleItem {
+            background-color: var(--containerBG);
+            filter: drop-shadow(-5px 5px 0px var(--lowInkOrange));
+            color: white;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 0 15px;
+            font-family: "Montserrat";
+        }
+
+        .scheduleRoundName {
+            justify-self: flex-start;
+            flex-grow: 1;
+            font-size: 2.5em;
+        }
+
+        .scheduleTime {
+            justify-self: flex-end;
+            text-align: center;
+        }
+
+        .scheduleRoundTime {
+            font-size: 3em;
+            margin-top: -5px;
+            margin-left: 15px;
+            width: 175px;
+        }
+
+        .scheduleRoundTimes {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .scheduleRoundStatus {
+            font-size: 1.5em;
+        }
+
+        #sceneSchedule {
+            display: flex;
+            justify-content: center;
+        }
+
+        .ampm {
+            font-size: 0.4em;
+        }
+
+        .scheduleZoneLabels {
+            color: white;
+            font-family: "Montserrat";
+            position: absolute;
+            top: 235px;
+            margin-left: 900px;
+            font-size: 0.75em;
+        }
     </style>
 </head>
 
@@ -460,6 +526,19 @@
         <div class="sceneTitle nextMapsTitle">upcoming stages</div>
         <div id="upcomingStagesGrid" class="upcomingStagesGrid">
 
+        </div>
+    </div>
+
+    <div id="sceneSchedule" class="sceneWrapper">
+        <div class="sceneTitle nextMapsTitle">stream schedule</div>
+        <div class="scheduleZoneLabels">
+            <div class="scheduleRoundTimes">
+                <div class="scheduleRoundTime">ET</div>
+                <div class="scheduleRoundTime">GMT</div>
+            </div>
+        </div>
+        <div class="scheduleGrid">
+            
         </div>
     </div>
 
