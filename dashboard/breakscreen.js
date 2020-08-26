@@ -408,6 +408,11 @@ daySwitchElems.forEach(elem => {elem.addEventListener('click', () => {
 })});
 
 // Set time input to currently selected value
+/* roundEndTime example:
+{
+    minute: 25,
+    hour: 23
+}*/
 function updateRoundEndTimeInput(roundEndTime) {
     document.querySelector('#scMinInput').value = roundEndTime.minute == -1 ? '0' : roundEndTime.minute;
     document.querySelector('#scHourInput').value = roundEndTime.hour == -1 ? '0' : roundEndTime.hour;

@@ -782,9 +782,12 @@ const scheduleInfo = nodecg.Replicant('scheduleInfo', {defaultValue: {
     ]
 }});
 
+// Offsets between local time and stream time zones
+// Postiive numbers and 0 are untested
 const GMTOffset = -3;
 const ETOffset = -7;
 
+// this frightens me and I wrote it
 scheduleInfo.on('change', (newValue, oldValue) => {
 	let roundInfo = roundList[newValue.day];
 	let endTimes = newValue.endTimes[newValue.day];
@@ -797,24 +800,29 @@ scheduleInfo.on('change', (newValue, oldValue) => {
 		let roundStatus = (!roundEnded) ? 'Estimated' : 'Finished at';
 		let euHour, euMin, naHour, naAMPM;
 
+		// If the round has ended, just use the times that were inputted for that round
 		if (roundEnded) {
 			euHour = offset24Hour(endTimes[i].hour, GMTOffset);
 			euMin = pad(endTimes[i].minute, 2);
 			naHour = offset12Hour(endTimes[i].hour, ETOffset).hour;
 			naAMPM = offset12Hour(endTimes[i].hour, ETOffset).ampm;
 		} else {
+			// Now, if the round hasn't ended...
 			let endedRounds = endTimes.filter(elem => isRoundEnded(elem));
 			let lastEndedRound = endedRounds[endedRounds.length - 1];
 			let stepsFromLastEndedRound = i - endedRounds.length;
 			let lastEndedRoundDate = new Date();
 
 			for (let j = 0; j < stepsFromLastEndedRound + 1; j++) {
+				// Get the last ended round's time, and start adding to it
 				lastEndedRoundDate.setMinutes(lastEndedRound.minute);
 				lastEndedRoundDate.setHours(lastEndedRound.hour);
 
+				// If this is the next round, add five minutes
 				lastEndedRoundDate = addMinutes(lastEndedRoundDate, 5);
 
 				for (let g = 1; g < stepsFromLastEndedRound + 1; g++) {
+					// For every round after that, add the lengths of the previous rounds to the estimated start time
 					let roundInfoIndex = endedRounds.length + g;
 					let info = roundInfo[roundInfoIndex];
 					lastEndedRoundDate = addMinutes(lastEndedRoundDate, info.length);
@@ -853,6 +861,7 @@ function pad(string, length) {
 	} else return string;
 }
 
+// Offset hour by X hours
 function offset24Hour(hour, offset) {
 	hour = Number(hour);
 	if (Math.sign(hour + offset) === -1) {
@@ -866,6 +875,12 @@ function offset24Hour(hour, offset) {
 	}
 }
 
+// Offset hour by X hours
+// Returns:
+/*{
+	hour: hour, in 12hr format
+	ampm: either 'AM' or 'PM'
+}*/
 function offset12Hour(hour, offset) {
 	let offset24 = offset24Hour(hour, offset);
 	
@@ -882,10 +897,12 @@ function offset12Hour(hour, offset) {
 	}
 }
 
+// If the hour and minute are -1, the round hasn't ended
 function isRoundEnded(endTime) {
 	return (endTime.hour !== -1 && endTime.minute !== -1);
 };
 
+// Add minutes to date object
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
