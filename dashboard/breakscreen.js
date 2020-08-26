@@ -263,6 +263,8 @@ const roundList = [
 // Round names minus round length
 const roundNames = roundList.map(a => a.map(b => b.name));
 
+// -1 = "unset"
+// Contains currently selected day and what hour and minute every round is set to end on for both days
 const scheduleInfo = nodecg.Replicant('scheduleInfo', {defaultValue: {
     day: 0,
     endTimes: [
@@ -323,6 +325,8 @@ const scheduleInfo = nodecg.Replicant('scheduleInfo', {defaultValue: {
 
 // I couldn't figure out what these are called - this is the closest I could find:
 // https://ux.stackexchange.com/questions/121768/what-is-this-ui-element-called-a-horizontal-scrolling-menu
+
+// Creates event listeners for moving left and right in scroll tab
 function registerScrollTabs(data, plusBtn, minusBtn, dataDisplay, index) {
     dataDisplay.innerText = data[index.index];
 
@@ -343,6 +347,7 @@ function registerScrollTabs(data, plusBtn, minusBtn, dataDisplay, index) {
     }, false);
 }
 
+// Update event listeners set by registerScrollTabs(), used for when data changes
 function updateScrollTabs(data, plusBtn, minusBtn, dataDisplay, index) {
     dataDisplay.innerText = data[index.index];
 
@@ -367,41 +372,48 @@ function updateScrollTabs(data, plusBtn, minusBtn, dataDisplay, index) {
 var dayIndex = {index: 0};
 var roundIndex = {index: 0};
 
+// Create event listeners for round names
 registerScrollTabs(roundNames[0], scRoundPlus, scRoundMinus, scRoundDisplay, roundIndex);
 
 NodeCG.waitForReplicants(scheduleInfo).then(() => {
-    dayIndex.index = scheduleInfo.value.day;
 
-    scheduleInfo.on('change', newValue => {
+    scheduleInfo.on('change', (newValue, oldValue) => {
         scDayDisplay.innerText = dayList[newValue.day];
+        dayIndex.index = newValue.day;
+        if (oldValue && oldValue.day !== newValue.day) {
+            roundIndex.index = 0;
+        }
+        // If selected day changes, update event listeners for round selection
         updateScrollTabs(roundNames[newValue.day], scRoundPlus, scRoundMinus, scRoundDisplay, roundIndex);
-        updateRoundEndTimeInput();
+        // Update time input with new values
+        updateRoundEndTimeInput(newValue.endTimes[newValue.day][roundIndex.index]);
     });
 
     let roundSwitchElems = [scRoundMinus, scRoundPlus];
     roundSwitchElems.forEach(elem => {elem.addEventListener('click', () => {
         scRoundDisplay.innerText = roundNames[dayIndex.index][roundIndex.index];
 
-        updateRoundEndTimeInput();
+        updateRoundEndTimeInput(scheduleInfo.value.endTimes[dayIndex.index][roundIndex.index]);
     })});
 });
 
 registerScrollTabs(dayList, scDayPlus, scDayMinus, scDayDisplay, dayIndex);
 
-// Switch round select to the selected day's rounds
+// Event listener to switch round select to the selected day's rounds
 let daySwitchElems = [scDayPlus, scDayMinus];
 daySwitchElems.forEach(elem => {elem.addEventListener('click', () => {
     roundIndex.index = 0;
     scheduleInfo.value.day = dayIndex.index;
-    updateRoundEndTimeInput();
+    updateRoundEndTimeInput(scheduleInfo.value.endTimes[dayIndex.index][roundIndex.index]);
 })});
 
-function updateRoundEndTimeInput() {
-    let roundEndTime = scheduleInfo.value.endTimes[dayIndex.index][roundIndex.index];
+// Set time input to currently selected value
+function updateRoundEndTimeInput(roundEndTime) {
     document.querySelector('#scMinInput').value = roundEndTime.minute == -1 ? '0' : roundEndTime.minute;
     document.querySelector('#scHourInput').value = roundEndTime.hour == -1 ? '0' : roundEndTime.hour;
 }
 
+// Update schedule
 scUpdate.onclick = () => {
     const min = parseInt(document.querySelector('#scMinInput').value);
     const hour = parseInt(document.querySelector('#scHourInput').value);
@@ -413,6 +425,7 @@ scUpdate.onclick = () => {
     }
 };
 
+// Reset currently selected round
 scResetCurrent.onclick = () => {
     scheduleInfo.value.endTimes[dayIndex.index][roundIndex.index] = {
         hour: -1,
@@ -420,6 +433,7 @@ scResetCurrent.onclick = () => {
     };
 };
 
+// Reset all rounds
 scResetAll.onclick = () => {
     let schedule = scheduleInfo.value.endTimes;
 
