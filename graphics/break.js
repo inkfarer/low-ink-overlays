@@ -791,6 +791,7 @@ const ETOffset = -7;
 scheduleInfo.on('change', (newValue, oldValue) => {
 	let roundInfo = roundList[newValue.day];
 	let endTimes = newValue.endTimes[newValue.day];
+	let lastEndedRoundIndex = getLastEndedRoundIndex(endTimes);
 	let scheduleGrid = document.querySelector('.scheduleGrid');
 
 	scheduleGrid.innerHTML = '';
@@ -799,6 +800,14 @@ scheduleInfo.on('change', (newValue, oldValue) => {
 		let roundEnded = isRoundEnded(endTimes[i]);
 		let roundStatus = (!roundEnded) ? 'Estimated' : 'Finished at';
 		let euHour, euMin, naHour, naAMPM;
+
+		// If there's an ended round after this one, assume we don't know the end time for this round
+		if (lastEndedRoundIndex > i) {
+			euHour = '??';
+			euMin = '??';
+			naHour = '??'
+			naAMPM = '';
+		}
 
 		// If the round has ended, just use the times that were inputted for that round
 		if (roundEnded) {
@@ -829,10 +838,12 @@ scheduleInfo.on('change', (newValue, oldValue) => {
 				}
 			}
 			
-			euHour = offset24Hour(lastEndedRoundDate.getHours(), GMTOffset);
-			euMin = pad(lastEndedRoundDate.getMinutes(), 2);
-			naHour = offset12Hour(lastEndedRoundDate.getHours(), ETOffset).hour;
-			naAMPM = offset12Hour(lastEndedRoundDate.getHours(), ETOffset).ampm;
+			if (!euHour && !euMin && !naHour && !naAMPM) {
+				euHour = offset24Hour(lastEndedRoundDate.getHours(), GMTOffset);
+				euMin = pad(lastEndedRoundDate.getMinutes(), 2);
+				naHour = offset12Hour(lastEndedRoundDate.getHours(), ETOffset).hour;
+				naAMPM = offset12Hour(lastEndedRoundDate.getHours(), ETOffset).ampm;
+			}
 		}
 
 		scheduleHTML += `
@@ -905,4 +916,10 @@ function isRoundEnded(endTime) {
 // Add minutes to date object
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
+}
+
+function getLastEndedRoundIndex(data) {
+	for (let i = data.length - 1; i >= 0; i--) {
+		if (isRoundEnded(data[i])) {return i; }
+	}
 }
