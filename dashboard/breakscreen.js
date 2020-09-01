@@ -452,3 +452,10 @@ scResetAll.onclick = () => {
         
     }
 };
+
+// RGB Mode
+const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
+
+RGBMode.on('change', newValue => {
+    document.querySelector('#checkSetRGB').checked = newValue;
+});

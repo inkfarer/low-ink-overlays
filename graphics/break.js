@@ -673,27 +673,27 @@ const roundList = [
     [
         {
             name: 'Swiss Round 1',
-            length: 35
+            length: 30
         },
         {
             name: 'Swiss Round 2',
-            length: 35
+            length: 30
         },
         {
             name: 'Swiss Round 3',
-            length: 35
+            length: 30
         },
         {
             name: 'Swiss Round 4',
-            length: 35
+            length: 30
         },
         {
             name: 'Swiss Round 5',
-            length: 35
+            length: 30
         },
         {
             name: 'Swiss Round 6',
-            length: 35
+            length: 30
         }
     ],
     [
@@ -798,7 +798,7 @@ scheduleInfo.on('change', (newValue, oldValue) => {
 	var scheduleHTML = '';
 	for (let i = 0; i < roundInfo.length; i++) {
 		let roundEnded = isRoundEnded(endTimes[i]);
-		let roundStatus = (!roundEnded) ? 'Estimated' : 'Finished at';
+		let roundStatus = (!roundEnded) ? 'Estimated' : 'Started at';
 		let euHour, euMin, naHour, naAMPM;
 
 		// If there's an ended round after this one, assume we don't know the end time for this round
@@ -828,9 +828,9 @@ scheduleInfo.on('change', (newValue, oldValue) => {
 				lastEndedRoundDate.setHours(lastEndedRound.hour);
 
 				// If this is the next round, add five minutes
-				lastEndedRoundDate = addMinutes(lastEndedRoundDate, 5);
+				//lastEndedRoundDate = addMinutes(lastEndedRoundDate, 5);
 
-				for (let g = 1; g < stepsFromLastEndedRound + 1; g++) {
+				for (let g = 0; g < stepsFromLastEndedRound + 1; g++) {
 					// For every round after that, add the lengths of the previous rounds to the estimated start time
 					let roundInfoIndex = endedRounds.length + g;
 					let info = roundInfo[roundInfoIndex];
