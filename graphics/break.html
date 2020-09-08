@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <!--
+	   All rights reserved, reuse not permitted.
+	  -->
     <meta charset="UTF-8">
     <script src="../node_modules/gsap/dist/gsap.js"></script>
     <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
@@ -17,7 +20,7 @@
             --largeTextOnBGColor: #fff;
             --mapsSceneTextColor: #fff;
         }
-        
+
         body {
             width: 1920px;
             height: 1080px;
@@ -26,7 +29,7 @@
             background-color: var(--BGColor) !important;
             margin: 0;
         }
-        
+
         .logo {
             width: 750px;
             height: 750px;
@@ -36,7 +39,7 @@
             left: 150px;
             filter: drop-shadow(0px 0px 10px var(--lowInkOrange));
         }
-        
+
         #squidarrows {
             left: 0px;
             bottom: 0px;
@@ -44,7 +47,7 @@
             height: 2160px;
             z-index: -10;
         }
-        
+
         #squidarrowswrapper {
             position: absolute;
             overflow: hidden;
@@ -53,7 +56,7 @@
             top: 0;
             left: 0;
         }
-        
+
         .mainSceneGrid {
             display: grid;
             grid-template-columns: 1fr;
@@ -67,7 +70,7 @@
             justify-items: center;
             align-items: center;
         }
-        
+
         .mainSceneBigText {
             color: var(--textColor);
             font-size: 10em;
@@ -76,23 +79,23 @@
             top: -25px;
             left: 15px;
         }
-        
+
         .mainSceneBigBG {
             background-color: var(--containerBG);
             width: 700px;
             height: 170px;
             filter: drop-shadow(-10px 10px 0 var(--lowInkOrange));
         }
-        
+
         .mainSceneBG {
             background-color: var(--containerBG);
             padding: 4px 0;
         }
-        
+
         #breakFlavorTextBG {
             width: 100px;
         }
-        
+
         .breakMainSmallText {
             color: var(--textColor);
             font-family: 'Montserrat', sans-serif;
@@ -100,7 +103,7 @@
             font-size: 2.5em;
             margin-left: 10px;
         }
-        
+
         #measurer,
         .measurer {
             font-family: 'Montserrat', sans-serif;
@@ -111,7 +114,7 @@
             position: absolute;
             visibility: visible;
         }
-        
+
         .mainSceneIconBG {
             background-color: var(--lowInkOrange);
             height: 57px;
@@ -119,7 +122,7 @@
             float: right;
             position: relative;
         }
-        
+
         .mainSceneIcon {
             height: 45px;
             width: 45px;
@@ -127,7 +130,7 @@
             top: 6px;
             left: 6px;
         }
-        
+
         .mainSceneIconRaster {
             width: 45px;
             position: absolute;
@@ -135,19 +138,19 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        
+
         .mainSceneMusic {
             display: block;
         }
-        
+
         .withIcon {
             margin-right: 57px;
         }
-        
+
         .mainSceneWrapper {
             filter: drop-shadow(-3px 3px 0 var(--lowInkOrange));
         }
-        
+
         #topBar {
             display: grid;
             grid-template-columns: 1fr 15fr;
@@ -163,19 +166,19 @@
             top: -80px;
             z-index: 9999;
         }
-        
+
         .smallIcon {
             height: 60px;
             margin-left: 30px;
         }
-        
+
         #topBarText {
             color: var(--textColor);
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5em;
             font-weight: 700;
         }
-        
+
         #topBarInfoText {
             color: var(--textColor);
             font-family: 'Montserrat', sans-serif;
@@ -184,13 +187,13 @@
             position: absolute;
             right: 100px;
         }
-        
+
         #topBarInfoIcon {
             position: absolute;
             right: 30px;
             height: 60px;
         }
-        
+
         .versus {
             position: absolute;
             top: 50%;
@@ -202,15 +205,15 @@
             font-size: 10em;
             text-shadow: 0px 0px 10px var(--lowInkOrange);
         }
-        
+
         #teamAInfo {
             left: 250px;
         }
-        
+
         #teamBInfo {
             right: 250px;
         }
-        
+
         .teamInfo {
             width: 500px;
             height: 600px;
@@ -220,7 +223,7 @@
             filter: drop-shadow(-5px 5px 0px var(--lowInkOrange));
             overflow: hidden;
         }
-        
+
         .teamImage {
             width: 400px;
             height: 400px;
@@ -234,11 +237,11 @@
             background-position: 50% 50%;
             background-size: cover;
         }
-        
+
         .rightAlign {
             text-align: right;
         }
-        
+
         .teamName {
             color: var(--textColor);
             font-family: 'Montserrat', sans-serif;
@@ -248,7 +251,7 @@
             margin-bottom: 30px;
             margin-left: 25px;
         }
-        
+
         .teamPlayer {
             color: var(--textColor);
             font-family: 'Montserrat', sans-serif;
@@ -258,7 +261,7 @@
             margin-left: 35px;
             margin-right: 35px;
         }
-        
+
         .sceneTitle {
             font-family: 'lemon/milk';
             text-align: center;
@@ -267,17 +270,17 @@
             width: 100%;
             text-shadow: 0px 0px 10px var(--lowInkOrange);
         }
-        
+
         .nextUpTitle {
             font-size: 7em;
             top: 150px;
         }
-        
+
         .nextMapsTitle {
             font-size: 5em;
             top: 120px;
         }
-        
+
         .sceneWrapper {
             height: 1080px;
             width: 1920px;
@@ -285,7 +288,7 @@
             top: -1080px;
             left: 0;
         }
-        
+
         .upcomingStagesGrid {
             height: 700px;
             display: grid;
@@ -299,27 +302,27 @@
             grid-template-rows: 1fr;
             filter: drop-shadow(-5px 5px 0px var(--lowInkOrange));
         }
-        
+
         .stageBox {
             background-color: var(--containerBG);
             overflow: hidden;
             position: relative;
         }
-        
+
         .mapsStagePic {
             height: 700px;
             z-index: -1;
             margin-left: -500px;
         }
-        
+
         .mapsStagePic3Maps {
             margin-left: -400px !important;
         }
-        
+
         .mapsStagePic5Maps {
             margin-left: -460px !important;
         }
-        
+
         .mapsModeName {
             font-family: 'Montserrat', sans-serif;
             color: var(--mapsSceneTextColor);
@@ -329,7 +332,7 @@
             font-size: 1.5em;
             z-index: 10;
         }
-        
+
         .mapsStageName {
             font-family: 'Montserrat', sans-serif;
             color: var(--mapsSceneTextColor);
@@ -339,7 +342,7 @@
             font-size: 2em;
             z-index: 10;
         }
-        
+
         .mapsWinnerName {
             font-family: 'Montserrat', sans-serif;
             color: var(--mapsSceneTextColor);
@@ -359,7 +362,7 @@
             top: 10px;
             word-break: break-word;
         }
-        
+
         .mapsNameGradient {
             position: absolute;
             height: 250px;
@@ -369,7 +372,7 @@
             width: 1000px;
             z-index: 0;
         }
-        
+
         .winnerGradient {
             position: absolute;
             height: 250px;
@@ -539,7 +542,7 @@
             </div>
         </div>
         <div class="scheduleGrid">
-            
+
         </div>
     </div>
 
