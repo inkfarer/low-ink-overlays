@@ -45,10 +45,10 @@ submitId.onclick = () => {
 					for (let j = 0; j < element.players.length; j++) {
 						const elementPlayer = element.players[j];
 						let playerInfo = {
-							name: elementPlayer.inGameName,
+							name: elementPlayer.inGameName.substring(0, 48),
 							//just in case...
 							//why does everybody have like, three names?
-							username : elementPlayer.username
+							username : elementPlayer.username.substring(0, 48)
 						};
 						teamInfo.players.push(playerInfo);
 					}
