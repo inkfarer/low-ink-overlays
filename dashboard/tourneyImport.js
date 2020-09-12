@@ -20,7 +20,7 @@ const battlefyData = nodecg.Replicant('tourneyData', {
 
 submitId.onclick = () => {
 	setStatusLoading();
-	const requestURL = "https://cors-anywhere.herokuapp.com/https://dtmwra1jsgyb0.cloudfront.net/tournaments/" + tourneyIdInput.value + "/teams";
+	const requestURL = "https://dtmwra1jsgyb0.cloudfront.net/tournaments/" + tourneyIdInput.value + "/teams";
 	fetch(requestURL, {})
 			.then(response => {
 				return response.json();
@@ -37,7 +37,8 @@ submitId.onclick = () => {
 				for (let i = 0; i < data.length; i++) {
 					const element = data[i];
 					var teamInfo = {
-						name: element.name,
+						// concatenate team names
+						name: element.name.substring(0, 48),
 						logoUrl: element.persistentTeam.logoUrl,
 						players: []
 					}
