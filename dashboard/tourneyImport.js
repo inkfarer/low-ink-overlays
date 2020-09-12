@@ -18,6 +18,8 @@ const battlefyData = nodecg.Replicant('tourneyData', {
 	]
 });
 
+const maxNameLength = 48;
+
 submitId.onclick = () => {
 	setStatusLoading();
 	const requestURL = "https://dtmwra1jsgyb0.cloudfront.net/tournaments/" + tourneyIdInput.value + "/teams";
@@ -38,17 +40,17 @@ submitId.onclick = () => {
 					const element = data[i];
 					var teamInfo = {
 						// concatenate team names
-						name: element.name.substring(0, 48),
+						name: addDots(element.name),
 						logoUrl: element.persistentTeam.logoUrl,
 						players: []
 					}
 					for (let j = 0; j < element.players.length; j++) {
 						const elementPlayer = element.players[j];
 						let playerInfo = {
-							name: elementPlayer.inGameName.substring(0, 48),
+							name: addDots(elementPlayer.inGameName),
 							//just in case...
 							//why does everybody have like, three names?
-							username : elementPlayer.username.substring(0, 48)
+							username : addDots(elementPlayer.username)
 						};
 						teamInfo.players.push(playerInfo);
 					}
@@ -62,6 +64,11 @@ submitId.onclick = () => {
 				console.log("err " + err);
 				setStatusFailure();
 			});
+}
+
+function addDots(string) {
+	if (string.length >= maxNameLength) return string.substring(0, maxNameLength) + '...';
+	else return string;
 }
 
 tourneyIdInput.addEventListener('input', (event) => {
