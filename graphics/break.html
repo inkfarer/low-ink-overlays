@@ -452,6 +452,13 @@
             font-size: 0.75em;
             text-align: center;
         }
+
+        span.pronoun {
+			font-size: 20px;
+			background-color: var(--lowInkOrange);
+			padding: 0 5px;
+			color: white;
+		}
     </style>
 </head>
 
@@ -480,7 +487,7 @@
                     <img src="icons/microphone.svg" class="mainSceneIcon">
                 </div>
                 <div class="mainSceneBG withIcon" id="breakCasterNamesBG">
-                    <fitted-text class="breakMainSmallText" id="breakCasterNames" max-width="720" text="uWu"></fitted-text>
+                    <fitted-text useInnerHTML class="breakMainSmallText" id="breakCasterNames" max-width="720" text="uWu"></fitted-text>
                 </div>
             </div>
             <div class="mainSceneSupport mainSceneWrapper">
@@ -505,7 +512,7 @@
     <div id="topBar">
         <img class="smallIcon" src="Inkgaugelogo-li-coolbg-notext.png">
         <fitted-text id="topBarText" align="left" max-width="840"></fitted-text>
-        <fitted-text id="topBarInfoText" text="OwO" align="right" max-width="840"></fitted-text>
+        <fitted-text id="topBarInfoText" useInnerHTML text="OwO" align="right" max-width="840"></fitted-text>
         <img id="topBarInfoIcon" src="icons/microphone.svg">
     </div>
 

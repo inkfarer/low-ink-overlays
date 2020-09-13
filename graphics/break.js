@@ -263,7 +263,8 @@ window.onload = function() {
 	});
 	
 	casterNames.on('change', newValue => {
-		changeBreakMainText('breakCasterNames', newValue, 'breakCasterNamesBG');
+		let finalElem = newValue.replaceAll('[[', '<span class="pronoun">').replaceAll(']]', '</span>');
+		changeBreakMainText('breakCasterNames', finalElem, 'breakCasterNamesBG');
 	});
 	
 	nowPlaying.on('change', newValue => {
@@ -354,8 +355,8 @@ const topBarInfoTL = gsap.timeline();
 function addTopBarAnim(i) {
 	topBarInfoTL.add(gsap.to('#topBarInfoText, #topBarInfoIcon', 0.5, {opacity: 0, onComplete: function() {
 		if (i === 0) {
-			// TODO: PRONOUNS
-			topBarInfoText.setAttribute('text', casterNames.value)
+			let finalElem = casterNames.value.replaceAll('[[', '<span class="pronoun">').replaceAll(']]', '</span>');
+			topBarInfoText.setAttribute('text', finalElem)
 			topBarInfoIcon.src = 'icons/microphone.svg';
 		} else if (i === 1) {
 			if (mSongEnabled.value) {
