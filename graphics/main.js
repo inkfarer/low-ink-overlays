@@ -47,16 +47,16 @@ const colorNameToHex = {
 //replicant changes
 
 SBData.on('change', newValue => {
-	flavorTextDisplay.text = newValue.flavorText;
-	teamAnameDisplay.text = newValue.teamAInfo.name;
-	teamBnameDisplay.text = newValue.teamBInfo.name;
+	flavorTextDisplay.setAttribute('text', newValue.flavorText);
+	teamAnameDisplay.setAttribute('text', newValue.teamAInfo.name);
+	teamBnameDisplay.setAttribute('text', newValue.teamBInfo.name);
 	gsap.to("#teamAcolorDisplay", { duration: 0.5, backgroundColor: colorNameToHex[newValue.teamAColor]});
 	gsap.to("#teamBcolorDisplay", { duration: 0.5, backgroundColor: colorNameToHex[newValue.teamBcolor]});
 });
 
 teamScores.on('change', newValue => {
-    teamAScoreDisplay.text = newValue.teamA;
-    teamBScoreDisplay.text = newValue.teamB;
+    teamAScoreDisplay.setAttribute('text', newValue.teamA);
+    teamBScoreDisplay.setAttribute('text', newValue.teamB);
 });
 
 SBShown.on('change', newValue => {

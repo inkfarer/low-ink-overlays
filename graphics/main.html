@@ -5,10 +5,7 @@
     <!--
 	   All rights reserved, reuse not permitted.
 	  -->
-    <meta charset="UTF-8">
-    <script src="../node_modules/gsap/dist/gsap.js"></script>
-    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../bower_components/sc-fitted-text/sc-fitted-text.html">
+    <meta charset="UTF-8"
     <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
     <style>
          :root {
@@ -136,27 +133,29 @@
         <div class="scLine"></div>
         <div id="scContents">
             <div class="flavorTextBG">
-                <sc-fitted-text id="flavorTextDisplay" max-width="415"></sc-fitted-text>
+                <fitted-text id="flavorTextDisplay" max-width="415"></fitted-text>
             </div>
             <div class="scNames">
                 <div class="teamInfoGrid">
                     <div class="teamInfo">
                         <div class="colorDisplay" id="teamAcolorDisplay"></div>
-                        <sc-fitted-text class="nameDisplay" id="teamAnameDisplay" max-width="330"></sc-fitted-text>
+                        <fitted-text class="nameDisplay" id="teamAnameDisplay" max-width="330"></fitted-text>
                     </div>
                     <div class="teamInfo">
                         <div class="colorDisplay" id="teamBcolorDisplay"></div>
-                        <sc-fitted-text class="nameDisplay" id="teamBnameDisplay" max-width="330"></sc-fitted-text>
+                        <fitted-text class="nameDisplay" id="teamBnameDisplay" max-width="330"></fitted-text>
                     </div>
                 </div>
                 <div class="scoreDisplay">
-                    <sc-fitted-text id="teamAScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></sc-fitted-text>
-                    <sc-fitted-text id="teamBScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></sc-fitted-text>
+                    <fitted-text id="teamAScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></fitted-text>
+                    <fitted-text id="teamBScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></fitted-text>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="fitted-text.js"></script>
+    <script src="../node_modules/gsap/dist/gsap.js"></script>
     <script src="main.js "></script>
 </body>
 

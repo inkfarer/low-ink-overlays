@@ -148,13 +148,13 @@ NodeCG.waitForReplicants(maplists, currentMaplistID).then(() => {
 musicShown.on('change', newValue => {
 	//not very good, should be prettified
 	if (newValue) {
-		gsap.to('#musicWrapper', 0.5, {opacity: 1});
+		gsap.to('#musicWrapper', {duration: 0.5, opacity: 1});
 		var gridTemplateRows;
 		if (NSTimerShown.value) { gridTemplateRows = '2fr 1fr 1fr 1fr 1fr 1fr'; }
 		else { gridTemplateRows = '2fr 1fr 0fr 1fr 1fr 1fr'; };
 		gsap.to('.mainSceneGrid', {duration: 0.5, ease: 'power2.out', gridTemplateRows: gridTemplateRows});
 	} else {
-		gsap.to('#musicWrapper', 0.5, {opacity: 0});
+		gsap.to('#musicWrapper', {duration: 0.5, opacity: 0});
 		var gridTemplateRows;
 		if (NSTimerShown.value) { gridTemplateRows = '2fr 1fr 1fr 1fr 1fr 0fr'; }
 		else { gridTemplateRows = '2fr 1fr 0fr 1fr 1fr 0fr'; };
@@ -212,11 +212,11 @@ currentBreakScene.on('change', newValue => {
 
 nextTeams.on('change', newValue => {
 	document.querySelector('#teamAImage').style.backgroundImage = 'url(' + newValue.teamAInfo.logoUrl + ')';
-	teamAName.text = newValue.teamAInfo.name;
+	teamAName.setAttribute('text', newValue.teamAInfo.name)
 	addTeamPlayers('A', newValue.teamAInfo.players);
 
 	document.querySelector('#teamBImage').style.backgroundImage = 'url(' + newValue.teamBInfo.logoUrl + ')';
-	teamBName.text = newValue.teamBInfo.name;
+	teamBName.setAttribute('text', newValue.teamBInfo.name);
 	addTeamPlayers('B', newValue.teamBInfo.players);
 });
 
@@ -259,7 +259,7 @@ window.onload = function() {
 	startTopBarTextLoop();
 	bigTextValue.on('change', newValue => {
 		changeBreakMainText('breakFlavorText', newValue, "breakFlavorTextBG");
-		topBarText.text = newValue;
+		topBarText.setAttribute('text', newValue);
 	});
 	
 	casterNames.on('change', newValue => {
@@ -328,7 +328,7 @@ function addSocialAnim(number) {
     var calcWidth;
     calcWidth = measureText(socialTexts[number], "'Montserrat', sans-serif", "2.5em") + 20;
     socialTL.add(gsap.to("#breakSupport", 0.5, {opacity: 0, ease: Power2.easeIn, onComplete: function() {
-        breakSupport.text = socialTexts[number];
+		breakSupport.setAttribute('text', socialTexts[number]);
     }}))
     .add(gsap.to("#socialIcon", 0.5, {delay: -0.5, opacity: 0, ease: Power2.easeIn, onComplete: function() {
         socialIcon.src = socialIcons[number];
@@ -354,17 +354,14 @@ const topBarInfoTL = gsap.timeline();
 function addTopBarAnim(i) {
 	topBarInfoTL.add(gsap.to('#topBarInfoText, #topBarInfoIcon', 0.5, {opacity: 0, onComplete: function() {
 		if (i === 0) {
-			topBarInfoText.text = casterNames.value;
+			// TODO: PRONOUNS
+			topBarInfoText.setAttribute('text', casterNames.value)
 			topBarInfoIcon.src = 'icons/microphone.svg';
 		} else if (i === 1) {
 			if (mSongEnabled.value) {
-				topBarInfoText.text = nowPlayingManual.value.artist + ' - ' + nowPlayingManual.value.song;
+				topBarInfoText.setAttribute('text', getSongNameString(nowPlayingManual.value));
 			} else {
-				if (nowPlaying.value.artist === undefined && nowPlaying.value.song === undefined) {
-					topBarInfoText.text = 'Nothing is playing at the moment.';
-				} else {
-					topBarInfoText.text = nowPlaying.value.artist + ' - ' + nowPlaying.value.song;
-				}
+				topBarInfoText.setAttribute('text', getSongNameString(nowPlaying.value));
 			}
 			topBarInfoIcon.src = 'icons/music.svg';
 		}
@@ -404,7 +401,7 @@ function changeBreakMainText(id, text, BGelement) {
 	const roundWidth = Math.round(calcWidth);
     const songTimeline = gsap.timeline();
 	songTimeline.add(gsap.to('#' + id, 0.5, {opacity: 0, ease:'Power2.in', onComplete: function() {
-		document.getElementById(id).text = text;
+		document.getElementById(id).setAttribute('text', text);
 	}}))
 	.add(gsap.to('#' + BGelement, 0.5, {ease: 'expo.out', width: roundWidth}))
 	.add(gsap.to('#' + id, 0.5, {opacity: 1}));
@@ -414,9 +411,9 @@ function addTeamPlayers(teamNo, players) {
 	//clear existing
 	var selector;
 	if (teamNo === 'A') {
-		selector = 'sc-fitted-text.teamPlayer.teamPlayerA';
+		selector = 'fitted-text.teamPlayer.teamPlayerA';
 	} else if (teamNo === 'B') {
-		selector = 'sc-fitted-text.teamPlayer.teamPlayerB';
+		selector = 'fitted-text.teamPlayer.teamPlayerB';
 	}
 	const existing = document.querySelectorAll(selector);
 	for (let i = 0; i < existing.length; i++) {
@@ -426,16 +423,16 @@ function addTeamPlayers(teamNo, players) {
 
 	for (let i = 0; i < players.length; i++) {
 		const element = players[i];
-		const playerText = document.createElement('sc-fitted-text');
-		playerText.text = element.name;
+		const playerText = document.createElement('fitted-text');
+		playerText.setAttribute('text', element.name);
 		playerText.maxWidth = "430"
 		playerText.classList.add('teamPlayer');
 		if (teamNo === 'A') {
-			playerText.align = "right";
+			playerText.setAttribute('align', "right");
 			playerText.classList.add('teamPlayerA');
 			document.getElementById('teamAInfo').appendChild(playerText);
 		} else if (teamNo === 'B') {
-			playerText.align = "left";
+			playerText.setAttribute('align', "left");
 			playerText.classList.add('teamPlayerB')
 			document.getElementById('teamBInfo').appendChild(playerText);
 		}
@@ -600,8 +597,8 @@ function hideTopBar() {
 function showNextUp(delay) {
 	gsap.fromTo("#nextUp", {top: -1080}, {top: 0, duration: 1.5, ease: 'power3.inOut', delay: delay});
 
-	const namesA = document.querySelectorAll('sc-fitted-text.teamPlayer.teamPlayerA');
-	const namesB = document.querySelectorAll('sc-fitted-text.teamPlayer.teamPlayerB');
+	const namesA = document.querySelectorAll('fitted-text.teamPlayer.teamPlayerA');
+	const namesB = document.querySelectorAll('fitted-text.teamPlayer.teamPlayerB');
 
 	for (let i = 0; i < namesA.length; i++) { namesA[i].style.opacity = "0"; }
 	for (let i = 0; i < namesB.length; i++) { namesB[i].style.opacity = "0"; }
@@ -665,6 +662,20 @@ function updateMapLists(maplist) {
 		}
 	}});
 	gsap.to('#upcomingStagesGrid', {duration: 0.5, opacity: 1, delay: 0.5});
+}
+
+function checkStringEmptyOrUndef(string) {
+	string = String(string);
+	return (string === 'undefined' || string === '');
+}
+
+function getSongNameString(rep) {
+	if (checkStringEmptyOrUndef(rep.artist) && checkStringEmptyOrUndef(rep.song)) {return 'No song is playing.'}
+
+	if (checkStringEmptyOrUndef(rep.artist)) { return rep.song; }
+	else if (checkStringEmptyOrUndef(rep.song)) { return rep.artist; }
+
+	return rep.artist + ' - ' + rep.song;
 }
 
 // Stream Schedule
