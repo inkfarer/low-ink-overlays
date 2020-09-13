@@ -1,4 +1,4 @@
-CSS, HTML, Images
+CSS, HTML for viewer facing graphics, Images
 All rights reserved, reuse not permitted.
 
 The CSS, HTML and images used within this repository are copyright of their
@@ -7,7 +7,7 @@ written permission for their respective copyright owners.
 
 Splatoon 2 map portraits are property of Nintendo.
 
-JavaScript code:
+JavaScript code & HTML layouts for dashboard panels:
 The MIT License (MIT)
 
 Copyright (c) 2020 inkfarer <inkfarer@inkfarer.com> (https://inkfarer.com)
