@@ -263,7 +263,7 @@ window.onload = function() {
 	});
 	
 	casterNames.on('change', newValue => {
-		let finalElem = newValue.replaceAll('[[', '<span class="pronoun">').replaceAll(']]', '</span>');
+		let finalElem = newValue.replace(/\[\[/g, '<span class="pronoun">').replace(/\]\]/g, '</span>');
 		changeBreakMainText('breakCasterNames', finalElem, 'breakCasterNamesBG');
 	});
 	
@@ -355,7 +355,7 @@ const topBarInfoTL = gsap.timeline();
 function addTopBarAnim(i) {
 	topBarInfoTL.add(gsap.to('#topBarInfoText, #topBarInfoIcon', 0.5, {opacity: 0, onComplete: function() {
 		if (i === 0) {
-			let finalElem = casterNames.value.replaceAll('[[', '<span class="pronoun">').replaceAll(']]', '</span>');
+			let finalElem = casterNames.value.replace(/\[\[/g, '<span class="pronoun">').replace(/\]\]/g, '</span>');
 			topBarInfoText.setAttribute('text', finalElem)
 			topBarInfoIcon.src = 'icons/microphone.svg';
 		} else if (i === 1) {
