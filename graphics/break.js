@@ -935,3 +935,19 @@ function getLastEndedRoundIndex(data) {
 		if (isRoundEnded(data[i])) {return i; }
 	}
 }
+
+
+// Showing / Hiding team icons on break
+
+const showAImg = nodecg.Replicant('teamAImgShown', {defaultValue: true});
+const showBImg = nodecg.Replicant('teamBImgShown', {defaultValue: true});
+
+showAImg.on('change', newValue => {
+	const opacity = (newValue ? 0.25 : 0);
+	gsap.to('#teamAImage', {duration: 0.25, opacity: opacity});
+});
+
+showBImg.on('change', newValue => {
+    const opacity = (newValue ? 0.25 : 0);
+	gsap.to('#teamBImage', {duration: 0.5, opacity: opacity});
+});

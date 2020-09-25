@@ -459,3 +459,16 @@ const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
 RGBMode.on('change', newValue => {
     document.querySelector('#checkSetRGB').checked = newValue;
 });
+
+// Showing / Hiding team icons on break
+
+const showAImg = nodecg.Replicant('teamAImgShown', {defaultValue: true});
+const showBImg = nodecg.Replicant('teamBImgShown', {defaultValue: true});
+
+showAImg.on('change', newValue => {
+    document.querySelector('#checkSetTeamAImg').checked = newValue;
+});
+
+showBImg.on('change', newValue => {
+    document.querySelector('#checkSetTeamBImg').checked = newValue;
+});
