@@ -7,42 +7,10 @@ const emptyTeamInfo = {
     }]
 };
 
-const SBData = nodecg.Replicant('SBData', {defaultValue: {
-	flavorText: 'Flavor Text',
-	teamAInfo: {
-		name: "Placeholder Team 1",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamAColor: 'Green',
-	teamBInfo: {
-		name: "Placeholder Team 2",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamBcolor: 'Purple'
-}});
-const teamScores = nodecg.Replicant('teamScores', {defaultValue: {
-    teamA: 0,
-    teamB: 0
-}});
-const SBShown = nodecg.Replicant('SBShown', {defaultValue: true});
+const SBData = nodecg.Replicant('SBData', 'ipl-overlay-controls');
+const teamScores = nodecg.Replicant('teamScores', 'ipl-overlay-controls');
+const SBShown = nodecg.Replicant('SBShown', 'ipl-overlay-controls');
 const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
-
-const colorNameToHex = {
-	"Dark Blue": "#3535D2",
-	"Green": "#6BD921",
-	"Blue Green": "#16DD81",
-	"Purple": "#B51CCE",
-	"Yellow": "#FEF232",
-	"Light Blue": "#2ED2FE",
-	"Violet": "#8941FF",
-	"Pink": "#EF26BD",
-	"Turquoise": "#39EAB1",
-	"Orange": "#FB7B08"
-}
 
 //replicant changes
 
@@ -50,8 +18,8 @@ SBData.on('change', newValue => {
 	flavorTextDisplay.setAttribute('text', newValue.flavorText);
 	teamAnameDisplay.setAttribute('text', newValue.teamAInfo.name);
 	teamBnameDisplay.setAttribute('text', newValue.teamBInfo.name);
-	gsap.to("#teamAcolorDisplay", { duration: 0.5, backgroundColor: colorNameToHex[newValue.teamAColor]});
-	gsap.to("#teamBcolorDisplay", { duration: 0.5, backgroundColor: colorNameToHex[newValue.teamBcolor]});
+	gsap.to("#teamAcolorDisplay", { duration: 0.5, backgroundColor: (newValue.swapColorOrder) ? newValue.colorInfo.clrB : newValue.colorInfo.clrA});
+	gsap.to("#teamBcolorDisplay", { duration: 0.5, backgroundColor: (newValue.swapColorOrder) ? newValue.colorInfo.clrA : newValue.colorInfo.clrB});
 });
 
 teamScores.on('change', newValue => {

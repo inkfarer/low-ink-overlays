@@ -24,71 +24,21 @@ const mapNameToImagePath = {"Ancho-V Games": "stages/S2_Stage_Ancho-V_Games.png"
 "Skipper Pavilion":"stages/S2_Stage_Skipper_Pavilion.png",
 "Unknown Map":"stages/low-ink-unknown-map.png"};
 
-const bigTextValue = nodecg.Replicant('mainFlavorText', { defaultValue: 'Be right back!' });
-const casterNames = nodecg.Replicant('casterNames', { defaultValue: 'We don\'t know.' });
-const nowPlaying = nodecg.Replicant('nowPlaying');
-const nowPlayingManual = nodecg.Replicant('nowPlayingManual', {defaultValue: {
-	artist: undefined,
-	song: undefined
-}});
-const mSongEnabled = nodecg.Replicant('mSongEnabled', {defaultValue: false});
-const musicShown = nodecg.Replicant('musicShown', {defaultValue: true});
-const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: 'mainScene' });
-const nextTeams = nodecg.Replicant('nextTeams', {defaultValue: {
-	teamAInfo: {
-		name: "Placeholder Team 1",
-		logoUrl: "",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamBInfo: {
-		name: "Placeholder Team 2",
-		logoUrl: "",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	}
-}});
-const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: '0' });
-const mapWinners = nodecg.Replicant('mapWinners', { defaultValue: [0, 0, 0, 0, 0, 0, 0] });
-const SBData = nodecg.Replicant('SBData', {defaultValue: {
-	flavorText: 'Flavor Text',
-	teamAInfo: {
-		name: "Placeholder Team 1",
-		logoUrl: "",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamAColor: 'Green',
-	teamBInfo: {
-		name: "Placeholder Team 2",
-		logoUrl: "",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamBcolor: 'Purple'
-}});
+const bigTextValue = nodecg.Replicant('mainFlavorText', 'ipl-overlay-controls');
+const casterNames = nodecg.Replicant('casterNames', 'ipl-overlay-controls');
+const nowPlaying = nodecg.Replicant('nowPlaying', 'ipl-overlay-controls');
+const nowPlayingManual = nodecg.Replicant('nowPlayingManual', 'ipl-overlay-controls');
+const mSongEnabled = nodecg.Replicant('mSongEnabled', 'ipl-overlay-controls');
+const musicShown = nodecg.Replicant('musicShown', 'ipl-overlay-controls');
+const currentBreakScene = nodecg.Replicant('currentBreakScene', 'ipl-overlay-controls');
+const nextTeams = nodecg.Replicant('nextTeams', 'ipl-overlay-controls');
+const currentMaplistID = nodecg.Replicant('currentMaplistID', 'ipl-overlay-controls');
+const mapWinners = nodecg.Replicant('mapWinners', 'ipl-overlay-controls');
+const SBData = nodecg.Replicant('SBData', 'ipl-overlay-controls');
 const RGBMode = nodecg.Replicant('RGBMode', {defaultValue: false});
-const NSTimerShown = nodecg.Replicant('NSTimerShown', {defaultValue: false});
-const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
-    hour: 0,
-    minute: 0,
-    day: 1,
-    month: 0
-}});
-const maplists = nodecg.Replicant('maplists', {
-    defaultValue: [
-        [
-            { id: 0, name: "Default map list" },
-            { map: "Ancho-V Games", mode: "Clam Blitz" },
-            { map: "Ancho-V Games", mode: "Tower Control" },
-            { map: "Wahoo World", mode: "Rainmaker" }
-        ]
-    ]
-});
+const NSTimerShown = nodecg.Replicant('NSTimerShown', 'ipl-overlay-controls');
+const nextStageTime = nodecg.Replicant('nextStageTime', 'ipl-overlay-controls');
+const maplists = nodecg.Replicant('maplists', 'ipl-overlay-controls');
 
 //replicant changes
 var nextStageInterval = setInterval(() => {
@@ -310,9 +260,9 @@ arrowTl.to('#squidarrows', 15, {ease: Power0.easeNone, left: -605});
 
 //surrort texts
 
-const socialTexts = ["Twitter: @LowInkSplatoon",
-"Discord: discord.gg/F7RaNUR",
-"Patreon: patreon.com/lowink"];
+const socialTexts = ["Twitter: @IPLSplatoon",
+"Discord: iplabs.ink/discord",
+"Patreon: patreon.com/IPLSplatoon"];
 
 const socialIcons = ["icons/logoTwitter.png",
 "icons/logoDiscord.png",
@@ -939,7 +889,7 @@ function getLastEndedRoundIndex(data) {
 
 // Showing / Hiding team icons on break
 
-const showAImg = nodecg.Replicant('teamAImgShown', {defaultValue: true});
+/*const showAImg = nodecg.Replicant('teamAImgShown', {defaultValue: true});
 const showBImg = nodecg.Replicant('teamBImgShown', {defaultValue: true});
 
 showAImg.on('change', newValue => {
@@ -950,4 +900,14 @@ showAImg.on('change', newValue => {
 showBImg.on('change', newValue => {
     const opacity = (newValue ? 0.25 : 0);
 	gsap.to('#teamBImage', {duration: 0.5, opacity: opacity});
+});*/
+
+const teamImageHidden = nodecg.Replicant('teamImageHidden', 'ipl-overlay-controls');
+
+teamImageHidden.on('change', newValue => {
+	let opacityA = newValue.teamA ? 0.25 : 0;
+	let opacityB = newValue.teamB ? 0.25 : 0;
+
+	gsap.to('#teamAImage', {duration: 0.5, opacity: opacityA});
+	gsap.to('#teamBImage', {duration: 0.5, opacity: opacityB});
 });

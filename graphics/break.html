@@ -7,6 +7,7 @@
 	  -->
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:700,600|Work+Sans:400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
     <style>
          :root {
             --lowInkOrange: #F37002;
@@ -25,11 +26,12 @@
             /*OBS is a bastard and hopefully this important tag fixes that*/
             background-color: var(--BGColor) !important;
             margin: 0;
+            font-family: 'Montserrat', 'Kosugi Maru', sans-serif;
         }
 
         .logo {
-            width: 750px;
-            height: 750px;
+            width: 650px;
+            height: 675px;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -85,6 +87,7 @@
         }
 
         .mainSceneBG {
+            height: 49px;
             background-color: var(--containerBG);
             padding: 4px 0;
         }
@@ -95,7 +98,6 @@
 
         .breakMainSmallText {
             color: var(--textColor);
-            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             font-size: 2.5em;
             margin-left: 10px;
@@ -103,7 +105,6 @@
 
         #measurer,
         .measurer {
-            font-family: 'Montserrat', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
             z-index: 99999;
@@ -171,14 +172,12 @@
 
         #topBarText {
             color: var(--textColor);
-            font-family: 'Montserrat', sans-serif;
             font-size: 2.5em;
             font-weight: 700;
         }
 
         #topBarInfoText {
             color: var(--textColor);
-            font-family: 'Montserrat', sans-serif;
             font-size: 2.5em;
             font-weight: 700;
             position: absolute;
@@ -242,7 +241,6 @@
 
         .teamName {
             color: var(--textColor);
-            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             font-size: 2.75em;
             margin-top: 30px;
@@ -252,12 +250,12 @@
 
         .teamPlayer {
             color: var(--textColor);
-            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             font-size: 2em;
             margin-top: 15px;
             margin-left: 35px;
             margin-right: 35px;
+            height: 43px;
         }
 
         .sceneTitle {
@@ -322,7 +320,6 @@
         }
 
         .mapsModeName {
-            font-family: 'Montserrat', sans-serif;
             color: var(--mapsSceneTextColor);
             position: absolute;
             left: 10px;
@@ -332,7 +329,6 @@
         }
 
         .mapsStageName {
-            font-family: 'Montserrat', sans-serif;
             color: var(--mapsSceneTextColor);
             position: absolute;
             left: 10px;
@@ -342,7 +338,6 @@
         }
 
         .mapsWinnerName {
-            font-family: 'Montserrat', sans-serif;
             color: var(--mapsSceneTextColor);
             position: absolute;
             right: 10px;
@@ -404,7 +399,6 @@
             flex-direction: row;
             align-items: center;
             padding: 0 15px;
-            font-family: "Montserrat";
         }
 
         .scheduleRoundName {
@@ -445,7 +439,6 @@
 
         .scheduleZoneLabels {
             color: white;
-            font-family: "Montserrat";
             position: absolute;
             top: 235px;
             right: 370px;
@@ -459,12 +452,20 @@
 			padding: 0 5px;
 			color: white;
 		}
+
+        .ipl-brand {
+            position: absolute;
+            width: 400px;
+            bottom: 35px;
+            left: 760px;
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body>
     <div id="mainScene" class="sceneWrapper">
-        <img class="logo" src="Inkgaugelogo-li-coolbg.png">
+        <img class="logo" src="Inkgaugelogo-li-coolbg-nomargin.png">
         <div class="mainSceneGrid">
             <div class="mainSceneBigBG">
                 <div class="mainSceneBigText">LOW INK</div>
@@ -507,6 +508,7 @@
                 </div>
             </div>
         </div>
+        <img class="ipl-brand" src="ipl-powered-inkling.png"></div>
     </div>
 
     <div id="topBar">

@@ -8,12 +8,12 @@ function clearSelectors(className) {
     }
 }
 
-function addSelector(name, className) {
+function addSelector(text, className, value = '') {
     var elements = document.querySelectorAll(`.${className}`);
     Array.from(elements).forEach(function(item) {
         var opt = document.createElement("option");
-        opt.value = name;
-        opt.text = name;
+        opt.value = (value !== '') ? value : text;
+        opt.text = text;
         item.appendChild(opt);
     });
 }

@@ -139,7 +139,3 @@ option {
 .maxWidth > * {
 	flex-grow: 1;
 }
-
-.textCenter {
-	text-align: center;
-}
