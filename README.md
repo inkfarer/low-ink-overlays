@@ -19,19 +19,21 @@ If you're using nodecg-cli:
 
 2.1. Run `nodecg install inkfarer/low-ink-overlays`.
 
+2.2. Install the dashboard by running `nodecg install inkfarer/ipl-overlay-controls`
+
 Otherwise:
 
-2.1. Clone low-ink-overlays to `nodecg/bundles/low-ink-overlays`.
+2.1. Clone low-ink-overlays to `nodecg/bundles/low-ink-overlays` and clone [ipl-overlay-controls](https://github.com/inkfarer/ipl-overlay-controls) to `nodecg/bundles/ipl-overlay-controls`.
 
-2.2. Install dependencies by running `npm install` and `bower install` in `nodecg/bundles/low-ink-overlays`.
+2.2. Install dependencies by running `npm install` in `nodecg/bundles/low-ink-overlays` and `nodecg/bundles/ipl-overlay-controls`.
 
-3.1. For last.fm integration to work, create the configuration file at `nodecg/cfg/low-ink-overlays.json`.
+3.1. For last.fm integration to work, create the configuration file at `nodecg/cfg/ipl-overlay-controls.json`.
 
 Example configuration file:
 ```
 {
 	"lastfm": {
-		"targetAccount": "Your last.fm account",
+		"targetAccount": "Your last.fm account name",
 		"apiKey": "your API key",
 		"secret": "your secret"
 	}
