@@ -214,7 +214,7 @@ window.onload = function() {
 	
 	casterNames.on('change', newValue => {
 		let finalElem = newValue.replace(/\[\[/g, '<span class="pronoun">').replace(/\]\]/g, '</span>');
-		changeBreakMainText('breakCasterNames', finalElem, 'breakCasterNamesBG');
+		changeBreakMainText('breakCasterNames', finalElem, 'breakCasterNamesBG', true);
 	});
 	
 	nowPlaying.on('change', newValue => {
@@ -326,24 +326,29 @@ function addTopBarAnim(i) {
 
 //misc functions
 
-function measureText(text, font, fontSize) {
+function measureText(text, font, fontSize, useInnerHTML = false) {
     const measurer2 = document.createElement("div");
     measurer2.classList.add("measurer");
     measurer2.style.fontFamily = font;
     measurer2.style.fontSize = fontSize;
-    measurer2.innerText = text;
+	
+	if (useInnerHTML) {
+		measurer2.innerHTML = text;
+	} else {
+		measurer2.innerText = text;
+	}
     document.body.appendChild(measurer2);
     var width = measurer2.getBoundingClientRect().width;
     measurer2.parentNode.removeChild(measurer2);
     return width;
 }
 
-function changeBreakMainText(id, text, BGelement) {
+function changeBreakMainText(id, text, BGelement, useInnerHTML = false) {
 	var calcWidth;
     if (text == "") {
         calcWidth = 0;
     } else {
-        calcWidth = measureText(text, "'Montserrat', sans-serif", "2.5em") + 20;
+        calcWidth = measureText(text, "'Montserrat', sans-serif", "2.5em", useInnerHTML) + 20;
 	}
 	const maxWidth = parseInt(document.getElementById(id).getAttribute("max-width"));
     if (calcWidth > maxWidth) {
