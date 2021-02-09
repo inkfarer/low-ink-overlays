@@ -19,16 +19,9 @@
     ],
     "nodecg": {
         "compatibleRange": "^1.1.1",
-        "dashboardPanels": [
-            {
-                "name": "li-dash",
-                "title": "Low Ink options",
-                "width": 2,
-                "file": "liDash.html",
-                "workspace": "ipl",
-                "headerColor": "#262F40"
-            }
-        ],
+        "bundleDependencies": {
+
+        },
         "graphics": [
             {
                 "file": "main.html",
@@ -43,8 +36,8 @@
         ]
     },
     "dependencies": {
-        "gsap": "^3.0.5",
-        "lastfm": "^0.9.2"
+        "fitted-text": "^1.0.1",
+        "gsap": "^3.0.5"
     },
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT"
