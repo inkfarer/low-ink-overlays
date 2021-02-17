@@ -34,7 +34,11 @@
     },
     "dependencies": {
         "fitted-text": "^1.0.1",
-        "gsap": "^3.6.0"
+        "gsap": "^3.6.0",
+        "luxon": "^1.26.0"
+    },
+    "devDependencies": {
+      "ts-nodecg": "^0.3.1"
     },
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT"

@@ -1,0 +1,24 @@
+:root {
+	--background-1: #191919;
+	--background-2: #262626;
+	--background-3: #303030;
+
+	--accent: rgb(243, 112, 2);
+	--accent-alpha-15: rgba(243, 112, 2, 0.15);
+
+	--text-color: white;
+}
+
+body {
+	margin: 0;
+	width: 1920px;
+	height: 1080px;
+	overflow: hidden;
+	font-family: 'Montserrat', 'Kosugi Maru', sans-serif;
+}
+
+.flex-align-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
