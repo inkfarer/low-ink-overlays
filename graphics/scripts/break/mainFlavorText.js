@@ -8,7 +8,7 @@ mainFlavorText.on('change', newValue => {
 			x: 50,
 			opacity: 0,
 			duration: 0.5,
-			ease: 'power2.in',
+			ease: Power2.easeIn,
 			onComplete: function() {
 				flavorTextElem.setAttribute('text', newValue);
 			}
@@ -20,7 +20,7 @@ mainFlavorText.on('change', newValue => {
 			x: 0,
 			opacity: 1,
 			duration: 0.5,
-			ease: 'power2.out'
+			ease: Power2.easeOut
 		})
 	);
 });

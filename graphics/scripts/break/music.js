@@ -2,6 +2,8 @@ const nowPlaying = nodecg.Replicant('nowPlaying', DASHBOARD_BUNDLE_NAME);
 const mainArtistElem = document.getElementById('main-artist');
 const mainSongElem = document.getElementById('main-song');
 const mainMusicTl = gsap.timeline();
+const topBarMusicTl = gsap.timeline();
+const topBarMusicElem = document.getElementById('info-row-music-text');
 
 nowPlaying.on('change', newValue => {
 	mainMusicTl.add(
@@ -9,8 +11,8 @@ nowPlaying.on('change', newValue => {
 			x: 25,
 			opacity: 0,
 			duration: 0.5,
-			ease: 'power2.in',
-			onComplete: function() {
+			ease: Power2.easeIn,
+			onComplete: function () {
 				mainArtistElem.setAttribute('text', newValue.artist);
 				mainSongElem.setAttribute('text', newValue.song);
 			}
@@ -22,7 +24,17 @@ nowPlaying.on('change', newValue => {
 			x: 0,
 			opacity: 1,
 			duration: 0.5,
-			ease: 'power2.out'
+			ease: Power2.easeOut
 		})
 	);
+
+	topBarMusicTl.add(gsap.to([topBarMusicElem, '#info-row-music-icon'], {
+		opacity: 0, duration: 0.3, onComplete: function () {
+			topBarMusicElem.setAttribute('text', `${newValue.artist} - ${newValue.song}`);
+		}
+	}));
+
+	topBarMusicTl.add(gsap.to([topBarMusicElem, '#info-row-music-icon'], {
+		opacity: 1, duration: 0.3
+	}));
 });

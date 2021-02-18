@@ -1,3 +1,10 @@
+body {
+	background: radial-gradient(
+		var(--background-3) 0%,
+		var(--background-2) 100%
+	);
+}
+
 .arrows-background {
 	position: absolute;
 	width: 800px;
@@ -23,7 +30,16 @@
 	height: inherit;
 
 	background: radial-gradient(
-		transparent 60%, 
+		transparent 60%,
 		var(--accent-alpha-15) 100%
 	);
+}
+
+span.pronoun {
+	background-color: var(--accent);
+	color: white;
+	padding: 1px 5px;
+	font-size: 20px;
+	font-weight: 400;
+	margin-top: 5px;
 }

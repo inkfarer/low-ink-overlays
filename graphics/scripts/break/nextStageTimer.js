@@ -40,5 +40,5 @@ const nextRoundStartTimeShown = nodecg.Replicant('nextRoundStartTimeShown', DASH
 nextRoundStartTimeShown.on('change', newValue => {
 	const elemHeight = newValue ? 252 : 0;
 	const elemOpacity = newValue ? 1 : 0;
-	gsap.to('.next-round-timer', {duration: 0.5, height: elemHeight, opacity: elemOpacity, ease: 'power2.inOut'});
+	gsap.to('.next-round-timer', {duration: 0.5, height: elemHeight, opacity: elemOpacity, ease: Power2.easeInOut});
 });

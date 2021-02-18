@@ -38,11 +38,6 @@
 	justify-content: center;
 	flex-direction: column;
 
-	background: radial-gradient(
-		var(--background-3) 0%,
-		var(--background-2) 100%
-	);
-
 	color: var(--text-color);
 }
 
