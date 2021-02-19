@@ -9,7 +9,6 @@ casters.on('change', (newValue, oldValue) => {
 
 	let updateTwitters = (oldValue === undefined);
 	let updateNames = (oldValue === undefined);
-	console.log(updateNames);
 
 	Object.keys(newValue).forEach((item, index, arr) => {
 		const element = newValue[item];
@@ -38,8 +37,6 @@ casters.on('change', (newValue, oldValue) => {
 			twittersText += ' & ';
 		}
 	});
-
-	console.log(updateNames);
 
 	if (updateNames) {
 		topBarCastersTl.add(gsap.to([topBarCasterElem, getIcon(topBarCasterElem)], {
