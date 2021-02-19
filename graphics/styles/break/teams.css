@@ -1,0 +1,120 @@
+.scene.teams-scene {
+	align-items: unset;
+}
+
+.scene.teams-scene > .scene-content {
+	width: 1350px;
+	height: 650px;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 2fr 1.25fr 2fr;
+	position: absolute;
+	bottom: 135px;
+}
+
+.scene.teams-scene > .scene-content > .team {
+	position: relative;
+}
+
+.scene.teams-scene > .scene-content > .team > .accent {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	z-index: 1;
+	position: absolute;
+
+	background-color: var(--accent);
+	filter: drop-shadow(0 0 5px var(--accent));
+}
+
+.scene.teams-scene > .scene-content > .team > .background {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	z-index: 1;
+	position: absolute;
+
+	background-color: var(--background-1);
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow: hidden;
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper > .content {
+	width: 513px;
+	height: 650px;
+	border-radius: 10px;
+	z-index: 2;
+	position: absolute;
+
+	color: white;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper > .content.first-team-content {
+	align-items: flex-end;
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper > .content > fitted-text.team-name {
+	font-size: 60px;
+	margin: 30px 35px;
+	font-weight: 700;
+	height: 73px;
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper > .content > .players > fitted-text.team-player {
+	font-size: 40px;
+	font-weight: 600;
+	margin: 10px 35px;
+	height: 40px;
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper > .content > .players {
+	margin-top: 15px;
+	height: 480px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+#team-a-players {
+	align-items: flex-end;
+}
+
+.scene.teams-scene > .scene-content > .versus {
+	color: white;
+	text-align: center;
+	place-self: center;
+	font-size: 145px;
+	font-weight: 700;
+	filter: drop-shadow(0 0 5px var(--accent));
+}
+
+div.teams-line {
+	width: calc(100% - 70px);
+	margin: 0 35px;
+	height: 5px;
+	background-color: var(--accent);
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper > .content > .team-image-wrapper {
+	width: 100%;
+	height: inherit;
+	position: absolute;
+}
+
+.scene.teams-scene > .scene-content > .team > .content-wrapper > .content > .team-image-wrapper > .team-image {
+	width: 300px;
+	height: 300px;
+	background-size: cover;
+	background-position: center center;
+	border-radius: 50%;
+	z-index: -1;
+	opacity: 0.2;
+}

@@ -5,16 +5,16 @@ activeBreakScene.on('change', (newValue, oldValue) => {
 	if (!oldValue) {
 		if (newValue !== 'main') {
 			hideMainScene();
-
+			hideTeams();
 		}
 	} else {
 		switch (oldValue) {
 			case 'main':
 				hideMainScene();
-
 				break;
-			case 'break':
-
+			case 'teams':
+				hideTeams();
+				hideInfoBar('-=0.6')
 				break;
 			case 'stages':
 
@@ -29,8 +29,9 @@ activeBreakScene.on('change', (newValue, oldValue) => {
 			setInfoSwitchAnim();
 			showMainScene();
 			break;
-		case 'break':
-
+		case 'teams':
+			showInfoBar();
+			showTeams();
 			break;
 		case 'stages':
 
@@ -41,7 +42,6 @@ activeBreakScene.on('change', (newValue, oldValue) => {
 });
 
 function showMainScene() {
-	hideInfoBar();
 	toggleExpandBackground(false);
 	sceneTl.add(gsap.to('.scene.main-scene > .scene-content', {
 		x: 0,
@@ -57,7 +57,6 @@ function hideMainScene() {
 	sceneTl.add(gsap.to('.side-logo > .brand', {x: -50, opacity: 0, duration: 0.5, ease: Power2.easeIn}), '-=0.5');
 
 	toggleExpandBackground(true);
-	showInfoBar();
 }
 
 function toggleExpandBackground(expand) {
@@ -69,13 +68,45 @@ function toggleExpandBackground(expand) {
 function showInfoBar() {
 	const width = 1400;
 
-	sceneTl.add(gsap.to('.top-info-bar-accent', {width: width, ease: Power3.easeOut, duration: 0.5}));
-	sceneTl.add(gsap.to(['.top-info-bar-background', '.top-info-bar'], {width: width, ease: Power3.easeOut, duration: 0.5}), '-=0.45');
+	sceneTl.add(gsap.to('.top-info-bar-accent', {width: width, ease: Power3.easeOut, duration: 0.75}));
+	sceneTl.add(gsap.to(['.top-info-bar-background', '.top-info-bar'], {
+		width: width,
+		ease: Power3.easeOut,
+		duration: 0.75
+	}), '-=0.7');
 }
 
-function hideInfoBar() {
+function hideInfoBar(position = '-=0.0') {
 	const width = 0;
 
-	sceneTl.add(gsap.to(['.top-info-bar-background', '.top-info-bar'], {width: width, ease: Power3.easeIn, duration: 0.5}));
-	sceneTl.add(gsap.to('.top-info-bar-accent', {width: width, ease: Power3.easeIn, duration: 0.5}), '-=0.5');
+	sceneTl.add(gsap.to(['.top-info-bar-background', '.top-info-bar'], {
+		width: width,
+		ease: Power3.easeIn,
+		duration: 0.75
+	}), position);
+	sceneTl.add(gsap.to('.top-info-bar-accent', {width: width, ease: Power3.easeIn, duration: 0.75}), '-=0.75');
+}
+
+function showTeams() {
+	const height = 650;
+
+	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.75, ease: Power3.easeOut}), '-=0.6');
+	sceneTl.add(gsap.to(['.team > .background', '.team > .content-wrapper'], {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeOut
+	}), '-=0.7');
+	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 1, duration: 0.75}), '-=0.75');
+}
+
+function hideTeams() {
+	const height = 0;
+
+	sceneTl.add(gsap.to(['.team > .background', '.team > .content-wrapper'], {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeIn
+	}));
+	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.75, ease: Power3.easeIn}), '-=0.75');
+	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 0, duration: 0.75}), '-=0.75');
 }
