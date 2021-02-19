@@ -3,9 +3,18 @@ const sceneTl = gsap.timeline();
 
 activeBreakScene.on('change', (newValue, oldValue) => {
 	if (!oldValue) {
-		if (newValue !== 'main') {
-			hideMainScene();
-			hideTeams();
+		switch (newValue) {
+			case 'main':
+				hideStages();
+				hideTeams();
+				break;
+			case 'teams':
+				hideMainScene();
+				hideStages();
+				break;
+			case 'stages':
+				hideMainScene();
+				hideTeams();
 		}
 	} else {
 		switch (oldValue) {
@@ -14,10 +23,9 @@ activeBreakScene.on('change', (newValue, oldValue) => {
 				break;
 			case 'teams':
 				hideTeams();
-				hideInfoBar('-=0.6')
 				break;
 			case 'stages':
-
+				hideStages()
 				break;
 			default:
 
@@ -26,6 +34,7 @@ activeBreakScene.on('change', (newValue, oldValue) => {
 
 	switch (newValue) {
 		case 'main':
+			hideInfoBar('-=0.6');
 			setInfoSwitchAnim();
 			showMainScene();
 			break;
@@ -34,7 +43,8 @@ activeBreakScene.on('change', (newValue, oldValue) => {
 			showTeams();
 			break;
 		case 'stages':
-
+			showInfoBar();
+			showStages();
 			break;
 		default:
 
@@ -109,4 +119,59 @@ function hideTeams() {
 	}));
 	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.75, ease: Power3.easeIn}), '-=0.75');
 	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 0, duration: 0.75}), '-=0.75');
+}
+
+function showStages() {
+	const height = 700;
+
+	sceneTl.add(gsap.fromTo('.stage > .accent', {height: 0}, {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeOut,
+		stagger: {
+			from: 'center',
+			each: 0.05
+		},
+		onStart: function () {
+			gsap.set('.stages-grid', {opacity: 1});
+		}
+	}), '-=0.6');
+	sceneTl.add(gsap.fromTo('.stage > .stage-content', {height: 0}, {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeOut,
+		stagger: {
+			from: 'center',
+			each: 0.05
+		}
+	}), '-=0.7');
+	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 1, y: 0, duration: 0.5, ease: Power2.easeOut}), '-=0.75');
+}
+
+function hideStages() {
+	const height = 0;
+
+	sceneTl.add(gsap.to('.stage > .stage-content', {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeIn,
+		stagger: {
+			from: 'center',
+			each: 0.05
+		}
+	}));
+	sceneTl.add(gsap.to('.stage > .accent', {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeIn,
+		stagger: {
+			from: 'center',
+			each: 0.05
+		},
+		onComplete: function () {
+			gsap.set('.stages-grid', {opacity: 0});
+		}
+	}), '-=0.75');
+	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 0, y: -50, duration: 0.5, ease: Power2.easeIn}), '-=0.5');
+	//sceneTl.add(gsap.to({}, {duration: 5}));
 }

@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="styles/break/main.css">
 	<link rel="stylesheet" href="styles/break/teams.css">
 	<link rel="stylesheet" href="styles/break/topInfoBar.css">
+	<link rel="stylesheet" href="styles/break/stages.css">
 </head>
 
 <body>
@@ -150,11 +151,27 @@
 	</div>
 </div>
 
+<div class="scene stages-scene flex-align-center">
+	<div class="stages-scoreboard">
+		<fitted-text id="team-a-name-scoreboard" max-width="400" text="BONGUS TEAMBONGUS TEAM"></fitted-text>
+		<div class="scores">
+			<fitted-text id="team-a-score-scoreboard" max-width="50" text="0"></fitted-text>
+			<div></div>
+			<fitted-text id="team-b-score-scoreboard" max-width="50" text="0"></fitted-text>
+		</div>
+		<fitted-text id="team-b-name-scoreboard" max-width="400" text="BINGUS TEAM"></fitted-text>
+	</div>
+	<div class="stages-grid" id="stages-grid">
+
+	</div>
+</div>
+
 <script src="../node_modules/luxon/build/global/luxon.js"></script>
 <script src="../node_modules/fitted-text/dist/fitted-text.js"></script>
 <script src="../node_modules/gsap/dist/gsap.js"></script>
 
 <script src="scripts/globals.js"></script>
+<script src="scripts/break/stages.js"></script>
 <script src="scripts/break/break.js"></script>
 <script src="scripts/break/music.js"></script>
 <script src="scripts/break/mainFlavorText.js"></script>
