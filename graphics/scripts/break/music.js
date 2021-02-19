@@ -1,6 +1,3 @@
-const nowPlaying = nodecg.Replicant('nowPlaying', DASHBOARD_BUNDLE_NAME);
-const musicShown = nodecg.Replicant('musicShown', DASHBOARD_BUNDLE_NAME);
-
 const mainMusicElem = document.querySelector('.scene.main-scene > .scene-content > .main-container > .music');
 const mainArtistElem = document.getElementById('main-artist');
 const mainSongElem = document.getElementById('main-song');

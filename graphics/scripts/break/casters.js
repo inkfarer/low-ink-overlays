@@ -1,4 +1,3 @@
-const casters = nodecg.Replicant('casters', DASHBOARD_BUNDLE_NAME);
 const topBarCasterElem = document.getElementById('info-row-casters-text');
 const topBarTwitterElem = document.getElementById('info-row-casters-twitter-text');
 const topBarCastersTl = gsap.timeline();

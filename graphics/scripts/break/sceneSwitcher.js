@@ -1,4 +1,3 @@
-const activeBreakScene = nodecg.Replicant('activeBreakScene', DASHBOARD_BUNDLE_NAME);
 const sceneTl = gsap.timeline();
 
 activeBreakScene.on('change', (newValue, oldValue) => {

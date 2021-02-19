@@ -1,4 +1,3 @@
-const nextRoundTime = nodecg.Replicant('nextRoundStartTime', DASHBOARD_BUNDLE_NAME);
 const nextRoundTimeElem = document.getElementById('next-round-minutes');
 let nextStageDate;
 let lastDiff;
@@ -34,8 +33,6 @@ setInterval(() => {
 		nextRoundTimeElem.innerHTML = newText;
 	}
 }, 1000);
-
-const nextRoundStartTimeShown = nodecg.Replicant('nextRoundStartTimeShown', DASHBOARD_BUNDLE_NAME);
 
 nextRoundStartTimeShown.on('change', newValue => {
 	const elemHeight = newValue ? 252 : 0;

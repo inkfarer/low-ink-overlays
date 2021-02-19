@@ -1,4 +1,3 @@
-const mainFlavorText = nodecg.Replicant('mainFlavorText', DASHBOARD_BUNDLE_NAME);
 const flavorTextElem = document.getElementById('main-flavor-text');
 const flavorTextTl = gsap.timeline();
 

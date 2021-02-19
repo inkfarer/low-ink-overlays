@@ -1,4 +1,3 @@
-const nextTeams = nodecg.Replicant('nextTeams', DASHBOARD_BUNDLE_NAME);
 const teamsTls = {
 	'a': gsap.timeline(),
 	'b': gsap.timeline()

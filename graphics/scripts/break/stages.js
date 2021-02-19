@@ -1,9 +1,3 @@
-const rounds = nodecg.Replicant('rounds', DASHBOARD_BUNDLE_NAME);
-const activeRound = nodecg.Replicant('activeRoundId', DASHBOARD_BUNDLE_NAME);
-const gameWinners = nodecg.Replicant('gameWinners', DASHBOARD_BUNDLE_NAME);
-const scoreboardData = nodecg.Replicant('scoreboardData', DASHBOARD_BUNDLE_NAME);
-const teamScores = nodecg.Replicant('teamScores', DASHBOARD_BUNDLE_NAME);
-
 const stagesElem = document.getElementById('stages-grid');
 const mapNameToImagePath = {
 	"Ancho-V Games": "S2_Stage_Ancho-V_Games.png",
