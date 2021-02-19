@@ -122,9 +122,46 @@ function hideTeams() {
 }
 
 function showStages() {
+	showStageElems(sceneTl, '-=0.6');
+	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 1, y: 0, duration: 0.5, ease: Power2.easeOut}), '-=0.75');
+}
+
+function hideStages() {
+	hideStageElems(sceneTl);
+	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 0, y: -50, duration: 0.5, ease: Power2.easeIn}), '-=0.5');
+	//sceneTl.add(gsap.to({}, {duration: 5}));
+}
+
+function hideStageElems(timeline, callback = () => {}) {
+	const height = 0;
+	timeline.add(gsap.to('.stage > .stage-content', {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeIn,
+		stagger: {
+			from: 'center',
+			each: 0.05
+		}
+	}))
+	.add(gsap.to('.stage > .accent', {
+		height: height,
+		duration: 0.75,
+		ease: Power3.easeIn,
+		stagger: {
+			from: 'center',
+			each: 0.05
+		},
+		onComplete: () => {
+			gsap.set('.stages-grid', {opacity: 0});
+			callback();
+		}
+	}), '-=0.75');
+}
+
+function showStageElems(timeline, startPos = '-=0.0') {
 	const height = 700;
 
-	sceneTl.add(gsap.fromTo('.stage > .accent', {height: 0}, {
+	timeline.add(gsap.fromTo('.stage > .accent', {height: 0}, {
 		height: height,
 		duration: 0.75,
 		ease: Power3.easeOut,
@@ -135,8 +172,8 @@ function showStages() {
 		onStart: function () {
 			gsap.set('.stages-grid', {opacity: 1});
 		}
-	}), '-=0.6');
-	sceneTl.add(gsap.fromTo('.stage > .stage-content', {height: 0}, {
+	}), startPos)
+	.add(gsap.fromTo('.stage > .stage-content', {height: 0}, {
 		height: height,
 		duration: 0.75,
 		ease: Power3.easeOut,
@@ -145,33 +182,4 @@ function showStages() {
 			each: 0.05
 		}
 	}), '-=0.7');
-	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 1, y: 0, duration: 0.5, ease: Power2.easeOut}), '-=0.75');
-}
-
-function hideStages() {
-	const height = 0;
-
-	sceneTl.add(gsap.to('.stage > .stage-content', {
-		height: height,
-		duration: 0.75,
-		ease: Power3.easeIn,
-		stagger: {
-			from: 'center',
-			each: 0.05
-		}
-	}));
-	sceneTl.add(gsap.to('.stage > .accent', {
-		height: height,
-		duration: 0.75,
-		ease: Power3.easeIn,
-		stagger: {
-			from: 'center',
-			each: 0.05
-		},
-		onComplete: function () {
-			gsap.set('.stages-grid', {opacity: 0});
-		}
-	}), '-=0.75');
-	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 0, y: -50, duration: 0.5, ease: Power2.easeIn}), '-=0.5');
-	//sceneTl.add(gsap.to({}, {duration: 5}));
 }

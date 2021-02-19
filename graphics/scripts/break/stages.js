@@ -152,6 +152,14 @@ function updateStages(roundObject) {
 	for (let i = 0; i < roundObject.games.length; i++) {
 		const game = roundObject.games[i];
 
+		const winnerValue = gameWinners.value[i];
+		let winnerName = '';
+		if (winnerValue === 1) {
+			winnerName = scoreboardData.value.teamAInfo.name;
+		} else if (winnerValue === 2) {
+			winnerName = scoreboardData.value.teamBInfo.name;
+		}
+
 		// noinspection CssUnknownTarget,CssInvalidPropertyValue
 		roundsHTML += `
 			<div class="stage flex-align-center">
@@ -161,8 +169,8 @@ function updateStages(roundObject) {
 						style="background-image: url('img/stages/${mapNameToImagePath[game.stage]}'); filter: saturate(1)">
 					</div>
 					<div class="stage-text">
-						<div class="stage-winner-wrapper flex-align-center" style="opacity: 0">
-							<div class="stage-winner" style="font-size: ${stageModeFontSize}px">BINGUS</div>
+						<div class="stage-winner-wrapper flex-align-center" style="opacity: ${winnerValue === 0 ? 0 : 1}">
+							<div class="stage-winner" style="font-size: ${stageModeFontSize}px">${winnerName}</div>
 						</div>
 						<div class="stage-info">
 							<fitted-text
@@ -179,17 +187,18 @@ function updateStages(roundObject) {
 			</div>`
 	}
 
-	stagesTl.add(gsap.to(stagesElem, {
-		opacity: 0, duration: 0.35, onComplete: function () {
-			gsap.set(stagesElem, {
-				gridTemplateColumns: `repeat(${roundObject.games.length}, 1fr)`,
-				width: stagesWidth,
-				gap: stagesGap
-			});
-			stagesElem.innerHTML = roundsHTML;
-		}
-	}))
-		.add(gsap.to(stagesElem, {opacity: 1, duration: 0.35}));
+
+
+	hideStageElems(stagesTl, () => {
+		gsap.set(stagesElem, {
+			gridTemplateColumns: `repeat(${roundObject.games.length}, 1fr)`,
+			width: stagesWidth,
+			gap: stagesGap
+		});
+		stagesElem.innerHTML = roundsHTML;
+		showStageElems(stagesTl);
+	});
+
 }
 
 function stageGamesMatch(elem1, elem2) {
@@ -218,7 +227,7 @@ function setGameWinner(index, winner, oldWinner) {
 	const tl = winnerTls[index];
 
 	const winnerOpacity = winner === 0 ? 0 : 1;
-	const winnerSaturation = winner === 0 ? 1 : 0.25;
+	const winnerSaturation = winner === 0 ? 1 : 0.15;
 	let winnerName;
 	if (winner === 1) {
 		winnerName = scoreboardData.value.teamAInfo.name;
