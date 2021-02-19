@@ -1,13 +1,32 @@
 const casters = nodecg.Replicant('casters', DASHBOARD_BUNDLE_NAME);
 const topBarCasterElem = document.getElementById('info-row-casters-text');
 const topBarTwitterElem = document.getElementById('info-row-casters-twitter-text');
+const topBarCastersTl = gsap.timeline();
 
-casters.on('change', newValue => {
+casters.on('change', (newValue, oldValue) => {
 	let castersText = '';
 	let twittersText = '';
 
+	let updateTwitters = (oldValue === undefined);
+	let updateNames = (oldValue === undefined);
+	console.log(updateNames);
+
 	Object.keys(newValue).forEach((item, index, arr) => {
-		const element = casters.value[item];
+		const element = newValue[item];
+
+		if (oldValue) {
+			const oldElement = oldValue[item];
+
+			if (element.pronouns !== oldElement.pronouns) {
+				updateNames = true;
+				updateTwitters = true;
+			} else if (element.twitter !== oldElement.twitter) {
+				updateTwitters = true;
+			} else if (element.name !== oldElement.name) {
+				updateNames = true;
+			}
+		}
+
 		castersText += `${element.name} <span class="pronoun">${element.pronouns}</span>`;
 		twittersText += `${element.twitter} <span class="pronoun">${element.pronouns}</span>`;
 
@@ -20,6 +39,39 @@ casters.on('change', newValue => {
 		}
 	});
 
-	topBarCasterElem.setAttribute('text', castersText);
-	topBarTwitterElem.setAttribute('text', twittersText);
+	console.log(updateNames);
+
+	if (updateNames) {
+		topBarCastersTl.add(gsap.to([topBarCasterElem, getIcon(topBarCasterElem)], {
+			opacity: 0,
+			duration: 0.3,
+			onComplete: () => {
+				topBarCasterElem.setAttribute('text', castersText);
+			}
+		}));
+
+		topBarCastersTl.add(gsap.to([topBarCasterElem, getIcon(topBarCasterElem)], {
+			opacity: 1,
+			duration: 0.3
+		}));
+	}
+
+	if (updateTwitters) {
+		topBarCastersTl.add(gsap.to([topBarTwitterElem, getIcon(topBarTwitterElem)], {
+			opacity: 0,
+			duration: 0.3,
+			onComplete: () => {
+				topBarTwitterElem.setAttribute('text', twittersText);
+			}
+		}));
+
+		topBarCastersTl.add(gsap.to([topBarTwitterElem, getIcon(topBarTwitterElem)], {
+			opacity: 1,
+			duration: 0.3
+		}));
+	}
 });
+
+function getIcon(elem) {
+	return elem.parentNode.querySelector('i');
+}
