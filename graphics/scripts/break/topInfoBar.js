@@ -2,7 +2,7 @@ const topBarInfoRows = document.querySelectorAll('.top-info-bar > .info-row');
 let topInfoTl;
 
 function setTopBarAnim() {
-	const switchDelay = 10;
+	const switchDelay = 2;
 
 	if (topInfoTl) {
 		topInfoTl.kill();
@@ -11,6 +11,11 @@ function setTopBarAnim() {
 
 	for (let i = 0; i < topBarInfoRows.length; i++) {
 		const elem = topBarInfoRows[i];
+
+		if (!musicShown.value && elem.classList.contains('info-row-music')) {
+			gsap.set(elem, {opacity: 0});
+			continue;
+		}
 
 		topInfoTl.add(gsap.fromTo(elem, {opacity: 0, y: -25}, {
 			opacity: 1,
@@ -39,6 +44,10 @@ function setTopBarAnim() {
 		topInfoTl.add(gsap.to(elem, {opacity: 0, y: 25, duration: 0.3, ease: Power2.easeIn, force3D: false}));
 	}
 }
+
+musicShown.on('change', newValue => {
+	setTopBarAnim();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
 	setTopBarAnim();

@@ -55,6 +55,7 @@
 	flex-direction: row;
 	position: relative;
 	width: max-content;
+	margin-bottom: 15px;
 }
 
 .scene.main-scene > .scene-content > .main-container > .music > .icon {
@@ -79,7 +80,6 @@
 .next-round-timer > .title {
 	font-size: 60px;
 	font-weight: 600;
-	margin-top: 30px;
 }
 
 .next-round-timer > .line {
