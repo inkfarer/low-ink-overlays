@@ -129,7 +129,6 @@ function showStages() {
 function hideStages() {
 	hideStageElems(sceneTl);
 	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 0, y: -50, duration: 0.5, ease: Power2.easeIn}), '-=0.5');
-	//sceneTl.add(gsap.to({}, {duration: 5}));
 }
 
 function hideStageElems(timeline, callback = () => {}) {
@@ -170,7 +169,9 @@ function showStageElems(timeline, startPos = '-=0.0') {
 			each: 0.05
 		},
 		onStart: function () {
-			gsap.set('.stages-grid', {opacity: 1});
+			if (activeBreakScene.value === 'stages') {
+				gsap.set('.stages-grid', {opacity: 1});
+			}
 		}
 	}), startPos)
 	.add(gsap.fromTo('.stage > .stage-content', {height: 0}, {
