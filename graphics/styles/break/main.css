@@ -41,6 +41,13 @@
 	color: var(--text-color);
 }
 
+.scene.main-scene > .scene-content > img {
+	width: 425px;
+	position: absolute;
+	bottom: 25px;
+	right: 50px;
+}
+
 .scene.main-scene > .scene-content > * {
 	margin-left: 65px;
 }
