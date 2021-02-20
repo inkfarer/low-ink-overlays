@@ -67,5 +67,10 @@ function disableRGBMode() {
 	if (RGBTimeline) {
 		RGBTimeline.kill();
 	}
-	gsap.to(':root', {'--accent': '#F37002', duration: 1, ease: 'none'});
+	gsap.to(':root', {
+		'--accent': '#F37002',
+		'--accent-alpha-15': 'rgba(243, 112, 2, 0.15)',
+		duration: 1,
+		ease: 'none'
+	});
 }
