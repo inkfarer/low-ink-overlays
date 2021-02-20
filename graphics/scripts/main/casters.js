@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 nodecg.listenFor('mainShowCasters', DASHBOARD_BUNDLE_NAME, () => {
-	const duration = 3;
+	const duration = 20;
 	gsap.set('.caster > .caster-twitter', {opacity: 0});
 	gsap.set('.caster > .caster-name', {opacity: 1});
 
