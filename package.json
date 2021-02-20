@@ -30,15 +30,25 @@
                 "width": 1920,
                 "height": 1080
             }
+        ],
+        "dashboardPanels": [
+            {
+                "name": "lowInkSettings",
+                "title": "Low Ink options",
+                "width": 2,
+                "file": "lowinkdashboard.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            }
         ]
     },
     "dependencies": {
         "fitted-text": "^1.0.1",
-        "gsap": "^3.6.0",
+        "gsap": "3.5.0",
         "luxon": "^1.26.0"
     },
     "devDependencies": {
-      "ts-nodecg": "^0.3.1"
+        "ts-nodecg": "^0.3.1"
     },
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT"
