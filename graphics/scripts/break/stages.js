@@ -41,7 +41,7 @@ const sbTls = {
 	'b': gsap.timeline()
 };
 
-NodeCG.waitForReplicants(rounds, activeRound, gameWinners, scoreboardData).then(() => {
+NodeCG.waitForReplicants(rounds, activeRound, gameWinners, scoreboardData, activeBreakScene).then(() => {
 	activeRound.on('change', newValue => {
 		const roundObject = rounds.value[newValue];
 		updateStages(roundObject);
@@ -181,18 +181,24 @@ function updateStages(roundObject) {
 			</div>`
 	}
 
-
-
-	hideStageElems(stagesTl, () => {
+	if (activeBreakScene.value === 'stages') {
+		hideStageElems(stagesTl, () => {
+			gsap.set(stagesElem, {
+				gridTemplateColumns: `repeat(${roundObject.games.length}, 1fr)`,
+				width: stagesWidth,
+				gap: stagesGap
+			});
+			stagesElem.innerHTML = roundsHTML;
+			showStageElems(stagesTl);
+		});
+	} else {
 		gsap.set(stagesElem, {
 			gridTemplateColumns: `repeat(${roundObject.games.length}, 1fr)`,
 			width: stagesWidth,
 			gap: stagesGap
 		});
 		stagesElem.innerHTML = roundsHTML;
-		showStageElems(stagesTl);
-	});
-
+	}
 }
 
 function stageGamesMatch(elem1, elem2) {
