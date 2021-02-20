@@ -11,3 +11,4 @@ const gameWinners = nodecg.Replicant('gameWinners', DASHBOARD_BUNDLE_NAME);
 const scoreboardData = nodecg.Replicant('scoreboardData', DASHBOARD_BUNDLE_NAME);
 const teamScores = nodecg.Replicant('teamScores', DASHBOARD_BUNDLE_NAME);
 const nextTeams = nodecg.Replicant('nextTeams', DASHBOARD_BUNDLE_NAME);
+const scoreboardShown = nodecg.Replicant('scoreboardShown', DASHBOARD_BUNDLE_NAME);

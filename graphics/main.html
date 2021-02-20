@@ -6,13 +6,55 @@
 	   All rights reserved, reuse not permitted.
 	  -->
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles/main.css">
+	<link rel="stylesheet" href="styles/globals.css">
+    <link rel="stylesheet" href="styles/main/main.css">
 </head>
 
 <body>
+	<div class="scoreboard-wrapper flex-align-center">
+		<div class="accent"></div>
+		<div class="background flex-align-center">
+			<div class="scoreboard-content">
+				<div class="teams">
+					<div class="team">
+						<div class="team-color" id="team-a-color"></div>
+						<fitted-text id="team-a-name" max-width="250" text="First Team"></fitted-text>
+					</div>
+					<div class="team">
+						<div class="team-color" id="team-b-color"></div>
+						<fitted-text id="team-b-name" max-width="250" text="Second Team"></fitted-text>
+					</div>
+				</div>
+				<div class="scores">
+					<fitted-text id="team-a-score" max-width="45" text="0"></fitted-text>
+					<fitted-text id="team-b-score" max-width="45" text="0"></fitted-text>
+				</div>
+				<div class="flavor-text flex-align-center">
+					<fitted-text id="scoreboard-flavor-text" max-width="360" text="Low Ink!"></fitted-text>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<div class="casters-wrapper flex-align-center">
+		<div class="accent"></div>
+		<div class="background flex-align-center">
+			<div class="casters-content flex-align-center">
+				<div class="casters">
+				</div>
+				<div class="label">Commentators</div>
+			</div>
+		</div>
+	</div>
+
+	<img class="placeholder" src="img/placeholder.jpg">
+
+	<script src="../node_modules/fitted-text/dist/fitted-text.js"></script>
     <script src="../node_modules/gsap/dist/gsap.js"></script>
-    <script src="scripts/main.js"></script>
-</body>
 
+	<script src="scripts/globals.js"></script>
+	<script src="scripts/replicants.js"></script>
+	<script src="scripts/main/scoreboard.js"></script>
+	<script src="scripts/main/casters.js"></script>
+</body>
 </html>

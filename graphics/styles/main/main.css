@@ -1,0 +1,159 @@
+img.placeholder {
+	width: 1920px;
+	height: 1080px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -999;
+}
+
+div.scoreboard-wrapper {
+	position: absolute;
+	left: 50px;
+	top: 50px;
+	width: 375px;
+	height: 145px;
+}
+
+div.scoreboard-wrapper > .background {
+	height: 100%;
+	width: 100%;
+	background-color: var(--background-1);
+	position: absolute;
+	z-index: 2;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content {
+	width: 375px;
+	height: 145px;
+	position: absolute;
+
+	display: grid;
+	grid-template-areas:
+		'a b'
+		'a b'
+		'c c';
+
+	color: white;
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content > .scores,
+div.scoreboard-wrapper > .background > .scoreboard-content > .teams {
+	height: 100%;
+	width: 320px;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 1fr;
+	align-items: center;
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content > .scores {
+	background: var(--background-2);
+	font-size: 45px;
+	font-weight: 700;
+	justify-items: center;
+	grid-area: b;
+	width: 55px;
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content > .scores > fitted-text {
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content > .teams {
+	font-size: 32px;
+	font-weight: 600;
+	grid-area: a;
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content > .teams > .team {
+	display: flex;
+	align-items: center;
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content > .teams > .team > .team-color {
+	width: 25px;
+	height: 40px;
+	background-color: red;
+	margin: 0 10px;
+	border-radius: 5px;
+}
+
+div.scoreboard-wrapper > .accent,
+div.casters-wrapper > .accent {
+	height: 100%;
+	width: 100%;
+	background-color: var(--accent);
+	filter: drop-shadow(0 0 5px var(--accent));
+	position: absolute;
+	z-index: 1;
+	border-radius: 10px;
+}
+
+div.scoreboard-wrapper > .background > .scoreboard-content > .flavor-text {
+	background-color: var(--background-2);
+	width: 100%;
+	grid-area: c;
+	height: 35px;
+	font-size: 25px;
+}
+
+div.casters-wrapper {
+	position: absolute;
+	left: 50px;
+	top: 220px;
+	width: 375px;
+}
+
+div.casters-wrapper > .background {
+	height: 170px;
+	width: 100%;
+
+	background-color: var(--background-1);
+	z-index: 2;
+	border-radius: 10px;
+	color: white;
+
+	overflow: hidden;
+	position: relative;
+}
+
+div.casters-wrapper > .background > .casters-content {
+	width: 375px;
+	flex-direction: column;
+	position: absolute;
+}
+
+div.casters-wrapper > .background > .casters-content > .casters {
+	width: calc(100% - 20px);
+	margin: 5px 10px 0;
+}
+
+div.casters-wrapper > .background > .casters-content > .casters fitted-text {
+	font-size: 32px;
+	position: absolute;
+}
+
+div.casters-wrapper > .background > .casters-content > .casters > * > * {
+	position: absolute;
+}
+
+div.casters-wrapper > .background > .casters-content > .casters > * {
+	height: 40px;
+}
+
+div.casters-wrapper > .background > .casters-content > .label {
+	font-size: 25px;
+	background-color: var(--background-2);
+	width: 100%;
+	text-align: center;
+	padding: 5px 0;
+	margin-top: 5px;
+}
+
+span.pronoun {
+	background-color: var(--accent);
+	font-size: 20px;
+	padding: 0 5px;
+}
