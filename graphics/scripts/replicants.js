@@ -13,3 +13,4 @@ const teamScores = nodecg.Replicant('teamScores', DASHBOARD_BUNDLE_NAME);
 const nextTeams = nodecg.Replicant('nextTeams', DASHBOARD_BUNDLE_NAME);
 const scoreboardShown = nodecg.Replicant('scoreboardShown', DASHBOARD_BUNDLE_NAME);
 const RGBModeEnabled = nodecg.Replicant('RGBModeEnabled', {defaultValue: false});
+const teamImageShown = nodecg.Replicant('teamImageHidden', DASHBOARD_BUNDLE_NAME);

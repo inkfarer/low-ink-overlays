@@ -39,7 +39,9 @@ function setTeams(data, team) {
 			} else {
 				loadImage(data.logoUrl, () => {
 					teamImageElem.style.backgroundImage = `url("${data.logoUrl}")`;
-					tl.add(gsap.to(teamImageElem, {opacity: 0.2, duration: 0.3}));
+					if ((team === 'a' && teamImageShown.value.teamA === true) || (team === 'b' && teamImageShown.value.teamB === true)) {
+						tl.add(gsap.to(teamImageElem, {opacity: 0.2, duration: 0.3}));
+					}
 				});
 			}
 		}
@@ -72,3 +74,8 @@ function loadImage(imageUrl, callback) {
 		callback();
 	});
 }
+
+teamImageShown.on('change', newValue => {
+	gsap.to('#team-a-image', {opacity: newValue.teamA ? 0.2 : 0, duration: 0.35});
+	gsap.to('#team-b-image', {opacity: newValue.teamB ? 0.2 : 0, duration: 0.35});
+});
