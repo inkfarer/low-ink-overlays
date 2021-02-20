@@ -2,7 +2,7 @@ const topBarInfoRows = document.querySelectorAll('.top-info-bar > .info-row');
 let topInfoTl;
 
 function setTopBarAnim() {
-	const switchDelay = 2;
+	const switchDelay = 10;
 
 	if (topInfoTl) {
 		topInfoTl.kill();
