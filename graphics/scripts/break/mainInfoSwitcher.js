@@ -10,8 +10,10 @@ function setInfoSwitchAnim() {
 	for (let i = 0; i < infoContainers.length; i++) {
 		const elem = infoContainers[i];
 
+		const pauseDuration = i === 1 ? 15 : 45;
+
 		infoTl.add(gsap.fromTo(elem, {opacity: 0, x: -25}, {opacity: 1, x: 0, duration: 0.5, ease: Power2.easeOut, force3D: false}));
-		infoTl.add(gsap.to({}, {duration: 20}));
+		infoTl.add(gsap.to({}, {duration: pauseDuration}));
 		infoTl.add(gsap.to(elem, {opacity: 0, x: 25, duration: 0.5, ease: Power2.easeIn, force3D: false}));
 	}
 }

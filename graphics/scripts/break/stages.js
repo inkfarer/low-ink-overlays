@@ -107,7 +107,7 @@ function updateScoreboardName(team, newName) {
 
 	sbTls[team].add(gsap.to(teamNameElem, {
 		opacity: 0, duration: 0.35, onComplete: function() {
-			teamNameElem.innerText = newName;
+			teamNameElem.setAttribute('text', newName);
 		}
 	}))
 		.add(gsap.to(teamNameElem, {opacity: 1, duration: 0.35}));
