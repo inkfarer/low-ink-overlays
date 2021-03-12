@@ -1,0 +1,127 @@
+:root {
+	--side-logo-width: 800px;
+}
+
+.side-logo {
+	position: relative;
+	width: var(--side-logo-width);
+	height: 100vh;
+}
+
+.side-logo > .brand {
+	text-align: center;
+	font-size: 120px;
+	font-family: "Lemon/Milk", sans-serif;
+	font-weight: bold;
+	color: white;
+}
+
+.side-logo > .brand > div {
+	filter: drop-shadow(0 0 5px var(--accent));
+}
+
+.side-logo > .brand > img {
+	width: 550px;
+	filter: drop-shadow(0 0 15px var(--accent));
+	margin-top: 25px;
+}
+
+.scene.main-scene {
+	display: flex;
+	flex-direction: row;
+}
+
+.scene.main-scene > .scene-content {
+	width: calc(100vw - var(--side-logo-width));
+
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+
+	color: var(--text-color);
+}
+
+.scene.main-scene > .scene-content > img {
+	width: 425px;
+	position: absolute;
+	bottom: 25px;
+	right: 35px;
+}
+
+.scene.main-scene > .scene-content > * {
+	margin-left: 65px;
+}
+
+.main-container-title {
+	font-size: 80px;
+	font-weight: 700;
+}
+
+.scene.main-scene > .scene-content > .main-container > .music {
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	width: max-content;
+	margin-bottom: 15px;
+}
+
+.scene.main-scene > .scene-content > .main-container > .music > .icon {
+	margin-right: 25px;
+	font-size: 50px;
+}
+
+.scene.main-scene > .scene-content > .main-container > .music > .text {
+	font-size: 45px;
+	font-weight: 400;
+}
+
+.line {
+	width: 500px;
+	height: 5px;
+
+	margin: 25px 0;
+
+	background-color: var(--accent);
+}
+
+.next-round-timer > .title {
+	font-size: 60px;
+	font-weight: 600;
+}
+
+.next-round-timer > .line {
+	margin: 15px 0 0;
+}
+
+.next-round-timer > .count {
+	font-size: 45px;
+}
+
+.next-round-timer > .count > span.count-minutes {
+	font-size: 100px;
+	font-weight: 700;
+}
+
+.next-round-timer > .times {
+	font-size: 30px;
+}
+
+.scene.main-scene > .scene-content > .main-container {
+	position: absolute;
+	opacity: 0;
+}
+
+.scene.main-scene > .scene-content > .main-container > .support-row > i {
+	font-size: 60px;
+}
+
+.scene.main-scene > .scene-content > .main-container > .support-row > span {
+	margin-left: 20px;
+}
+
+.scene.main-scene > .scene-content > .main-container > .support-row {
+	font-size: 45px;
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}

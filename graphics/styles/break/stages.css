@@ -1,0 +1,141 @@
+.scene.stages-scene {
+	align-items: unset;
+}
+
+.scene.stages-scene > .stages-grid {
+	width: 1700px;
+	height: 700px;
+
+	position: absolute;
+	bottom: 75px;
+
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 20px;
+}
+
+.scene.stages-scene > .stages-grid > .stage {
+	border-radius: 10px;
+	position: relative;
+}
+
+.scene.stages-scene > .stages-grid > .stage > .accent {
+	height: 100%;
+	width: 100%;
+
+	position: absolute;
+	z-index: 1;
+
+	background-color: var(--accent);
+	filter: drop-shadow(0 0 5px var(--accent));
+	border-radius: 10px;
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content {
+	height: 100%;
+	width: 100%;
+
+	overflow: hidden;
+
+	position: absolute;
+	z-index: 2;
+	border-radius: 10px;
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-image {
+	height: 700px;
+	width: 100%;
+
+	position: absolute;
+
+	background-image: url("../../img/stages/S2_Stage_MakoMart.png");
+	background-position: center center;
+	background-size: cover;
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text {
+	height: 700px;
+	width: 100%;
+	position: absolute;
+
+	background: linear-gradient(0deg, var(--background-1) 1%, rgba(25, 25, 25, 0.75) 30%, transparent 60%);
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text > .stage-winner-wrapper > .stage-winner {
+	color: white;
+	text-align: right;
+	position: relative;
+	font-weight: 600;
+	margin: 10px;
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text > .stage-winner-wrapper {
+	height: 550px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	align-items: unset;
+	justify-content: flex-end;
+	background: linear-gradient(180deg, var(--background-1) 0%, transparent 50%);
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text > .stage-info {
+	position: absolute;
+	bottom: 0;
+	color: white;
+	margin: 10px;
+	width: calc(100% - 20px);
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text > .stage-info > .stage-mode {
+	font-size: 32px;
+	margin-bottom: 5px;
+}
+
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text > .stage-info > .stage-name {
+	font-size: 35px;
+	font-weight: 600;
+}
+
+.scene.stages-scene > .stages-scoreboard {
+	height: 65px;
+	width: 1000px;
+	background-color: var(--background-1);
+	position: absolute;
+	top: 175px;
+	filter: drop-shadow(0 0 5px var(--accent));
+	border-radius: 0 0 10px 10px;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 4fr 1.5fr 4fr;
+	color: white;
+	align-items: center;
+}
+
+.scene.stages-scene > .stages-scoreboard > .scores {
+	background-color: var(--background-2);
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 1fr 0.5fr 1fr;
+	align-items: center;
+	justify-items: center;
+	font-size: 50px;
+	font-weight: 700;
+}
+
+.scene.stages-scene > .stages-scoreboard > .scores > fitted-text {
+	margin-top: 4px;
+}
+
+.scene.stages-scene > .stages-scoreboard > fitted-text {
+	margin: 0 5px;
+	font-size: 35px;
+	font-weight: 600;
+}
+
+#team-a-name-scoreboard {
+	justify-self: end;
+}

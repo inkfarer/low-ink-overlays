@@ -18,17 +18,7 @@
         "nodecg-bundle"
     ],
     "nodecg": {
-        "compatibleRange": "^1.1.1",
-        "dashboardPanels": [
-            {
-                "name": "li-dash",
-                "title": "Low Ink options",
-                "width": 2,
-                "file": "liDash.html",
-                "workspace": "ipl",
-                "headerColor": "#262F40"
-            }
-        ],
+        "compatibleRange": "^1.7.0",
         "graphics": [
             {
                 "file": "main.html",
@@ -40,11 +30,25 @@
                 "width": 1920,
                 "height": 1080
             }
+        ],
+        "dashboardPanels": [
+            {
+                "name": "lowInkSettings",
+                "title": "Low Ink options",
+                "width": 2,
+                "file": "lowinkdashboard.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            }
         ]
     },
     "dependencies": {
-        "gsap": "^3.0.5",
-        "lastfm": "^0.9.2"
+        "fitted-text": "^1.0.1",
+        "gsap": "3.5.0",
+        "luxon": "^1.26.0"
+    },
+    "devDependencies": {
+        "ts-nodecg": "^0.3.1"
     },
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT"

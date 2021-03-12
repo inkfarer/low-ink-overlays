@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'Lemon/Milk';
+	font-weight: bold;
+	src: url("LemonMilkbold.woff") format("woff"),
+		 url("LemonMilkbold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: 'Lemon/Milk';
+	font-weight: normal;
+	src: url("LemonMilk.woff") format("woff"),
+		 url("LemonMilk.woff2") format("woff2");
+}

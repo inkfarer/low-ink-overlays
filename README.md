@@ -1,51 +1,44 @@
 # low-ink-overlays
 
-A [NodeCG](http://github.com/nodecg/nodecg) bundle.
-
-## Screenshots
-
-* [Scoreboard (Main scene)](https://i.imgur.com/LBs1cyS.png)
-* [Break screen](https://i.imgur.com/N2joHF9.png)
-* [Upcoming teams](https://i.imgur.com/Q7laPh2.png)
-* [Upcoming stages](https://i.imgur.com/hadGiZY.jpg)
-* [Dashboard 1 (Setup)](https://i.imgur.com/BYyIjFK.png)
-* [Dashboard 2 (Live controls)](https://i.imgur.com/Vbsh79Z.png)
+A [NodeCG](http://github.com/nodecg/nodecg) bundle, used for the Low Ink Splatoon tournament, hosted by [Inkling Performance Labs.](https://iplabs.ink/)
 
 ## Install
 
-1.1. Install NodeCG and [nodecg-cli](https://github.com/nodecg/nodecg-cli) (optional)
+- Install [git](http://git-scm.com/)
 
-If you're using nodecg-cli:
+- Install [node.js](https://nodejs.org/en/) (Using the LTS release (14.x as of writing) is recommended.)
 
-2.1. Run `nodecg install inkfarer/low-ink-overlays`.
+- Install [nodecg-cli](https://github.com/nodecg/nodecg-cli) using `npm`: `npm install -g nodecg-cli`
 
-2.2. Install the dashboard by running `nodecg install inkfarer/ipl-overlay-controls`
+- Install `nodecg` in a new folder:
 
-Otherwise:
-
-2.1. Clone low-ink-overlays to `nodecg/bundles/low-ink-overlays` and clone [ipl-overlay-controls](https://github.com/inkfarer/ipl-overlay-controls) to `nodecg/bundles/ipl-overlay-controls`.
-
-2.2. Install dependencies by running `npm install` in `nodecg/bundles/low-ink-overlays` and `nodecg/bundles/ipl-overlay-controls`.
-
-3.1. For last.fm integration to work, create the configuration file at `nodecg/cfg/ipl-overlay-controls.json`.
-
-Example configuration file:
+```shell
+mkdir nodecg
+cd nodecg
+nodecg setup
 ```
+
+- Install the dashboard: `nodecg install inkfarer/ipl-overlay-controls` 
+    
+    - The overlays work with v2.x.x of `ipl-overlay-controls`. Specify a version by adding the version number with a
+      \# symbol: `nodecg install ipl-overlay-controls#2.0.3`
+
+- Install the overlays: `nodecg install inkfarer/low-ink-overlays`
+
+- (Optional) Create the configuration file in `[nodecg root]/cfg/ipl-overlay-controls.json` with the following contents:
+
+```json
 {
 	"lastfm": {
-		"targetAccount": "Your last.fm account name",
-		"apiKey": "your API key",
-		"secret": "your secret"
+		"targetAccount": "Your Last.fm account name",
+		"apiKey": "Your last.fm API key",
+		"secret": "Your last.fm API secret"
 	}
 }
 ```
 
-## Usage
+- Start nodecg using the `nodecg start` command in the folder you installed NodeCG in.
 
-Start NodeCG. By default, the dashboard can be accessed from `localhost:9090` in your browser.
+- Access the dashboard from `http://localhost:9090/` in your browser.
 
-From the dashboard, URLs to the graphics can be found from the graphics tab. To use them, they should be added as browser sources in a broadcast application such as OBS Studio. The graphics are made to run at a resolution of 1920x1080.
-
-## Credits
-
-Splatoon 2 map portraits are property of Nintendo and were downloaded from the [Splatoon wiki.](https://splatoonwiki.org/)
+- Access the graphics from the "Graphics" tab in the dashboard. They are made to be used as browser sources in your preferred broadcast application, with a resolution of 1920x1080.

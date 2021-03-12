@@ -1,0 +1,53 @@
+body {
+	background: radial-gradient(
+		var(--background-3) 0%,
+		var(--background-2) 100%
+	);
+}
+
+.arrows-background {
+	position: absolute;
+	width: 800px;
+	height: 1080px;
+
+	background-color: var(--background-1);
+
+	border-right: 10px solid var(--accent);
+}
+
+.arrows-background > .arrows {
+	position: absolute;
+	width: inherit;
+	height: inherit;
+	background-image: url("../../img/arrows-bg.png");
+	background-size: 3070px 2160px;
+	background-position-x: 0px;
+}
+
+.arrows-background > .gradient {
+	position: absolute;
+	width: inherit;
+	height: inherit;
+
+	background: radial-gradient(
+		transparent 60%,
+		var(--accent-alpha-15) 100%
+	);
+}
+
+span.pronoun {
+	background-color: var(--accent);
+	color: white;
+	padding: 1px 5px;
+	font-size: 20px;
+	font-weight: 400;
+	margin-top: 5px;
+}
+
+.scene {
+	width: 100vw;
+	height: 100vh;
+
+	position: absolute;
+	top: 0; left: 0;
+}

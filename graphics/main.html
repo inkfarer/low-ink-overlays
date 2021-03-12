@@ -5,159 +5,55 @@
     <!--
 	   All rights reserved, reuse not permitted.
 	  -->
-    <meta charset="UTF-8"
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,600" rel="stylesheet">
-    <style>
-         :root {
-            --lowInkOrange: #F37002;
-        }
-
-        body {
-            font-family: 'Montserrat';
-            font-weight: 700;
-        }
-
-        .scWrapper {
-            position: absolute;
-            top: 40px;
-            left: 50px;
-            height: 106px;
-            width: 430px;
-            overflow: hidden;
-        }
-
-        #flavorTextDisplay {
-            color: white;
-            position: relative;
-            top: 1px;
-            left: 8px;
-            font-size: 1.6em;
-            font-weight: 600;
-        }
-
-        .flavorTextBG {
-            width: 425px;
-            height: 32px;
-            left: 5px;
-            position: relative;
-            background-color: #111;
-        }
-
-        .scNames {
-            background-color: #222222;
-            position: relative;
-            top: 0px;
-            width: 425px;
-            left: 5px;
-            height: 74px;
-        }
-
-        img.temp {
-            position: absolute;
-            width: 1920px;
-            height: 1080px;
-            top: 0;
-            left: 0;
-            z-index: -9999;
-        }
-
-        .teamInfoGrid {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            grid-template-columns: 1fr;
-            height: 70px;
-            width: 400px;
-            align-items: center;
-            position: relative;
-            top: 2px;
-        }
-
-        .nameDisplay {
-            color: white;
-            position: relative;
-            left: 40px;
-            font-size: 1.8em;
-        }
-
-        .colorDisplay {
-            position: absolute;
-            left: 7px;
-            margin-top: 5px;
-            width: 25px;
-            height: 25px;
-            border-radius: 5px;
-        }
-
-        .scoreDisplay {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            grid-template-columns: 1fr;
-            height: 75px;
-            width: 45px;
-            align-items: center;
-            justify-items: center;
-            position: absolute;
-            top: 1px;
-            right: 0px;
-            background-color: #111;
-        }
-
-        .scoreDisplayText {
-            color: white;
-            font-size: 2.35em;
-            width: 40px;
-            margin-top: -7px;
-        }
-
-        .scLine {
-            background-color: var(--lowInkOrange);
-            height: 106px;
-            width: 5px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 999;
-        }
-
-        #scContents {
-            position: relative;
-            top: 0;
-            left: 0;
-            font-weight: 600;
-        }
-    </style>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="styles/globals.css">
+    <link rel="stylesheet" href="styles/main/main.css">
 </head>
 
 <body>
-    <div class="scWrapper">
-        <!--any decorations will go here-->
-        <div class="scLine"></div>
-        <div id="scContents">
-            <div class="flavorTextBG">
-                <fitted-text id="flavorTextDisplay" max-width="405"></fitted-text>
-            </div>
-            <div class="scNames">
-                <div class="teamInfoGrid">
-                    <div class="teamInfo">
-                        <div class="colorDisplay" id="teamAcolorDisplay"></div>
-                        <fitted-text class="nameDisplay" id="teamAnameDisplay" max-width="330"></fitted-text>
-                    </div>
-                    <div class="teamInfo">
-                        <div class="colorDisplay" id="teamBcolorDisplay"></div>
-                        <fitted-text class="nameDisplay" id="teamBnameDisplay" max-width="330"></fitted-text>
-                    </div>
-                </div>
-                <div class="scoreDisplay">
-                    <fitted-text id="teamAScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></fitted-text>
-                    <fitted-text id="teamBScoreDisplay" class="scoreDisplayText" align="center" max-width="40"></fitted-text>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="scoreboard-wrapper flex-align-center">
+		<div class="accent"></div>
+		<div class="background flex-align-center">
+			<div class="scoreboard-content">
+				<div class="teams">
+					<div class="team">
+						<div class="team-color" id="team-a-color"></div>
+						<fitted-text id="team-a-name" max-width="265" text="First Team"></fitted-text>
+					</div>
+					<div class="team">
+						<div class="team-color" id="team-b-color"></div>
+						<fitted-text id="team-b-name" max-width="265" text="Second Team"></fitted-text>
+					</div>
+				</div>
+				<div class="scores">
+					<fitted-text id="team-a-score" max-width="45" text="0"></fitted-text>
+					<fitted-text id="team-b-score" max-width="45" text="0"></fitted-text>
+				</div>
+				<div class="flavor-text flex-align-center">
+					<fitted-text id="scoreboard-flavor-text" max-width="360" text="Low Ink!"></fitted-text>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <script src="fitted-text.js"></script>
+	<div class="casters-wrapper flex-align-center">
+		<div class="accent"></div>
+		<div class="background flex-align-center">
+			<div class="casters-content flex-align-center">
+				<div class="casters">
+				</div>
+				<div class="label">Commentators</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="../node_modules/fitted-text/dist/fitted-text.js"></script>
     <script src="../node_modules/gsap/dist/gsap.js"></script>
-    <script src="main.js "></script>
-</body>
 
+	<script src="scripts/globals.js"></script>
+	<script src="scripts/replicants.js"></script>
+	<script src="scripts/main/scoreboard.js"></script>
+	<script src="scripts/main/casters.js"></script>
+	<script src="scripts/RGBMode.js"></script>
+</body>
 </html>
