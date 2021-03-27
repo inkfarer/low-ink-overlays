@@ -25,7 +25,7 @@ function setTeams(data, team) {
 	const teamNameElem = document.getElementById(`team-${team}-name`);
 	tl.add(gsap.to(teamNameElem, {
 		opacity: 0, duration: 0.3, onComplete: function () {
-			teamNameElem.setAttribute('text', data.name);
+			teamNameElem.setAttribute('text', addDots(data.name));
 		}
 	}));
 	tl.add(gsap.to(teamNameElem, {opacity: 1, duration: 0.3}));
@@ -56,7 +56,7 @@ function setTeams(data, team) {
 
 				const playerNameElem = document.createElement('fitted-text');
 				playerNameElem.classList.add('team-player');
-				playerNameElem.setAttribute('text', player.name);
+				playerNameElem.setAttribute('text', addDots(player.name));
 				playerNameElem.setAttribute('max-width', '445');
 
 				teamPlayersElem.appendChild(playerNameElem);

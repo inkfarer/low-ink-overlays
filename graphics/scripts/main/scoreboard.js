@@ -5,16 +5,16 @@ teamScores.on('change', newValue => {
 
 scoreboardData.on('change', (newValue, oldValue) => {
 	if (!oldValue) {
-		textOpacitySwap(newValue.teamAInfo.name, document.getElementById('team-a-name'));
-		textOpacitySwap(newValue.teamBInfo.name, document.getElementById('team-b-name'));
+		textOpacitySwap(addDots(newValue.teamAInfo.name), document.getElementById('team-a-name'));
+		textOpacitySwap(addDots(newValue.teamBInfo.name), document.getElementById('team-b-name'));
 		textOpacitySwap(newValue.flavorText, document.getElementById('scoreboard-flavor-text'));
 	} else {
 		if (newValue.teamAInfo.name !== oldValue.teamAInfo.name) {
-			textOpacitySwap(newValue.teamAInfo.name, document.getElementById('team-a-name'));
+			textOpacitySwap(addDots(newValue.teamAInfo.name), document.getElementById('team-a-name'));
 		}
 
 		if (newValue.teamBInfo.name !== oldValue.teamBInfo.name) {
-			textOpacitySwap(newValue.teamBInfo.name, document.getElementById('team-b-name'));
+			textOpacitySwap(addDots(newValue.teamBInfo.name), document.getElementById('team-b-name'));
 		}
 
 		if (newValue.flavorText !== oldValue.flavorText) {

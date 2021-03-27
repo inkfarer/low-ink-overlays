@@ -24,7 +24,7 @@ const mapNameToImagePath = {
 	"Wahoo World": "S2_Stage_Wahoo_World.png",
 	"Walleye Warehouse": "S2_Stage_Walleye_Warehouse.png",
 	"Skipper Pavilion": "S2_Stage_Skipper_Pavilion.png",
-	"Unknown Map": "low-ink-unknown-map.png"
+	"Unknown Stage": "low-ink-unknown-map.png"
 };
 const winnerTls = {
 	0: gsap.timeline(),
@@ -75,10 +75,10 @@ NodeCG.waitForReplicants(rounds, activeRound, gameWinners, scoreboardData, activ
 
 			if (elem === 1) {
 				if (oldValue && oldValue.teamAInfo.name === newValue.teamAInfo.name) continue;
-				setWinnerName(i, newValue.teamAInfo.name);
+				setWinnerName(i, addDots(newValue.teamAInfo.name));
 			} else if (elem === 2) {
 				if (oldValue && oldValue.teamBInfo.name === newValue.teamBInfo.name) continue;
-				setWinnerName(i, newValue.teamBInfo.name);
+				setWinnerName(i, addDots(newValue.teamBInfo.name));
 			}
 		}
 
@@ -87,11 +87,11 @@ NodeCG.waitForReplicants(rounds, activeRound, gameWinners, scoreboardData, activ
 			updateScoreboardName('b', newValue.teamBInfo.name);
 		} else {
 			if (oldValue.teamAInfo.name !== newValue.teamAInfo.name) {
-				updateScoreboardName('a', newValue.teamAInfo.name);
+				updateScoreboardName('a', addDots(newValue.teamAInfo.name));
 			}
 
 			if (oldValue.teamBInfo.name !== newValue.teamBInfo.name) {
-				updateScoreboardName('b', newValue.teamBInfo.name);
+				updateScoreboardName('b', addDots(newValue.teamBInfo.name));
 			}
 		}
 	});
@@ -113,7 +113,7 @@ function updateScoreboardName(team, newName) {
 		.add(gsap.to(teamNameElem, {opacity: 1, duration: 0.35}));
 }
 
-function updateStages(roundObject) {
+async function updateStages(roundObject) {
 	let stagesWidth = 0;
 	let stagesGap = 0;
 	let stageModeMaxWidth = 0;
@@ -138,11 +138,13 @@ function updateStages(roundObject) {
 			stagesWidth = 1700;
 			stagesGap = 20;
 			stageModeMaxWidth = 200;
-			stageNameFontSize = 34;
+			stageNameFontSize = 33;
 			stageModeFontSize = 31;
 	}
 
 	let roundsHTML = '';
+	const stageImageUrls = [];
+
 	for (let i = 0; i < roundObject.games.length; i++) {
 		const game = roundObject.games[i];
 
@@ -154,6 +156,8 @@ function updateStages(roundObject) {
 			winnerName = scoreboardData.value.teamBInfo.name;
 		}
 
+		stageImageUrls.push(`img/stages/${mapNameToImagePath[game.stage]}`);
+
 		// noinspection CssUnknownTarget,CssInvalidPropertyValue
 		roundsHTML += `
 			<div class="stage flex-align-center">
@@ -164,7 +168,7 @@ function updateStages(roundObject) {
 					</div>
 					<div class="stage-text">
 						<div class="stage-winner-wrapper flex-align-center" style="opacity: ${winnerValue === 0 ? 0 : 1}">
-							<div class="stage-winner" style="font-size: ${stageModeFontSize}px">${winnerName}</div>
+							<div class="stage-winner" style="font-size: ${stageModeFontSize}px">${addDots(winnerName)}</div>
 						</div>
 						<div class="stage-info">
 							<fitted-text
@@ -180,6 +184,13 @@ function updateStages(roundObject) {
 				</div>
 			</div>`
 	}
+
+	const imageLoads = [];
+	stageImageUrls.forEach(url => {
+		imageLoads.push(loadImagePromise(url));
+	});
+
+	await Promise.all(imageLoads);
 
 	if (activeBreakScene.value === 'stages') {
 		hideStageElems(stagesTl, () => {
