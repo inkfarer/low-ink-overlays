@@ -12,10 +12,17 @@ casters.on('change', (newValue, oldValue) => {
 	Object.keys(newValue).forEach((item, index, arr) => {
 		const element = newValue[item];
 
-		if (oldValue) {
+		if (oldValue && (!updateTwitters || !updateNames)) {
 			const oldElement = oldValue[item];
 
-			if (element.pronouns !== oldElement.pronouns) {
+			Object.keys(oldValue).forEach((item, index, arr) => {
+				if (!newValue[item]) {
+					updateTwitters = true;
+					updateNames = true;
+				}
+			});
+
+			if (!oldElement || element.pronouns !== oldElement.pronouns) {
 				updateNames = true;
 				updateTwitters = true;
 			} else {
@@ -39,6 +46,8 @@ casters.on('change', (newValue, oldValue) => {
 			twittersText += ' & ';
 		}
 	});
+
+	console.log(updateTwitters, updateNames);
 
 	if (updateNames) {
 		topBarCastersTl.add(gsap.to([topBarCasterElem, getIcon(topBarCasterElem)], {
