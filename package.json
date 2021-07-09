@@ -1,7 +1,7 @@
 {
     "name": "low-ink-overlays",
     "version": "0.0.0",
-    "compatibleDashboardVersion": "^2.0.0",
+    "compatibleDashboardVersion": "^3.0.0",
     "description": "",
     "homepage": "https://github.com/inkfarer/low-ink-overlays",
     "author": {
