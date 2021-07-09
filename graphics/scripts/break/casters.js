@@ -47,8 +47,6 @@ casters.on('change', (newValue, oldValue) => {
 		}
 	});
 
-	console.log(updateTwitters, updateNames);
-
 	if (updateNames) {
 		topBarCastersTl.add(gsap.to([topBarCasterElem, getIcon(topBarCasterElem)], {
 			opacity: 0,
