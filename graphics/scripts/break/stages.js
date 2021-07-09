@@ -148,11 +148,11 @@ function updateStages(roundObject) {
 	for (let i = 0; i < roundObject.games.length; i++) {
 		const game = roundObject.games[i];
 
-		const winnerValue = gameData.value[i];
+		const winnerValue = gameData.value[i].winner;
 		let winnerName = '';
-		if (winnerValue === 1) {
+		if (winnerValue === 'alpha') {
 			winnerName = scoreboardData.value.teamAInfo.name;
-		} else if (winnerValue === 2) {
+		} else if (winnerValue === 'bravo') {
 			winnerName = scoreboardData.value.teamBInfo.name;
 		}
 
@@ -165,7 +165,7 @@ function updateStages(roundObject) {
 						style="background-image: url('img/stages/${mapNameToImagePath[game.stage]}'); filter: saturate(1)">
 					</div>
 					<div class="stage-text">
-						<div class="stage-winner-wrapper flex-align-center" style="opacity: ${winnerValue === 0 ? 0 : 1}">
+						<div class="stage-winner-wrapper flex-align-center" style="opacity: ${winnerValue === 'none' ? 0 : 1}">
 							<div class="stage-winner" style="font-size: ${stageModeFontSize}px">${winnerName}</div>
 						</div>
 						<div class="stage-info">
