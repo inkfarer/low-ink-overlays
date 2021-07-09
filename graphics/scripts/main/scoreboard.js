@@ -23,12 +23,12 @@ scoreboardData.on('change', (newValue, oldValue) => {
 	}
 
 	gsap.to('#team-a-color', {
-		backgroundColor: newValue.swapColorOrder ? newValue.colorInfo.clrB : newValue.colorInfo.clrA,
+		backgroundColor: newValue.colorInfo.clrA,
 		duration: 0.35
 	});
 
 	gsap.to('#team-b-color', {
-		backgroundColor: newValue.swapColorOrder ? newValue.colorInfo.clrA : newValue.colorInfo.clrB,
+		backgroundColor: newValue.colorInfo.clrB,
 		duration: 0.35
 	});
 });
