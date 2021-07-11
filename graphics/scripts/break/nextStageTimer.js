@@ -3,7 +3,11 @@ let nextStageDate;
 let lastDiff;
 
 nextRoundTime.on('change', newValue => {
-	const time = luxon.DateTime.fromObject(newValue);
+	const elemHeight = newValue.isVisible ? 252 : 0;
+	const elemOpacity = newValue.isVisible ? 1 : 0;
+	gsap.to('.next-round-timer', {duration: 0.5, height: elemHeight, opacity: elemOpacity, ease: Power2.easeInOut});
+
+	const time = luxon.DateTime.fromISO(newValue.startTime);
 	nextStageDate = time;
 
 	const roundTimes = {
@@ -33,9 +37,3 @@ setInterval(() => {
 		nextRoundTimeElem.innerHTML = newText;
 	}
 }, 1000);
-
-nextRoundStartTimeShown.on('change', newValue => {
-	const elemHeight = newValue ? 252 : 0;
-	const elemOpacity = newValue ? 1 : 0;
-	gsap.to('.next-round-timer', {duration: 0.5, height: elemHeight, opacity: elemOpacity, ease: Power2.easeInOut});
-});

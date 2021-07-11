@@ -3,6 +3,8 @@ teamScores.on('change', newValue => {
 	document.getElementById('team-b-score').setAttribute('text', newValue.teamB);
 });
 
+const sbShowTl = new gsap.timeline();
+
 scoreboardData.on('change', (newValue, oldValue) => {
 	if (!oldValue) {
 		textOpacitySwap(newValue.teamAInfo.name, document.getElementById('team-a-name'));
@@ -31,22 +33,8 @@ scoreboardData.on('change', (newValue, oldValue) => {
 		backgroundColor: newValue.colorInfo.clrB,
 		duration: 0.35
 	});
-});
 
-function textOpacitySwap(newText, elem) {
-	gsap.to(elem, {
-		opacity: 0, duration: 0.35, onComplete: () => {
-			elem.setAttribute('text', newText);
-		}
-	});
-
-	gsap.to(elem, {opacity: 1, duration: 0.35, delay: 0.35});
-}
-
-const sbShowTl = new gsap.timeline();
-
-scoreboardShown.on('change', newValue => {
-	if (newValue) {
+	if (newValue.isVisible) {
 		sbShowTl.add(gsap.to('.scoreboard-wrapper > .accent', {
 			width: 375,
 			duration: 0.75,
@@ -70,3 +58,12 @@ scoreboardShown.on('change', newValue => {
 		}), '-=0.7');
 	}
 });
+function textOpacitySwap(newText, elem) {
+	gsap.to(elem, {
+		opacity: 0, duration: 0.35, onComplete: () => {
+			elem.setAttribute('text', newText);
+		}
+	});
+	gsap.to(elem, {opacity: 1, duration: 0.35, delay: 0.35});
+
+}
