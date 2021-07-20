@@ -8,3 +8,12 @@ function doOnDifference(newValue, oldValue, path, callback) {
         callback(newObject);
     }
 }
+
+function doOnNoDifference(newValue, oldValue, path, callback) {
+    const newObject = _.get(newValue, path);
+    const oldObject = _.get(oldValue, path);
+
+    if (newObject != null && (oldObject == null || _.isEqual(newObject, oldObject))) {
+        callback(newObject);
+    }
+}
