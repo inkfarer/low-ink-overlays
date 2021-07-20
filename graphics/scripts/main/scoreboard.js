@@ -1,38 +1,30 @@
-teamScores.on('change', newValue => {
-	document.getElementById('team-a-score').setAttribute('text', newValue.teamA);
-	document.getElementById('team-b-score').setAttribute('text', newValue.teamB);
+activeRound.on('change', (newValue, oldValue) => {
+	doOnDifference(newValue, oldValue, 'teamA.score',
+		value => document.getElementById('team-a-score').setAttribute('text', value));
+	doOnDifference(newValue, oldValue, 'teamB.score',
+		value => document.getElementById('team-b-score').setAttribute('text', value));
+
+	doOnDifference(newValue, oldValue, 'teamA.name',
+		value => textOpacitySwap(value, document.getElementById('team-a-name')));
+	doOnDifference(newValue, oldValue, 'teamB.name',
+		value => textOpacitySwap(value, document.getElementById('team-b-name')));
+
+	gsap.to('#team-a-color', {
+		backgroundColor: newValue.teamA.color,
+		duration: 0.35
+	});
+
+	gsap.to('#team-b-color', {
+		backgroundColor: newValue.teamB.color,
+		duration: 0.35
+	});
 });
 
 const sbShowTl = new gsap.timeline();
 
 scoreboardData.on('change', (newValue, oldValue) => {
-	if (!oldValue) {
-		textOpacitySwap(newValue.teamAInfo.name, document.getElementById('team-a-name'));
-		textOpacitySwap(newValue.teamBInfo.name, document.getElementById('team-b-name'));
-		textOpacitySwap(newValue.flavorText, document.getElementById('scoreboard-flavor-text'));
-	} else {
-		if (newValue.teamAInfo.name !== oldValue.teamAInfo.name) {
-			textOpacitySwap(newValue.teamAInfo.name, document.getElementById('team-a-name'));
-		}
-
-		if (newValue.teamBInfo.name !== oldValue.teamBInfo.name) {
-			textOpacitySwap(newValue.teamBInfo.name, document.getElementById('team-b-name'));
-		}
-
-		if (newValue.flavorText !== oldValue.flavorText) {
-			textOpacitySwap(newValue.flavorText, document.getElementById('scoreboard-flavor-text'));
-		}
-	}
-
-	gsap.to('#team-a-color', {
-		backgroundColor: newValue.colorInfo.clrA,
-		duration: 0.35
-	});
-
-	gsap.to('#team-b-color', {
-		backgroundColor: newValue.colorInfo.clrB,
-		duration: 0.35
-	});
+	doOnDifference(newValue, oldValue, 'flavorText',
+		value => textOpacitySwap(value, document.getElementById('scoreboard-flavor-text')));
 
 	if (newValue.isVisible) {
 		sbShowTl.add(gsap.to('.scoreboard-wrapper > .accent', {
@@ -58,6 +50,7 @@ scoreboardData.on('change', (newValue, oldValue) => {
 		}), '-=0.7');
 	}
 });
+
 function textOpacitySwap(newText, elem) {
 	gsap.to(elem, {
 		opacity: 0, duration: 0.35, onComplete: () => {
