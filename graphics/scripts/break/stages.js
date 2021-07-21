@@ -58,9 +58,23 @@ NodeCG.waitForReplicants(activeRound, activeBreakScene).then(() => {
 		});
 
 		doOnDifference(newValue, oldValue, 'teamA.name',
-			value => updateScoreboardName('a', value));
+			value => {
+				updateScoreboardName('a', value);
+				newValue.games.forEach((game, index) => {
+					if (game.winner === 'alpha') {
+						setWinnerName(index, value);
+					}
+				});
+			});
 		doOnDifference(newValue, oldValue, 'teamB.name',
-			value => updateScoreboardName('b', value));
+			value => {
+				updateScoreboardName('b', value);
+				newValue.games.forEach((game, index) => {
+					if (game.winner === 'bravo') {
+						setWinnerName(index, value);
+					}
+				});
+			});
 
 		document.getElementById('team-a-score-scoreboard').setAttribute('text', newValue.teamA.score);
 		document.getElementById('team-b-score-scoreboard').setAttribute('text', newValue.teamB.score);
@@ -131,7 +145,7 @@ async function updateSingleStage(index, game) {
 
 let isFirstStageUpdate = true;
 
-function updateStages(roundObject) {
+async function updateStages(roundObject) {
 	let stagesWidth = 0;
 	let stagesGap = 0;
 	let stageModeMaxWidth = 0;
@@ -160,9 +174,11 @@ function updateStages(roundObject) {
 			stageModeFontSize = 31;
 	}
 
+	const imageLoadPromises = [];
 	let roundsHTML = '';
 	for (let i = 0; i < roundObject.games.length; i++) {
 		const game = roundObject.games[i];
+		imageLoadPromises.push(loadImagePromise(`img/stages/${mapNameToImagePath[game.stage]}`))
 
 		const winnerValue = game.winner;
 		let winnerName = '';
@@ -199,6 +215,8 @@ function updateStages(roundObject) {
 			</div>`
 	}
 
+	await Promise.all(imageLoadPromises);
+
 	if (activeBreakScene.value === 'stages' && !isFirstStageUpdate) {
 		hideStageElems(stagesTl, () => {
 			gsap.set(stagesElem, {
@@ -218,20 +236,6 @@ function updateStages(roundObject) {
 		});
 		stagesElem.innerHTML = roundsHTML;
 	}
-}
-
-function stageGamesMatch(elem1, elem2) {
-	if (elem1.games.length !== elem2.games.length) return false;
-
-	for (let i = 0; i < elem1.games.length; i++) {
-		const elem1Game = elem1.games[i];
-		const elem2Game = elem2.games[i];
-
-		if (elem1Game.stage !== elem2Game.stage) return false;
-		if (elem1Game.mode !== elem2Game.mode) return false;
-	}
-
-	return true;
 }
 
 function setGameWinner(index, winner, oldWinner) {
@@ -281,6 +285,4 @@ function setWinnerName(index, name) {
 		}
 	}))
 		.add(gsap.to(winnerTextElem, {opacity: 1, duration: 0.35}));
-
-
 }
