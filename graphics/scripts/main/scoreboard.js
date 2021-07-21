@@ -41,12 +41,12 @@ scoreboardData.on('change', (newValue, oldValue) => {
 		sbShowTl.add(gsap.to('.scoreboard-wrapper > .background', {
 			width: 0,
 			duration: 0.75,
-			ease: Power3.easeIn
+			ease: Power2.easeIn
 		}));
 		sbShowTl.add(gsap.to('.scoreboard-wrapper > .accent', {
 			width: 0,
 			duration: 0.75,
-			ease: Power3.easeIn
+			ease: Power2.easeIn
 		}), '-=0.7');
 	}
 });
