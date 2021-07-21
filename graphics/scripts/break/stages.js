@@ -102,45 +102,29 @@ async function updateSingleStage(index, game) {
 	winnerTls[index].add(gsap.to(`#stage_${index} > .stage-content`, {
 		height: 0,
 		duration: 0.75,
-		ease: Power3.easeIn,
-		stagger: {
-			from: 'center',
-			each: 0.05
-		}
+		ease: Power3.easeIn
 	}))
 	.add(gsap.to(`#stage_${index} > .accent`, {
 		height: 0,
 		duration: 0.75,
 		ease: Power3.easeIn,
-		stagger: {
-			from: 'center',
-			each: 0.05
-		},
 		onComplete: () => {
 			imageElem.style.backgroundImage = `url('img/stages/${mapNameToImagePath[game.stage]}')`;
 			modeTextElem.setAttribute('text', game.mode);
 			stageNameElem.innerText = game.stage;
 		}
-	}), '-=0.75');
+	}), '-=0.55');
 
 	winnerTls[index].add(gsap.to(`#stage_${index} > .accent`, {
 		height: 700,
 		duration: 0.75,
 		ease: Power3.easeOut,
-		stagger: {
-			from: 'center',
-			each: 0.05
-		}
 	}), '+=0.25')
 	.add(gsap.to(`#stage_${index} > .stage-content`, {
 		height: 700,
 		duration: 0.75,
 		ease: Power3.easeOut,
-		stagger: {
-			from: 'center',
-			each: 0.05
-		}
-	}), '-=0.7');
+	}), '-=0.55');
 }
 
 let isFirstStageUpdate = true;
