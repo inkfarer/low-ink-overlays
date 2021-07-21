@@ -57,7 +57,7 @@ function showMainScene() {
 		opacity: 1,
 		ease: Power3.easeOut,
 		duration: 0.5
-	}), '-=0.15');
+	}), '-=0.3');
 	sceneTl.add(gsap.to('.side-logo > .brand', {x: 0, opacity: 1, duration: 0.5, ease: Power2.easeOut}), '-=0.5');
 }
 
@@ -70,8 +70,10 @@ function hideMainScene() {
 
 function toggleExpandBackground(expand) {
 	const bgWidth = expand ? 1920 : 800;
+	const ease = expand ? Power2.easeIn : Power2.easeOut;
+	const position = expand ? '-=0.2' : '-=0.0';
 
-	sceneTl.add(gsap.to('.arrows-background', {duration: 1, width: bgWidth, ease: Power2.easeInOut}), '-=0.1');
+	sceneTl.add(gsap.to('.arrows-background', {duration: 0.9, width: bgWidth, ease: ease}), position);
 }
 
 function showInfoBar() {
@@ -82,7 +84,7 @@ function showInfoBar() {
 		width: width,
 		ease: Power2.easeOut,
 		duration: 0.75
-	}), '-=0.7');
+	}), '-=0.6');
 }
 
 function hideInfoBar(position = '-=0.0') {
@@ -93,7 +95,7 @@ function hideInfoBar(position = '-=0.0') {
 		ease: Power2.easeIn,
 		duration: 0.75
 	}), position);
-	sceneTl.add(gsap.to('.top-info-bar-accent', {width: width, ease: Power2.easeIn, duration: 0.75}), '-=0.75');
+	sceneTl.add(gsap.to('.top-info-bar-accent', {width: width, ease: Power2.easeIn, duration: 0.75}), '-=0.6');
 }
 
 function showTeams() {
@@ -116,7 +118,7 @@ function hideTeams() {
 		duration: 0.75,
 		ease: Power2.easeIn
 	}));
-	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.75, ease: Power2.easeIn}), '-=0.75');
+	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.75, ease: Power2.easeIn}), '-=0.6');
 	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 0, duration: 0.75}), '-=0.75');
 }
 
