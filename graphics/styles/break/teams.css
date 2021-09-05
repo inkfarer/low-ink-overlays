@@ -4,7 +4,7 @@
 
 .scene.teams-scene > .scene-content {
 	width: 1350px;
-	height: 650px;
+	height: 670px;
 	display: grid;
 	grid-template-rows: 1fr;
 	grid-template-columns: 2fr 1.25fr 2fr;
@@ -63,7 +63,7 @@
 
 .scene.teams-scene > .scene-content > .team > .content-wrapper > .content > fitted-text.team-name {
 	font-size: 60px;
-	margin: 30px 35px;
+	margin: 20px 35px 30px;
 	font-weight: 700;
 	height: 73px;
 }

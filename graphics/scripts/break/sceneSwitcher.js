@@ -99,15 +99,15 @@ function hideInfoBar(position = '-=0.0') {
 }
 
 function showTeams() {
-	const height = 650;
+	const height = 670;
 
-	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.75, ease: Power3.easeOut}), '-=0.6');
+	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.6, ease: Power3.easeOut}), '-=0.75');
 	sceneTl.add(gsap.to(['.team > .background', '.team > .content-wrapper'], {
 		height: height,
-		duration: 0.75,
+		duration: 0.6,
 		ease: Power3.easeOut
 	}), '-=0.7');
-	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 1, duration: 0.75}), '-=0.75');
+	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 1, duration: 0.6}), '-=0.7');
 }
 
 function hideTeams() {
@@ -115,16 +115,16 @@ function hideTeams() {
 
 	sceneTl.add(gsap.to(['.team > .background', '.team > .content-wrapper'], {
 		height: height,
-		duration: 0.75,
-		ease: Power2.easeIn
+		duration: 0.6,
+		ease: Power3.easeIn
 	}));
-	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.75, ease: Power2.easeIn}), '-=0.6');
-	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 0, duration: 0.75}), '-=0.75');
+	sceneTl.add(gsap.to('.team > .accent', {height: height, duration: 0.6, ease: Power3.easeIn}), '-=0.55');
+	sceneTl.add(gsap.to('.scene.teams-scene > .scene-content > .versus', {opacity: 0, duration: 0.6}), '-=0.6');
 }
 
 function showStages() {
-	showStageElems(sceneTl, '-=0.6');
-	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 1, y: 0, duration: 0.5, ease: Power2.easeOut}), '-=0.75');
+	showStageElems(sceneTl, '-=0.75');
+	sceneTl.add(gsap.to('.stages-scoreboard', {opacity: 1, y: 0, duration: 0.5, ease: Power2.easeOut}), '-=0.5');
 }
 
 function hideStages() {
@@ -136,7 +136,7 @@ function hideStageElems(timeline, callback = () => {}) {
 	const height = 0;
 	timeline.add(gsap.to('.stage > .stage-content', {
 		height: height,
-		duration: 0.75,
+		duration: 0.6,
 		ease: Power3.easeIn,
 		stagger: {
 			from: 'center',
@@ -145,7 +145,7 @@ function hideStageElems(timeline, callback = () => {}) {
 	}))
 	.add(gsap.to('.stage > .accent', {
 		height: height,
-		duration: 0.75,
+		duration: 0.6,
 		ease: Power3.easeIn,
 		stagger: {
 			from: 'center',
@@ -155,7 +155,7 @@ function hideStageElems(timeline, callback = () => {}) {
 			gsap.set('.stages-grid', {opacity: 0});
 			callback();
 		}
-	}), '-=0.75');
+	}), '-=0.6');
 }
 
 function showStageElems(timeline, startPos = '-=0.0') {
@@ -163,7 +163,7 @@ function showStageElems(timeline, startPos = '-=0.0') {
 
 	timeline.add(gsap.fromTo('.stage > .accent', {height: 0}, {
 		height: height,
-		duration: 0.75,
+		duration: 0.6,
 		ease: Power3.easeOut,
 		stagger: {
 			from: 'center',
@@ -177,11 +177,11 @@ function showStageElems(timeline, startPos = '-=0.0') {
 	}), startPos)
 	.add(gsap.fromTo('.stage > .stage-content', {height: 0}, {
 		height: height,
-		duration: 0.75,
+		duration: 0.6,
 		ease: Power3.easeOut,
 		stagger: {
 			from: 'center',
 			each: 0.05
 		}
-	}), '-=0.7');
+	}), '-=0.55');
 }
