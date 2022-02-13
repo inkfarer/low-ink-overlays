@@ -5,9 +5,9 @@ activeRound.on('change', (newValue, oldValue) => {
 		value => document.getElementById('team-b-score').setAttribute('text', value));
 
 	doOnDifference(newValue, oldValue, 'teamA.name',
-		value => textOpacitySwap(value, document.getElementById('team-a-name')));
+		value => textOpacitySwap(addDots(value, 32), document.getElementById('team-a-name')));
 	doOnDifference(newValue, oldValue, 'teamB.name',
-		value => textOpacitySwap(value, document.getElementById('team-b-name')));
+		value => textOpacitySwap(addDots(value, 32), document.getElementById('team-b-name')));
 
 	gsap.to('#team-a-color', {
 		backgroundColor: newValue.teamA.color,
@@ -58,5 +58,4 @@ function textOpacitySwap(newText, elem) {
 		}
 	});
 	gsap.to(elem, {opacity: 1, duration: 0.35, delay: 0.35});
-
 }

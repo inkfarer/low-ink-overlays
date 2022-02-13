@@ -30,7 +30,7 @@ function setTeams(data, team) {
 	const teamNameElem = document.getElementById(`team-${team}-name`);
 	tl.add(gsap.to(teamNameElem, {
 		opacity: 0, duration: 0.3, onComplete: function () {
-			teamNameElem.setAttribute('text', data.name);
+			teamNameElem.setAttribute('text', addDots(data.name));
 		}
 	}));
 	tl.add(gsap.to(teamNameElem, {opacity: 1, duration: 0.3}));
@@ -75,7 +75,7 @@ function loadImage(imageUrl, callback) {
 	const imageLoaderElem = document.createElement("img");
 	imageLoaderElem.src = imageUrl;
 
-	imageLoaderElem.addEventListener('load', e => {
+	imageLoaderElem.addEventListener('load', () => {
 		callback();
 	});
 }

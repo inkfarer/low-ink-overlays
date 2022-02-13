@@ -39,3 +39,14 @@ function loadImagePromise(imageUrl) {
         });
     })
 }
+
+function addDots(value, maxLength = 48) {
+    const rolloff = '...';
+
+    if (!value) return value;
+    if (value.length > maxLength) {
+        return value.substring(0, maxLength - rolloff.length) + rolloff;
+    }
+
+    return value;
+}

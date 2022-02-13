@@ -86,7 +86,7 @@ function updateScoreboardName(team, newName) {
 
 	sbTls[team].add(gsap.to(teamNameElem, {
 		opacity: 0, duration: 0.35, onComplete: function() {
-			teamNameElem.setAttribute('text', newName);
+			teamNameElem.setAttribute('text', addDots(newName));
 		}
 	}))
 		.add(gsap.to(teamNameElem, {opacity: 1, duration: 0.35}));
@@ -167,9 +167,9 @@ async function updateStages(roundObject) {
 		const winnerValue = game.winner;
 		let winnerName = '';
 		if (winnerValue === 'alpha') {
-			winnerName = activeRound.value.teamA.name;
+			winnerName = addDots(activeRound.value.teamA.name);
 		} else if (winnerValue === 'bravo') {
-			winnerName = activeRound.value.teamB.name;
+			winnerName = addDots(activeRound.value.teamB.name);
 		}
 
 		// noinspection CssUnknownTarget,CssInvalidPropertyValue
@@ -237,9 +237,9 @@ function setGameWinner(index, winner, oldWinner) {
 	const winnerSaturation = winner === 'none' ? 1 : 0.15;
 	let winnerName;
 	if (winner === 'alpha') {
-		winnerName = activeRound.value.teamA.name
+		winnerName = addDots(activeRound.value.teamA.name)
 	} else if (winner === 'bravo') {
-		winnerName = activeRound.value.teamB.name;
+		winnerName = addDots(activeRound.value.teamB.name);
 	}
 
 	if (winner !== 'none') {
@@ -265,7 +265,7 @@ function setWinnerName(index, name) {
 
 	tl.add(gsap.to(winnerTextElem, {
 		opacity: 0, duration: 0.35, onComplete: function () {
-			winnerTextElem.innerText = name;
+			winnerTextElem.innerText = addDots(name);
 		}
 	}))
 		.add(gsap.to(winnerTextElem, {opacity: 1, duration: 0.35}));
