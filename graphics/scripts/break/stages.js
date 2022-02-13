@@ -24,7 +24,8 @@ const mapNameToImagePath = {
 	"Wahoo World": "S2_Stage_Wahoo_World.png",
 	"Walleye Warehouse": "S2_Stage_Walleye_Warehouse.png",
 	"Skipper Pavilion": "S2_Stage_Skipper_Pavilion.png",
-	"Unknown Stage": "low-ink-unknown-map.png"
+	"Unknown Stage": "low-ink-unknown-map.png",
+	"Counterpick": "low-ink-unknown-map.png"
 };
 const winnerTls = {
 	0: gsap.timeline(),
@@ -43,9 +44,9 @@ const sbTls = {
 
 NodeCG.waitForReplicants(activeRound, activeBreakScene).then(() => {
 	activeRound.on('change', (newValue, oldValue) => {
-		doOnDifference(newValue, oldValue, 'round.id', () => updateStages(newValue));
+		doOnDifference(newValue, oldValue, 'match.id', () => updateStages(newValue));
 
-		doOnNoDifference(newValue, oldValue, 'round.id', () => {
+		doOnNoDifference(newValue, oldValue, 'match.id', () => {
 			newValue.games.forEach((game, index) => {
 				doOnDifference(newValue, oldValue, `games[${index}].winner`,
 					(newWinner, oldWinner) => setGameWinner(index, newWinner, oldWinner));
