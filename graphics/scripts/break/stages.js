@@ -25,7 +25,15 @@ const mapNameToImagePath = {
 	"Walleye Warehouse": "S2_Stage_Walleye_Warehouse.png",
 	"Skipper Pavilion": "S2_Stage_Skipper_Pavilion.png",
 	"Unknown Stage": "low-ink-unknown-map.png",
-	"Counterpick": "low-ink-unknown-map.png"
+	"Counterpick": "low-ink-unknown-map.png",
+	"Museum d'Alfonsino": "S3_Stage_Museum_d_Alfonsino.png",
+	"Scorch Gorge": "S3_Scorch_Gorge.png",
+	"Eeltail Alley": "S3_Eeltail_Alley.png",
+	"Hagglefish Market": "S3HagglefishMarketIcon.png",
+	"Undertow Spillway": "S3UndertowSpillwayIcon.png",
+	"Mincemeat Metalworks": "S3MincemeatMetalworksIcon.png",
+	"Hammerhead Bridge": "S3HammerheadBridgeIcon.png",
+	"Mahi-Mahi Resort": "S3MahiMahiResortIcon.png"
 };
 const winnerTls = {
 	0: gsap.timeline(),
