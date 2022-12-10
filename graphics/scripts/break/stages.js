@@ -33,7 +33,9 @@ const mapNameToImagePath = {
 	"Undertow Spillway": "S3UndertowSpillwayIcon.png",
 	"Mincemeat Metalworks": "S3MincemeatMetalworksIcon.png",
 	"Hammerhead Bridge": "S3HammerheadBridgeIcon.png",
-	"Mahi-Mahi Resort": "S3MahiMahiResortIcon.png"
+	"Mahi-Mahi Resort": "S3MahiMahiResortIcon.png",
+	"Brinewater Springs": "S3_Brinewater_Springs.png",
+	"Flounder Heights": "S3_Stage_Flounder_Heights.png"
 };
 const winnerTls = {
 	0: gsap.timeline(),
