@@ -35,7 +35,8 @@ const mapNameToImagePath = {
 	"Hammerhead Bridge": "S3HammerheadBridgeIcon.png",
 	"Mahi-Mahi Resort": "S3MahiMahiResortIcon.png",
 	"Brinewater Springs": "S3_Brinewater_Springs.png",
-	"Flounder Heights": "S3_Stage_Flounder_Heights.png"
+	"Flounder Heights": "S3_Stage_Flounder_Heights.png",
+	"Um'ami Ruins": "S3_Stage_Umami_Ruins.png"
 };
 const winnerTls = {
 	0: gsap.timeline(),
