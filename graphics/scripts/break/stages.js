@@ -36,7 +36,8 @@ const mapNameToImagePath = {
 	"Mahi-Mahi Resort": "S3MahiMahiResortIcon.png",
 	"Brinewater Springs": "S3_Brinewater_Springs.png",
 	"Flounder Heights": "S3_Stage_Flounder_Heights.png",
-	"Um'ami Ruins": "S3_Stage_Umami_Ruins.png"
+	"Um'ami Ruins": "S3_Stage_Umami_Ruins.png",
+	"Barnacle & Dime": "S3_Stage_Barnacle_&_Dime.png"
 };
 const winnerTls = {
 	0: gsap.timeline(),
