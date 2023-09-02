@@ -7,3 +7,4 @@ const nextRoundTime = nodecg.Replicant('nextRoundStartTime', DASHBOARD_BUNDLE_NA
 const activeRound = nodecg.Replicant('activeRound', DASHBOARD_BUNDLE_NAME);
 const scoreboardData = nodecg.Replicant('scoreboardData', DASHBOARD_BUNDLE_NAME);
 const RGBModeEnabled = nodecg.Replicant('RGBModeEnabled', {defaultValue: false});
+const assetPaths = nodecg.Replicant('assetPaths', DASHBOARD_BUNDLE_NAME);

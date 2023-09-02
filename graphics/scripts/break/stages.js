@@ -1,44 +1,4 @@
 const stagesElem = document.getElementById('stages-grid');
-const mapNameToImagePath = {
-	"Ancho-V Games": "S2_Stage_Ancho-V_Games.png",
-	"Arowana Mall": "S2_Stage_Arowana_Mall.png",
-	"Blackbelly Skatepark": "S2_Stage_Blackbelly_Skatepark.png",
-	"Camp Triggerfish": "S2_Stage_Camp_Triggerfish.png",
-	"Goby Arena": "S2_Stage_Goby_Arena.png",
-	"Humpback Pump Track": "S2_Stage_Humpback_Pump_Track.png",
-	"Inkblot Art Academy": "S2_Stage_Inkblot_Art_Academy.png",
-	"Kelp Dome": "S2_Stage_Kelp_Dome.png",
-	"MakoMart": "S2_Stage_MakoMart.png",
-	"Manta Maria": "S2_Stage_Manta_Maria.png",
-	"Moray Towers": "S2_Stage_Moray_Towers.png",
-	"Musselforge Fitness": "S2_Stage_Musselforge_Fitness.png",
-	"New Albacore Hotel": "S2_Stage_New_Albacore_Hotel.png",
-	"Piranha Pit": "S2_Stage_Piranha_Pit.png",
-	"Port Mackerel": "S2_Stage_Port_Mackerel.png",
-	"Shellendorf Institute": "S2_Stage_Shellendorf_Institute.png",
-	"Shifty Station": "S2_Stage_Shifty_Station.png",
-	"Snapper Canal": "S2_Stage_Snapper_Canal.png",
-	"Starfish Mainstage": "S2_Stage_Starfish_Mainstage.png",
-	"Sturgeon Shipyard": "S2_Stage_Sturgeon_Shipyard.png",
-	"The Reef": "S2_Stage_The_Reef.png",
-	"Wahoo World": "S2_Stage_Wahoo_World.png",
-	"Walleye Warehouse": "S2_Stage_Walleye_Warehouse.png",
-	"Skipper Pavilion": "S2_Stage_Skipper_Pavilion.png",
-	"Unknown Stage": "low-ink-unknown-map.png",
-	"Counterpick": "low-ink-unknown-map.png",
-	"Museum d'Alfonsino": "S3_Stage_Museum_d_Alfonsino.png",
-	"Scorch Gorge": "S3_Scorch_Gorge.png",
-	"Eeltail Alley": "S3_Eeltail_Alley.png",
-	"Hagglefish Market": "S3HagglefishMarketIcon.png",
-	"Undertow Spillway": "S3UndertowSpillwayIcon.png",
-	"Mincemeat Metalworks": "S3MincemeatMetalworksIcon.png",
-	"Hammerhead Bridge": "S3HammerheadBridgeIcon.png",
-	"Mahi-Mahi Resort": "S3MahiMahiResortIcon.png",
-	"Brinewater Springs": "S3_Brinewater_Springs.png",
-	"Flounder Heights": "S3_Stage_Flounder_Heights.png",
-	"Um'ami Ruins": "S3_Stage_Umami_Ruins.png",
-	"Barnacle & Dime": "S3_Stage_Barnacle_&_Dime.png"
-};
 const winnerTls = {
 	0: gsap.timeline(),
 	1: gsap.timeline(),
@@ -54,7 +14,12 @@ const sbTls = {
 	'b': gsap.timeline()
 };
 
-NodeCG.waitForReplicants(activeRound, activeBreakScene).then(() => {
+function getStageImagePath(stageName) {
+	const path = assetPaths.value.stageImages[stageName];
+	return path == null ? 'img/low-ink-unknown-map.png' : path;
+}
+
+NodeCG.waitForReplicants(activeRound, activeBreakScene, assetPaths).then(() => {
 	activeRound.on('change', (newValue, oldValue) => {
 		doOnDifference(newValue, oldValue, 'match.id', () => updateStages(newValue));
 
@@ -106,7 +71,8 @@ function updateScoreboardName(team, newName) {
 }
 
 async function updateSingleStage(index, game) {
-	await loadImagePromise(`img/stages/${mapNameToImagePath[game.stage]}`);
+	const stageImagePath = getStageImagePath(game.stage);
+	await loadImagePromise(stageImagePath);
 	const stageElem = document.getElementById(`stage_${index}`);
 	const imageElem = stageElem.querySelector('.stage-content > .stage-image');
 	const modeTextElem = stageElem.querySelector('.stage-content > .stage-text > .stage-info > fitted-text.stage-mode');
@@ -122,7 +88,7 @@ async function updateSingleStage(index, game) {
 		duration: 0.75,
 		ease: Power3.easeIn,
 		onComplete: () => {
-			imageElem.style.backgroundImage = `url('img/stages/${mapNameToImagePath[game.stage]}')`;
+			imageElem.style.backgroundImage = `url('${stageImagePath}')`;
 			modeTextElem.setAttribute('text', game.mode);
 			stageNameElem.innerText = game.stage;
 		}
@@ -175,7 +141,8 @@ async function updateStages(roundObject) {
 	let roundsHTML = '';
 	for (let i = 0; i < roundObject.games.length; i++) {
 		const game = roundObject.games[i];
-		imageLoadPromises.push(loadImagePromise(`img/stages/${mapNameToImagePath[game.stage]}`))
+		const stageImagePath = getStageImagePath(game.stage);
+		imageLoadPromises.push(loadImagePromise(stageImagePath))
 
 		const winnerValue = game.winner;
 		let winnerName = '';
@@ -191,7 +158,7 @@ async function updateStages(roundObject) {
 				<div class="accent"></div>
 				<div class="stage-content flex-align-center">
 					<div class="stage-image"
-						style="background-image: url('img/stages/${mapNameToImagePath[game.stage]}'); filter: saturate(1)">
+						style="background-image: url('${stageImagePath}'); filter: saturate(1)">
 					</div>
 					<div class="stage-text">
 						<div class="stage-winner-wrapper flex-align-center" style="opacity: ${winnerValue === 'none' ? 0 : 1}">

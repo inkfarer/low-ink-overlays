@@ -1,7 +1,7 @@
 {
     "name": "low-ink-overlays",
     "version": "0.0.0",
-    "compatibleDashboardVersion": "^4.0.0",
+    "compatibleDashboardVersion": "^4.4.0",
     "compatibleGameVersions": ["SPLATOON_2", "SPLATOON_3"],
     "description": "",
     "homepage": "https://github.com/inkfarer/low-ink-overlays",
@@ -20,7 +20,7 @@
         "nodecg-bundle"
     ],
     "nodecg": {
-        "compatibleRange": "^1.7.0",
+        "compatibleRange": "^1.7.0 || ^2.0.0",
         "graphics": [
             {
                 "file": "main.html",
