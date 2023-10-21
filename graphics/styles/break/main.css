@@ -21,7 +21,7 @@
 }
 
 .side-logo > .brand > img {
-	width: 550px;
+	width: 600px;
 	filter: drop-shadow(0 0 15px var(--accent));
 	margin-top: 25px;
 }
