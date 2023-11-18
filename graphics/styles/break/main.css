@@ -16,8 +16,21 @@
 	color: white;
 }
 
-.side-logo > .brand > div {
+.side-logo > .brand > .tournament-name {
+	position: relative;
+}
+
+.side-logo > .brand > .tournament-name > .tournament-name-text {
 	filter: drop-shadow(0 0 5px var(--accent));
+}
+
+.side-logo > .brand > .tournament-name > img {
+	position: absolute;
+	top: 25px;
+	left: 0;
+	transform: rotate(5deg);
+	width: 320px;
+	z-index: 2;
 }
 
 .side-logo > .brand > img {
