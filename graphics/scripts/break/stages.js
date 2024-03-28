@@ -19,7 +19,13 @@ function getStageImagePath(stageName) {
 	return path == null ? 'img/low-ink-unknown-map.png' : path;
 }
 
-NodeCG.waitForReplicants(activeRound, activeBreakScene, assetPaths).then(() => {
+NodeCG.waitForReplicants(activeRound, activeBreakScene, assetPaths, localeInfo, runtimeConfig).then(() => {
+	runtimeConfig.on('change', (newValue, oldValue) => {
+		if (oldValue) {
+			doOnDifference(newValue, oldValue, 'locale', () => updateStages(activeRound.value));
+		}
+	});
+
 	activeRound.on('change', (newValue, oldValue) => {
 		doOnDifference(newValue, oldValue, 'match.id', () => updateStages(newValue));
 
@@ -89,8 +95,8 @@ async function updateSingleStage(index, game) {
 		ease: Power3.easeIn,
 		onComplete: () => {
 			imageElem.style.backgroundImage = `url('${stageImagePath}')`;
-			modeTextElem.setAttribute('text', game.mode);
-			stageNameElem.innerText = game.stage;
+			modeTextElem.setAttribute('text', localeInfo.value.modes[game.mode]);
+			stageNameElem.innerText = localeInfo.value.stages[game.stage];
 		}
 	}), '-=0.55');
 
@@ -168,11 +174,10 @@ async function updateStages(roundObject) {
 							<fitted-text
 								class="stage-mode"
 								style="font-size: ${stageModeFontSize}px"
-								text="${game.mode}"
+								text="${localeInfo.value.modes[game.mode]}"
 								max-width="${stageModeMaxWidth}">
 							</fitted-text>
-							<div class="stage-line"></div>
-							<div class="stage-name" style="font-size: ${stageNameFontSize}px">${game.stage}</div>
+							<div class="stage-name" style="font-size: ${stageNameFontSize}px">${localeInfo.value.stages[game.stage]}</div>
 						</div>
 					</div>
 				</div>
