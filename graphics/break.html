@@ -56,15 +56,16 @@
 			</div>
 
 			<div class="next-round-timer">
-				<div class="title">Stream resumes</div>
+				<div class="title" data-tl-key="breakMainTimerTitle">Stream resumes</div>
 				<div class="line"></div>
 				<div class="count" id="next-round-minutes">in <span class="count-minutes">??</span> minutes</div>
-				<div class="times"><span id="next-round-time-est">?? EST</span>, <span
-					id="next-round-time-utc">?? UTC</span></div>
+				<div class="times">
+					<span id="next-round-time-est">?? EST</span>, <span id="next-round-time-utc">?? UTC</span>
+				</div>
 			</div>
 		</div>
 		<div class="main-container">
-			<div class="main-container-title">Support us!</div>
+			<div class="main-container-title" data-tl-key="breakMainSupportUsTitle">Support us!</div>
 			<div class="line"></div>
 			<div class="support-row">
 				<i class="fab fa-twitter"></i>
@@ -92,9 +93,8 @@
 	<div class="top-info-bar-background"></div>
 
 	<div class="top-info-bar flex-align-center">
-		<div class="info-row info-row-welcome flex-align-center">
-			Welcome to<span class="low-ink-small-logo"><img src="img/li-logo-break-no-text.png"></span><span
-			class="lemon-milk">Low Ink!</span>
+		<div class="info-row info-row-welcome flex-align-center" data-tl-key="breakInfoBarWelcome" data-tl-use-inner-html>
+			Welcome to<span class="low-ink-small-logo"><img src="img/li-logo-break-no-text.png"></span><span class="lemon-milk">Low Ink!</span>
 		</div>
 		<div class="info-row info-row-commentators flex-align-center">
 			<div class="commentators flex-align-center">
@@ -185,6 +185,7 @@
 <script src="scripts/break/stages.js"></script>
 <script src="scripts/break/background.js"></script>
 <script src="scripts/RGBMode.js"></script>
+<script src="scripts/i18n.js"></script>
 </body>
 
 </html>

@@ -20,20 +20,36 @@ nextRoundTime.on('change', newValue => {
 	}
 });
 
-setInterval(() => {
-	const diff = Math.ceil(nextStageDate.diffNow(['minutes']).toObject().minutes);
-	if (lastDiff !== diff) {
-		lastDiff = diff;
-		let newText;
+NodeCG.waitForReplicants(runtimeConfig).then(() => {
+	setInterval(() => {
+		const diff = Math.ceil(nextStageDate.diffNow(['minutes']).toObject().minutes);
+		if (lastDiff !== diff) {
+			lastDiff = diff;
+			let newText;
 
-		if (diff < 1) {
-			newText = '<span class="count-minutes">Soon!</span>';
-		} else if (diff === 1) {
-			newText = `in <span class="count-minutes">~${diff}</span> minute`;
-		} else {
-			newText = `in <span class="count-minutes">~${diff}</span> minutes`;
+			switch (runtimeConfig.value.locale) {
+				case 'EU_FR': {
+					if (diff < 1) {
+						newText = '<span class="count-minutes">[FR] Soon!</span>';
+					} else if (diff === 1) {
+						newText = `[FR] in <span class="count-minutes">~${diff}</span> minute`;
+					} else {
+						newText = `[FR] in <span class="count-minutes">~${diff}</span> minutes`;
+					}
+					break;
+				}
+				default: {
+					if (diff < 1) {
+						newText = '<span class="count-minutes">Soon!</span>';
+					} else if (diff === 1) {
+						newText = `in <span class="count-minutes">~${diff}</span> minute`;
+					} else {
+						newText = `in <span class="count-minutes">~${diff}</span> minutes`;
+					}
+				}
+			}
+
+			nextRoundTimeElem.innerHTML = newText;
 		}
-
-		nextRoundTimeElem.innerHTML = newText;
-	}
-}, 1000);
+	}, 1000);
+});
