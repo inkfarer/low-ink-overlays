@@ -47,7 +47,7 @@
     "dependencies": {
         "gsap": "3.6.1",
         "lodash": "^4.17.21",
-        "luxon": "^1.26.0",
+        "luxon": "^1.28.1",
 		"fitted-text": "^1.0.0"
     },
     "devDependencies": {
