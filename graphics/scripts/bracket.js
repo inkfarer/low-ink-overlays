@@ -123,9 +123,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function buildBracketTitle(bracketData) {
-    if (bracketData.matchGroups.length === 1 && bracketData.matchGroups[0].name !== bracketData.name) {
-        return bracketData.matchGroups[0].name;
-    }
+    const title = bracketData.matchGroups.length === 1 && bracketData.matchGroups[0].name !== bracketData.name
+        ? bracketData.matchGroups[0].name
+        : bracketData.name;
 
-    return bracketData.name;
+    if (bracketData.roundNumber != null) {
+        return `${title} - Round ${bracketData.roundNumber}`;
+    } else {
+        return title;
+    }
 }
