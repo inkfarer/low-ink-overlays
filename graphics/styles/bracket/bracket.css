@@ -2,7 +2,7 @@
     position: absolute;
     height: 70px;
     width: 100%;
-    background-color: var(--background-1);
+    background-color: var(--background-2);
     border-bottom: 4px solid var(--accent);
     display: flex;
     align-items: center;
