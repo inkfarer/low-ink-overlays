@@ -1,6 +1,6 @@
 .bracket-title {
     position: absolute;
-    height: 65px;
+    height: 70px;
     width: 100%;
     background-color: var(--background-1);
     border-bottom: 4px solid var(--accent);
@@ -11,21 +11,21 @@
 
 #bracket-title-text {
     color: white;
-    font-size: 36px;
+    font-size: 42px;
     font-weight: 600;
 }
 
 #bracket-container {
     line-height: 1.5em;
     position: absolute;
-    top: 130px;
+    top: 110px;
     left: 100px;
     font-weight: 500;
 }
 
 #bracket-container > div {
     width: 1720px;
-    height: 900px;
+    height: 920px;
     overflow: visible;
 }
 
