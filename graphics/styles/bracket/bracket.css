@@ -1,0 +1,60 @@
+#bracket-container {
+    line-height: 1.5em;
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    font-weight: 500;
+}
+
+#bracket-container > div {
+    width: 1720px;
+    height: 980px;
+    overflow: visible;
+}
+
+.swiss-renderer {
+    width: 60%;
+    justify-items: center;
+}
+.swiss-renderer .match-row-wrapper {
+    width: 1000px;
+    margin: 6px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.swiss-renderer .match-row {
+    background-color: var(--background-1);
+    z-index: 2;
+    height: 100%;
+    min-width: 1000px;
+}
+.swiss-renderer .match-row-accent {
+    height: 100%;
+    width: 100%;
+    background-color: var(--accent);
+    filter: drop-shadow(0 0 5px var(--accent));
+    position: absolute;
+    z-index: 1;
+    border-radius: 10px;
+}
+.match-row-overflow-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+.swiss-renderer .match-row-wrapper .match-row__scores {
+    font-weight: 700;
+    background-color: var(--background-2);
+}
+.swiss-renderer .match-row-wrapper.top-team-winner .match-row__top-team-name {
+    font-weight: 700;
+}
+.swiss-renderer .match-row-wrapper.bottom-team-winner .match-row__bottom-team-name {
+    font-weight: 700;
+}

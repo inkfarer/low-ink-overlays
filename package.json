@@ -2,7 +2,10 @@
     "name": "low-ink-overlays",
     "version": "0.0.0",
     "compatibleDashboardVersion": "^4.4.0",
-    "compatibleGameVersions": ["SPLATOON_2", "SPLATOON_3"],
+    "compatibleGameVersions": [
+        "SPLATOON_2",
+        "SPLATOON_3"
+    ],
     "description": "",
     "homepage": "https://github.com/inkfarer/low-ink-overlays",
     "author": {
@@ -31,6 +34,11 @@
                 "file": "break.html",
                 "width": 1920,
                 "height": 1080
+            },
+            {
+                "file": "bracket.html",
+                "width": 1920,
+                "height": 1080
             }
         ],
         "dashboardPanels": [
@@ -45,10 +53,12 @@
         ]
     },
     "dependencies": {
+        "@tourneyview/renderer": "file:../../../tourneyview/tourneyview-renderer-0.7.0.tgz",
+        "d3": "^7.9.0",
+        "fitted-text": "^1.0.0",
         "gsap": "3.6.1",
         "lodash": "^4.17.21",
-        "luxon": "^1.26.0",
-		"fitted-text": "^1.0.0"
+        "luxon": "^1.26.0"
     },
     "devDependencies": {
         "ts-nodecg": "^0.3.1"
