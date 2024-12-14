@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    TourneyviewRenderer.revealOnObsSourceVisible(renderer, 0.2);
+    TourneyviewRenderer.revealOnObsSourceVisible(renderer, 0.5);
 });
 
 function buildBracketTitle(bracketData) {
