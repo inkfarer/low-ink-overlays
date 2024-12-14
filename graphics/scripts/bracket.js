@@ -4,47 +4,68 @@ class LISwissAnimator {
     }
 
     async hide(element) {
-        const overflowWrappers = element.querySelectorAll('.match-row-overflow-wrapper');
-        const accents = element.querySelectorAll('.match-row-accent');
+        const overflowWrappers = element.querySelectorAll('.match-cell-overflow-wrapper');
+        const accents = element.querySelectorAll('.match-cell-accent');
 
         return Promise.all([
             gsap.to(overflowWrappers, {
                 width: '0%',
-                duration: 0.75,
+                duration: 0.65,
                 ease: Power3.easeIn,
-                stagger: 0.05
+                stagger: {
+                    each: 0.08,
+                    from: 'center',
+                    grid: 'auto',
+                    axis: 'x'
+                }
             }),
             gsap.to(accents, {
                 width: '0%',
-                duration: 0.75,
+                duration: 0.65,
                 ease: Power3.easeIn,
-                stagger: 0.05,
+                stagger: {
+                    each: 0.08,
+                    from: 'center',
+                    grid: 'auto',
+                    axis: 'x'
+                },
                 delay: 0.1
             })
         ]);
     }
 
     beforeReveal(element) {
-        gsap.set(element.querySelectorAll('.match-row-overflow-wrapper, .match-row-accent'), { width: '0%' });
+        gsap.set(element.querySelectorAll('.match-cell-overflow-wrapper, .match-cell-accent'), { width: '0%' });
     }
 
-    async reveal(element) {
-        const overflowWrappers = element.querySelectorAll('.match-row-overflow-wrapper');
-        const accents = element.querySelectorAll('.match-row-accent');
+    async reveal(element, opts) {
+        const overflowWrappers = element.querySelectorAll('.match-cell-overflow-wrapper');
+        const accents = element.querySelectorAll('.match-cell-accent');
 
         return Promise.all([
             gsap.to(overflowWrappers, {
                 width: '100%',
-                duration: 0.75,
+                duration: 0.65,
                 ease: Power3.easeOut,
-                stagger: 0.05,
-                delay: 0.1
+                stagger: {
+                    each: 0.08,
+                    from: 'center',
+                    grid: 'auto',
+                    axis: 'x'
+                },
+                delay: 0.1 + (opts.delay ?? 0)
             }),
             gsap.to(accents, {
                 width: '100%',
-                duration: 0.75,
+                duration: 0.65,
                 ease: Power3.easeOut,
-                stagger: 0.05
+                stagger: {
+                    each: 0.08,
+                    from: 'center',
+                    grid: 'auto',
+                    axis: 'x'
+                },
+                delay: opts.delay
             })
         ]);
     }
@@ -57,18 +78,19 @@ class LIBracketAnimator extends TourneyviewRenderer.D3BracketAnimator {
 const renderer = new TourneyviewRenderer.BracketRenderer({
     animator: new LIBracketAnimator(),
     swissOpts: {
-        rowHeight: 50,
-        rowGap: 1,
+        cellHeight: 75,
+        columnGap: 16,
+        rowGap: 2,
         useScrollMask: true,
         onCellCreation(selection) {
             selection.each(function() {
                 const contentWrapper = document.createElement('div');
-                contentWrapper.classList.add('match-row-overflow-wrapper');
+                contentWrapper.classList.add('match-cell-overflow-wrapper');
                 this.appendChild(contentWrapper);
-                const content = this.querySelector('.match-row');
+                const content = this.querySelector('.match-cell');
                 contentWrapper.appendChild(content);
                 const backgroundElem = document.createElement('div');
-                backgroundElem.classList.add('match-row-accent');
+                backgroundElem.classList.add('match-cell-accent');
                 this.appendChild(backgroundElem);
             });
         }
@@ -81,6 +103,7 @@ const renderer = new TourneyviewRenderer.BracketRenderer({
 
 const bracketContainer = document.getElementById('bracket-container');
 bracketContainer.appendChild(renderer.element);
+const bracketTitleText = document.getElementById('bracket-title-text');
 
 document.addEventListener('DOMContentLoaded', async () => {
     await document.fonts.load('400 32px Montserrat');
@@ -88,6 +111,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     bracketData.on('change', newValue => {
         if (newValue != null) {
             void renderer.setData(newValue);
+
+            const bracketTitle = buildBracketTitle(newValue);
+            if (bracketTitleText.text !== bracketTitle) {
+                textOpacitySwap(bracketTitle, bracketTitleText);
+            }
         }
     });
+
+    TourneyviewRenderer.revealOnObsSourceVisible(renderer, 0.2);
 });
+
+function buildBracketTitle(bracketData) {
+    if (bracketData.matchGroups.length === 1 && bracketData.matchGroups[0].name !== bracketData.name) {
+        return bracketData.matchGroups[0].name;
+    }
+
+    return bracketData.name;
+}

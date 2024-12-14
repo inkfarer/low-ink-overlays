@@ -50,3 +50,12 @@ function addDots(value, maxLength = 48) {
 
     return value;
 }
+
+function textOpacitySwap(newText, elem) {
+    gsap.to(elem, {
+        opacity: 0, duration: 0.35, onComplete: () => {
+            elem.setAttribute('text', newText);
+        }
+    });
+    gsap.to(elem, {opacity: 1, duration: 0.35, delay: 0.35});
+}
