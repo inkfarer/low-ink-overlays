@@ -45,14 +45,18 @@
     height: 100%;
     min-width: 250px;
 }
+.swiss-renderer .match-cell-wrapper.in-progress .match-cell-accent {
+    filter: drop-shadow(0 0 5px var(--accent));
+}
 .swiss-renderer .match-cell-accent {
     height: 100%;
     width: 100%;
     background-color: var(--accent);
-    filter: drop-shadow(0 0 5px var(--accent));
+    filter: drop-shadow(0 0 1px var(--accent));
     position: absolute;
     z-index: 1;
     border-radius: 10px;
+    transition: filter 350ms;
 }
 .match-cell-overflow-wrapper {
     width: 100%;
@@ -70,9 +74,18 @@
     height: 100%;
     padding-top: 9px;
 }
+.swiss-renderer .match-cell__team-name {
+    transition: opacity 350ms;
+}
 .swiss-renderer .match-cell-wrapper.top-team-winner .match-cell__top-team-name {
     font-weight: 700;
 }
+.swiss-renderer .match-cell-wrapper.top-team-winner .match-cell__bottom-team-name {
+    opacity: 0.75;
+}
 .swiss-renderer .match-cell-wrapper.bottom-team-winner .match-cell__bottom-team-name {
     font-weight: 700;
+}
+.swiss-renderer .match-cell-wrapper.bottom-team-winner .match-cell__top-team-name {
+    opacity: 0.75;
 }
