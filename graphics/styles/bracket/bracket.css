@@ -61,7 +61,7 @@
     border-radius: 10px;
     transition: filter 350ms;
 }
-.match-cell-overflow-wrapper {
+.swiss-renderer .match-cell-overflow-wrapper {
     width: 100%;
     height: 100%;
     position: relative;
@@ -91,4 +91,55 @@
 }
 .swiss-renderer .match-cell-wrapper.bottom-team-winner .match-cell__top-team-name {
     opacity: 0.75;
+}
+
+.elimination-renderer .bracket-header {
+    color: white;
+}
+.elimination-renderer .match-cell-wrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    transition: opacity 350ms;
+}
+.elimination-renderer .match-cell-wrapper.missing-team {
+    opacity: 0.5;
+}
+.elimination-renderer .match-cell {
+    background-color: var(--background-1);
+    z-index: 2;
+    height: 100%;
+    min-width: var(--original-cell-width);
+}
+.elimination-renderer .match-cell-wrapper .match-cell__score-wrapper {
+    font-weight: 700;
+    background-color: var(--background-2);
+    height: 100%;
+    padding-top: 9px;
+}
+.elimination-renderer .match-cell-accent {
+    height: 100%;
+    width: 100%;
+    background-color: var(--accent);
+    filter: drop-shadow(0 0 1px var(--accent));
+    position: absolute;
+    z-index: 1;
+    border-radius: 10px;
+    transition: filter 350ms;
+}
+.elimination-renderer .match-cell-wrapper:not(.completed, .missing-team) .match-cell-accent {
+    filter: drop-shadow(0 0 5px var(--accent));
+}
+.elimination-renderer .match-cell-overflow-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+.elimination-renderer .bracket-link {
+    stroke: var(--accent);
 }

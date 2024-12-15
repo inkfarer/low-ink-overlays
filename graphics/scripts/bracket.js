@@ -71,8 +71,75 @@ class LISwissAnimator {
     }
 }
 
+class LIEliminationAnimator {
+    beforeHide() {
+
+    }
+
+    async hide(element, opts) {
+        return gsap.to(element, { opacity: 0, duration: 0.35, delay: opts.delay });
+    }
+
+    beforeReveal(element) {
+        gsap.set(element, { opacity: 1 });
+        gsap.set(element.querySelectorAll('.match-cell-overflow-wrapper, .match-cell-accent'), { width: '0%' });
+        gsap.set(element.querySelectorAll('.bracket-link'), { strokeDashoffset: '-1' });
+        gsap.set(element.querySelectorAll('.round-label, .elimination-renderer__bracket-title'), { opacity: 0 });
+    }
+
+    async reveal(element, opts) {
+        const depth = opts.renderer.getBracketDepth();
+
+        return Promise.all([
+            gsap.to(
+                element.querySelectorAll('.round-label, .elimination-renderer__bracket-title'),
+                {
+                    duration: 0.35,
+                    opacity: 1,
+                    stagger: function(index, target) {
+                        if (target.dataset.roundIndex != null) {
+                            return Number(target.dataset.roundIndex) * 0.1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            ),
+            gsap.to(element.querySelectorAll('.bracket-link'), {
+                strokeDashoffset: '0',
+                autoRound: false,
+                duration: 0.75,
+                ease: Power3.easeInOut,
+                stagger: function(index, target) {
+                    return (depth - target.__data__.source.depth) * 0.2;
+                },
+                delay: 0.1 + (opts.delay ?? 0)
+            }),
+            gsap.to(element.querySelectorAll('.match-cell-overflow-wrapper'), {
+                width: '100%',
+                duration: 0.65,
+                ease: Power3.easeOut,
+                delay: 0.1 + (opts.delay ?? 0),
+                stagger: function(index, target) {
+                    return (depth - target.parentNode.__data__.depth) * 0.1;
+                }
+            }),
+            gsap.to(element.querySelectorAll('.match-cell-accent'), {
+                width: '100%',
+                duration: 0.65,
+                ease: Power3.easeOut,
+                stagger: function(index, target) {
+                    return (depth - target.parentNode.__data__.depth) * 0.1;
+                },
+                delay: opts.delay
+            })
+        ]);
+    }
+}
+
 class LIBracketAnimator extends TourneyviewRenderer.D3BracketAnimator {
     swissAnimator = new LISwissAnimator();
+    eliminationAnimator = new LIEliminationAnimator();
 }
 
 const renderer = new TourneyviewRenderer.BracketRenderer({
@@ -98,6 +165,21 @@ const renderer = new TourneyviewRenderer.BracketRenderer({
     roundRobinOpts: {
         maxScale: 1.75,
         columnGap: 6
+    },
+    eliminationOpts: {
+        onCellCreation(selection) {
+            selection.each(function() {
+                const contentWrapper = document.createElement('div');
+                contentWrapper.classList.add('match-cell-overflow-wrapper');
+                this.appendChild(contentWrapper);
+                const content = this.querySelector('.match-cell');
+                contentWrapper.appendChild(content);
+                const backgroundElem = document.createElement('div');
+                backgroundElem.classList.add('match-cell-accent');
+                this.appendChild(backgroundElem);
+                this.style.setProperty('--original-cell-width', this.style.width);
+            });
+        }
     }
 });
 

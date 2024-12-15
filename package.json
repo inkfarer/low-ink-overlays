@@ -53,10 +53,10 @@
         ]
     },
     "dependencies": {
-        "@tourneyview/renderer": "0.8.0-alpha.0",
+        "@tourneyview/renderer": "0.8.0-alpha.1",
         "d3": "^7.9.0",
         "fitted-text": "^1.0.0",
-        "gsap": "3.6.1",
+        "gsap": "3.10.2",
         "lodash": "^4.17.21",
         "luxon": "^1.26.0"
     },
