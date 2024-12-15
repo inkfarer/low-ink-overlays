@@ -39,13 +39,16 @@
     justify-content: center;
     position: relative;
 }
+.swiss-renderer .match-cell-wrapper.missing-team {
+    opacity: 0.5;
+}
 .swiss-renderer .match-cell {
     background-color: var(--background-1);
     z-index: 2;
     height: 100%;
     min-width: 250px;
 }
-.swiss-renderer .match-cell-wrapper:not(.top-team-winner, .bottom-team-winner) .match-cell-accent {
+.swiss-renderer .match-cell-wrapper:not(.completed, .missing-team) .match-cell-accent {
     filter: drop-shadow(0 0 5px var(--accent));
 }
 .swiss-renderer .match-cell-accent {
