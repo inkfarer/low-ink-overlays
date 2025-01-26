@@ -1,7 +1,7 @@
 {
     "name": "low-ink-overlays",
     "version": "0.0.0",
-    "compatibleDashboardVersion": "^4.4.0",
+    "compatibleDashboardVersion": "~4.16.0",
     "compatibleGameVersions": [
         "SPLATOON_2",
         "SPLATOON_3"
@@ -53,7 +53,7 @@
         ]
     },
     "dependencies": {
-        "@tourneyview/renderer": "0.8.0-alpha.1",
+        "@tourneyview/renderer": "0.8.0",
         "d3": "^7.9.0",
         "fitted-text": "^1.0.0",
         "gsap": "3.10.2",
