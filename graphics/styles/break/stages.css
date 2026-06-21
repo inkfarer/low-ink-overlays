@@ -94,6 +94,10 @@
 	margin-bottom: 5px;
 }
 
+.scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text > .stage-info.without-mode > .stage-mode {
+	opacity: 0;
+}
+
 .scene.stages-scene > .stages-grid > .stage > .stage-content > .stage-text > .stage-info > .stage-name {
 	font-size: 35px;
 	font-weight: 600;

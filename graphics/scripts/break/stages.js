@@ -81,6 +81,7 @@ async function updateSingleStage(index, game) {
 	await loadImagePromise(stageImagePath);
 	const stageElem = document.getElementById(`stage_${index}`);
 	const imageElem = stageElem.querySelector('.stage-content > .stage-image');
+	const stageInfoElem = stageElem.querySelector('.stage-content > .stage-text > .stage-info');
 	const modeTextElem = stageElem.querySelector('.stage-content > .stage-text > .stage-info > fitted-text.stage-mode');
 	const stageNameElem = stageElem.querySelector('.stage-content > .stage-text > .stage-info > div.stage-name');
 
@@ -96,6 +97,11 @@ async function updateSingleStage(index, game) {
 		onComplete: () => {
 			imageElem.style.backgroundImage = `url('${stageImagePath}')`;
 			modeTextElem.setAttribute('text', localeInfo.value.modes[game.mode]);
+			if (game.mode === 'Unknown Mode') {
+				stageInfoElem.classList.add('without-mode');
+			} else {
+				stageInfoElem.classList.remove('without-mode');
+			}
 			stageNameElem.innerText = localeInfo.value.stages[game.stage];
 		}
 	}), '-=0.55');
@@ -170,7 +176,7 @@ async function updateStages(roundObject) {
 						<div class="stage-winner-wrapper flex-align-center" style="opacity: ${winnerValue === 'none' ? 0 : 1}">
 							<div class="stage-winner" style="font-size: ${stageModeFontSize}px">${winnerName}</div>
 						</div>
-						<div class="stage-info">
+						<div class="stage-info ${game.mode === 'Unknown Mode' ? 'without-mode' : ''}">
 							<fitted-text
 								class="stage-mode"
 								style="font-size: ${stageModeFontSize}px"
