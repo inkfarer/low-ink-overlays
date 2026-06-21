@@ -61,7 +61,7 @@ function setTeams(data, team) {
 
 				const playerNameElem = document.createElement('fitted-text');
 				playerNameElem.classList.add('team-player');
-				playerNameElem.setAttribute('text', player.name);
+				playerNameElem.setAttribute('text', player.inGameName?.name ?? player.name);
 				playerNameElem.setAttribute('max-width', '445');
 
 				teamPlayersElem.appendChild(playerNameElem);
